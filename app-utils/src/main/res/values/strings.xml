@@ -1,0 +1,4 @@
+<resources>
+	<string name="app_name">android-utils</string>
+	<string name="validate_error_required">Required</string>
+</resources>
