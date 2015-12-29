@@ -4,7 +4,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 
 /**
- * @author Matteus Magnusson <matteus.magnusson@spiddekauga.com>
+ * Display a progress bar in the main window
  */
 public class ProgressBar {
 /** Current progress bar */
@@ -40,7 +40,7 @@ public static void show(Styles style, String title, String message, boolean canc
 	hide();
 
 	// Create new
-	mProgressDialog = new ProgressDialog(App.getContext());
+	mProgressDialog = new ProgressDialog(App.getActivity());
 	if (style != null) {
 		mProgressDialog.setProgressStyle(style.getId());
 	}
@@ -52,6 +52,7 @@ public static void show(Styles style, String title, String message, boolean canc
 	}
 	mProgressDialog.setCancelable(cancelable);
 	mProgressDialog.setOnCancelListener(cancelListener);
+	mProgressDialog.show();
 }
 
 public static void hide() {

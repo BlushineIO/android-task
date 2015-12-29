@@ -3,7 +3,7 @@ package com.spiddekauga.android.validate;
 import android.widget.TextView;
 
 /**
- * @author Matteus Magnusson <matteus.magnusson@spiddekauga.com>
+ * Base class for various validators
  */
 public abstract class Validate {
 private String mErrorMessage;

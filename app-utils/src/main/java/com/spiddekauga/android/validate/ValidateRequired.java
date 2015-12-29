@@ -13,7 +13,7 @@ class ValidateRequired extends Validate {
  * Uses the default message
  */
 ValidateRequired() {
-	this(App.getContext().getResources().getString(R.string.validate_error_required));
+	this(App.getActivity().getResources().getString(R.string.validate_error_required));
 }
 
 /**

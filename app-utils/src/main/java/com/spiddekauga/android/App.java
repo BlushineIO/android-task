@@ -1,26 +1,26 @@
 package com.spiddekauga.android;
 
-import android.content.Context;
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 
 /**
- * @author Matteus Magnusson <matteus.magnusson@spiddekauga.com>
+ * Base class for Android Applications
  */
 public class App extends AppCompatActivity {
-static private Context mContext;
+static private Activity mActivity;
 
 /**
  * @return the context for this app
  */
-public static Context getContext() {
-	return mContext;
+public static Activity getActivity() {
+	return mActivity;
 }
 
 /**
- * Set the context
- * @param context the active context
+ * Set the current activity
+ * @param activity the active activity
  */
-protected static void setContext(Context context) {
-	mContext = context;
+protected static void setActivity(Activity activity) {
+	mActivity = activity;
 }
 }

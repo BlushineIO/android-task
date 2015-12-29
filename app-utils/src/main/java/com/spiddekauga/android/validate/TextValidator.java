@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Matteus Magnusson <matteus.magnusson@spiddekauga.com>
+ * Use this class to validate text fields. By itself this class does nothing, you have to call
+ * {@link #required()} or add your own validators through {@link #addValidation(Validate)}
  */
 public class TextValidator implements TextWatcher {
 protected final TextView mTextView;

@@ -5,7 +5,6 @@ import java.util.List;
 
 /**
  * Group of text validators
- * @author Matteus Magnusson <matteus.magnusson@spiddekauga.com>
  */
 public class TextValidatorGroup {
 private List<TextValidator> mTextValidators = new ArrayList<>();
