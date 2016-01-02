@@ -13,6 +13,16 @@ import android.widget.Toast;
  * Creates toasts for the UI
  */
 public class Toaster {
+private static final Duration DURATION_DEFAULT = Duration.SHORT;
+
+/**
+ * Display text toast message for a {@link Duration.SHORT} amount of time
+ * @param message the message to display
+ */
+public static void show(String message) {
+	show(message, DURATION_DEFAULT);
+}
+
 /**
  * Display text toast message
  * @param message the message to display
@@ -68,6 +78,15 @@ public static void show(String message, Duration duration, Icons icon) {
 
 	toast.setView(layout);
 	toast.show();
+}
+
+/**
+ * Display a toast message with the specified icon for a short amount of time
+ * @param message the message to display
+ * @parma icon what icon to use in from of the message. Set to {@link Icons.TEXT} to only display text
+ */
+public static void show(String message, Icons icon) {
+	show(message, DURATION_DEFAULT, icon);
 }
 
 /**
