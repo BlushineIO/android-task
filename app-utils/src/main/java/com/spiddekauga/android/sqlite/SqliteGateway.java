@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.sql.SQLException;
 
 /**
- * Gateway for all SQLite gateways
+ * Base class for all SQLite gateways
  */
 public abstract class SqliteGateway {
 private static SQLiteOpenHelper mSqlite = null;
@@ -17,7 +17,7 @@ private static SQLiteOpenHelper mSqlite = null;
  * Initialize SQLite
  * @param sqliteOpenHelper object which we want to open sqlite within
  */
-public static synchronized void init(SQLiteOpenHelper sqliteOpenHelper) {
+public static synchronized void setSqlite(SQLiteOpenHelper sqliteOpenHelper) {
 	mSqlite = sqliteOpenHelper;
 
 	// TODO Do all delete/insert/replace/update/execSql that was saved
@@ -105,7 +105,7 @@ protected long replace(String table, ContentValues initialValues) {
  * Passing null will update all rows.
  * @return the number of rows affected
  */
-public int update(String table, ContentValues values, String whereClause) {
+protected int update(String table, ContentValues values, String whereClause) {
 	if (isInitialized()) {
 		SQLiteDatabase db = mSqlite.getWritableDatabase();
 		db.update(table, values, whereClause, null);
@@ -130,7 +130,7 @@ public int update(String table, ContentValues values, String whereClause) {
  * not supported.
  * @throws SQLException if the SQL string is invalid
  */
-public void execSQL(String sql) throws SQLException {
+protected void execSQL(String sql) throws SQLException {
 	if (isInitialized()) {
 		SQLiteDatabase db = mSqlite.getWritableDatabase();
 		db.execSQL(sql);
@@ -148,7 +148,7 @@ public void execSQL(String sql) throws SQLException {
  * @return A {@link Cursor} object, which is positioned before the first entry. Note that
  * {@link Cursor}s are not synchronized, see the documentation for more details.
  */
-public Cursor rawQuery(String sql) {
+protected Cursor rawQuery(String sql) {
 	waitUntilInitialized();
 	SQLiteDatabase db = mSqlite.getReadableDatabase();
 	Cursor cursor = db.rawQuery(sql, null);
