@@ -16,11 +16,9 @@ public static Activity getActivity() {
 	return mActivity;
 }
 
-/**
- * Set the current activity
- * @param activity the active activity
- */
-protected static void setActivity(Activity activity) {
-	mActivity = activity;
+@Override
+protected void onResume() {
+	super.onResume();
+	mActivity = this;
 }
 }
