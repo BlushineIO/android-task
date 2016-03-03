@@ -40,7 +40,7 @@ public static void show(Styles style, String title, String message, boolean canc
 	hide();
 
 	// Create new
-	mProgressDialog = new ProgressDialog(App.getActivity());
+	mProgressDialog = new ProgressDialog(AppActivity.getActivity());
 	if (style != null) {
 		mProgressDialog.setProgressStyle(style.getId());
 	}
@@ -72,7 +72,7 @@ public enum Styles {
 
 	/**
 	 * Set the id of the style
-	 * @param id
+	 * @param id progress styles
 	 */
 	Styles(int id) {
 		mId = id;

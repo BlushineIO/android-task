@@ -39,7 +39,7 @@ public static void show(String message, Duration duration) {
  * @param icon what icon to use in front of the message. Set to {@link Icons.TEXT} to only display text
  */
 public static void show(String message, Duration duration, Icons icon) {
-	Activity activity = App.getActivity();
+	Activity activity = AppActivity.getActivity();
 	LayoutInflater inflater = activity.getLayoutInflater();
 
 	@IdRes int toastLayoutId = 0;

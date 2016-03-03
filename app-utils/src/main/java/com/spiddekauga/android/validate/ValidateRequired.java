@@ -2,7 +2,7 @@ package com.spiddekauga.android.validate;
 
 import android.widget.TextView;
 
-import com.spiddekauga.android.App;
+import com.spiddekauga.android.AppActivity;
 import com.spiddekauga.android.R;
 
 /**
@@ -13,7 +13,7 @@ class ValidateRequired extends Validate {
  * Uses the default message
  */
 ValidateRequired() {
-	this(App.getActivity().getResources().getString(R.string.validate_error_required));
+	this(AppActivity.getActivity().getResources().getString(R.string.validate_error_required));
 }
 
 /**

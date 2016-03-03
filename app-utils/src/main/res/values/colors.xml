@@ -3,6 +3,7 @@
 	<color name="primary">#3F51B5</color>
 	<color name="primary_dark">#303F9F</color>
 	<color name="accent">#FF4081</color>
+	<color name="cancel">@color/accent</color>
 	<color name="primary_button">#3F51B5</color>
 	<color name="accept_button">#00e676</color>
 	<color name="light_text">#ffffff</color>
