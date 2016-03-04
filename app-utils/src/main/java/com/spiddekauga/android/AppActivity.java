@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 /**
  * Base class for Android Activities
  */
-public class AppActivity extends AppCompatActivity {
+public abstract class AppActivity extends AppCompatActivity {
 static private Activity mActivity;
 
 /**
@@ -28,6 +28,17 @@ public static void exit() {
  */
 public static Activity getActivity() {
 	return mActivity;
+}
+
+/**
+ * Switch to the specified activity
+ * @param activityClass the activity to switch to
+ */
+public static void switchTo(Class<? extends Activity> activityClass) {
+	if (mActivity != null) {
+		Intent intent = new Intent(mActivity, activityClass);
+		mActivity.startActivity(intent);
+	}
 }
 
 @Override

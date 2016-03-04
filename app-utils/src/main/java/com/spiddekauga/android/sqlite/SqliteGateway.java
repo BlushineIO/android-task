@@ -6,12 +6,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Base class for all SQLite gateways
  */
 public abstract class SqliteGateway {
 private static SQLiteOpenHelper mSqlite = null;
+private Map<Cursor, SQLiteDatabase> mOpenDbs = new HashMap<>();
 
 /**
  * Initialize SQLite
@@ -152,7 +155,7 @@ protected Cursor rawQuery(String sql) {
 	waitUntilInitialized();
 	SQLiteDatabase db = mSqlite.getReadableDatabase();
 	Cursor cursor = db.rawQuery(sql, null);
-	db.close();
+	mOpenDbs.put(cursor, db);
 	return cursor;
 }
 
@@ -165,6 +168,18 @@ private static void waitUntilInitialized() {
 			Thread.sleep(20);
 		} catch (InterruptedException e) {
 		}
+	}
+}
+
+/**
+ * Closes the cursor and DB associated with this cursor
+ * @param cursor the cursor to close
+ */
+protected void close(Cursor cursor) {
+	cursor.close();
+	SQLiteDatabase db = mOpenDbs.get(cursor);
+	if (db != null) {
+		db.close();
 	}
 }
 }
