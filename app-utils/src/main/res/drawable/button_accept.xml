@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:state_pressed="true">
+		<shape>
+			<solid
+				android:color="@color/button_accept_pressed"/>
+			<corners
+				android:radius="3dp"/>
+			<padding
+				android:bottom="@dimen/button_padding"
+				android:left="@dimen/button_padding"
+				android:right="@dimen/button_padding"
+				android:top="@dimen/button_padding"/>
+		</shape>
+	</item>
+
+	<item android:state_focused="true">
+		<shape>
+			<solid
+				android:color="@color/button_accept_focus"/>
+			<corners
+				android:radius="3dp"/>
+			<padding
+				android:bottom="@dimen/button_padding"
+				android:left="@dimen/button_padding"
+				android:right="@dimen/button_padding"
+				android:top="@dimen/button_padding"/>
+		</shape>
+	</item>
+
+	<item android:state_enabled="false">
+		<shape>
+			<solid
+				android:color="@color/button_disabled"/>
+			<corners
+				android:radius="3dp"/>
+			<padding
+				android:bottom="@dimen/button_padding"
+				android:left="@dimen/button_padding"
+				android:right="@dimen/button_padding"
+				android:top="@dimen/button_padding"/>
+		</shape>
+	</item>
+
+	<item>
+		<shape>
+			<solid
+				android:color="@color/button_accept_up"/>
+			<corners
+				android:radius="3dp"/>
+			<padding
+				android:bottom="@dimen/button_padding"
+				android:left="@dimen/button_padding"
+				android:right="@dimen/button_padding"
+				android:top="@dimen/button_padding"/>
+		</shape>
+	</item>
+</selector>

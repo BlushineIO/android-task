@@ -3,8 +3,20 @@
 	<color name="primary">#3F51B5</color>
 	<color name="primary_dark">#303F9F</color>
 	<color name="accent">#FF4081</color>
-	<color name="cancel">@color/accent</color>
-	<color name="primary_button">#3F51B5</color>
-	<color name="accept_button">#00e676</color>
 	<color name="light_text">#ffffff</color>
+
+	<!-- Buttons -->
+	<color name="button_cancel_up">#EF9A9A</color>
+	<color name="button_cancel_focus">#FFCDD2</color>
+	<color name="button_cancel_pressed">#e57373</color>
+	<color name="button_accept_up">#00e676</color>
+	<color name="button_accept_focus">#00e676</color>
+	<color name="button_accept_pressed">#00e676</color>
+	<color name="button_primary_up">#81D4FA</color>
+	<color name="button_primary_focus">#B3E5FC</color>
+	<color name="button_primary_pressed">#4FC3F7</color>
+	<color name="button_default_up">#B0BEC5</color>
+	<color name="button_default_focus">#CFD8DC</color>
+	<color name="button_default_pressed">#90A4AE</color>
+	<color name="button_disabled">#9E9E9E</color>
 </resources>
