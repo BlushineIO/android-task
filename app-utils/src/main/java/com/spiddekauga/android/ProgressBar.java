@@ -32,7 +32,7 @@ public static void show(Styles style, String title, String message) {
  * @param style the type of the progress bar
  * @param title the title of the
  * @param message the message to display on the progress bar
- * @param cancelable set to true if the user should be able to cancel the progress
+ * @param cancelable set to true if the user should be able to cancel_selectable the progress
  * @param cancelListener the listener if this progress bar is canceled
  */
 public static void show(Styles style, String title, String message, boolean cancelable, DialogInterface.OnCancelListener cancelListener) {

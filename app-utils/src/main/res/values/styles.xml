@@ -8,23 +8,23 @@
 		<item name="colorAccent">@color/accent</item>
 	</style>
 
-	<style name="Widget.Button" parent="Widget.AppCompat.Button">
-		<item name="android:layout_margin">@dimen/button_margin</item>
-	</style>
+	<!--<style name="Widget.Button" parent="Widget.AppCompat.Button">-->
+	<!--<item name="android:layout_margin">@dimen/button_margin</item>-->
+	<!--</style>-->
 
-	<style name="Widget.Button.Accept" parent="Widget.Button">
-		<item name="android:background">@drawable/button_accept</item>
-	</style>
+	<!--<style name="Widget.Button.Accept" parent="Widget.Button">-->
+	<!--<item name="android:background">@drawable/accept_selectable</item>-->
+	<!--</style>-->
 
-	<style name="Widget.Button.Primary" parent="Widget.Button">
-		<item name="android:background">@drawable/button_primary</item>
-	</style>
+	<!--<style name="Widget.Button.Primary" parent="Widget.Button">-->
+	<!--<item name="android:background">@drawable/primary_selectable</item>-->
+	<!--</style>-->
 
-	<style name="Widget.Button.Cancel" parent="Widget.Button">
-		<item name="android:background">@drawable/button_cancel</item>
-	</style>
+	<!--<style name="Widget.Button.Cancel" parent="Widget.Button">-->
+	<!--<item name="android:background">@drawable/cancel_selectable</item>-->
+	<!--</style>-->
 
-	<style name="Widget.Button.Default" parent="Widget.Button">
-		<item name="android:background">@drawable/button_default</item>
-	</style>
+	<!--<style name="Widget.Button.Default" parent="Widget.Button">-->
+	<!--<item name="android:background">@drawable/default_selectable</item>-->
+	<!--</style>-->
 </resources>

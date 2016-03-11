@@ -66,7 +66,7 @@ public boolean isValid() {
 }
 
 /**
- * Set the text to be required (non-empty). Uses default error message
+ * Set the text to be required (non-empty). Uses default_selectable error message
  */
 public void required() {
 	addValidation(new ValidateRequired());

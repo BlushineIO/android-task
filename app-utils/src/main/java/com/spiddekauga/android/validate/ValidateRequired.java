@@ -10,7 +10,7 @@ import com.spiddekauga.android.R;
  */
 class ValidateRequired extends Validate {
 /**
- * Uses the default message
+ * Uses the default_selectable message
  */
 ValidateRequired() {
 	this(AppActivity.getActivity().getResources().getString(R.string.validate_error_required));

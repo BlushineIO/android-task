@@ -6,11 +6,8 @@
 				android:color="@color/button_accept_pressed"/>
 			<corners
 				android:radius="3dp"/>
-			<padding
-				android:bottom="@dimen/button_padding"
-				android:left="@dimen/button_padding"
-				android:right="@dimen/button_padding"
-				android:top="@dimen/button_padding"/>
+			<size
+				android:height="30dp"/>
 		</shape>
 	</item>
 
@@ -20,11 +17,8 @@
 				android:color="@color/button_accept_focus"/>
 			<corners
 				android:radius="3dp"/>
-			<padding
-				android:bottom="@dimen/button_padding"
-				android:left="@dimen/button_padding"
-				android:right="@dimen/button_padding"
-				android:top="@dimen/button_padding"/>
+			<size
+				android:height="30dp"/>
 		</shape>
 	</item>
 
@@ -34,11 +28,8 @@
 				android:color="@color/button_disabled"/>
 			<corners
 				android:radius="3dp"/>
-			<padding
-				android:bottom="@dimen/button_padding"
-				android:left="@dimen/button_padding"
-				android:right="@dimen/button_padding"
-				android:top="@dimen/button_padding"/>
+			<size
+				android:height="30dp"/>
 		</shape>
 	</item>
 
@@ -48,11 +39,8 @@
 				android:color="@color/button_accept_up"/>
 			<corners
 				android:radius="3dp"/>
-			<padding
-				android:bottom="@dimen/button_padding"
-				android:left="@dimen/button_padding"
-				android:right="@dimen/button_padding"
-				android:top="@dimen/button_padding"/>
+			<size
+				android:height="30dp"/>
 		</shape>
 	</item>
 </selector>
