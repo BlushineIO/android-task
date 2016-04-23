@@ -6,7 +6,7 @@ import com.spiddekauga.android.AppActivity;
 import com.spiddekauga.android.R;
 
 /**
- * @author Matteus Magnusson <matteus.magnusson@spiddekauga.com>
+ * Makes the field required
  */
 class ValidateRequired extends Validate {
 /**

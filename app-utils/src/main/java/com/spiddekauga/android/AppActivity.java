@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatActivity;
  * Base class for Android Activities
  */
 public abstract class AppActivity extends AppCompatActivity {
-static private Activity mActivity;
+static private AppCompatActivity mActivity;
 
 /**
  * Exit the application
@@ -26,7 +26,7 @@ public static void exit() {
 /**
  * @return the context for this app
  */
-public static Activity getActivity() {
+public static AppCompatActivity getActivity() {
 	return mActivity;
 }
 
