@@ -42,8 +42,8 @@ protected int delete(String table, String whereClause) {
 		rowsAffected = db.delete(table, whereClause, null);
 		db.close();
 	}
-	// TODO Save delete for later
 	else {
+		// TODO Save delete for later
 	}
 	return rowsAffected;
 }
@@ -72,9 +72,8 @@ protected long insert(String table, ContentValues values) {
 			db.close();
 		}
 	}
-	// TODO save insert for later
 	else {
-
+		// TODO save insert for later
 	}
 	return rowId;
 }
@@ -95,9 +94,8 @@ protected long replace(String table, ContentValues initialValues) {
 			db.close();
 		}
 	}
-	// TODO save replace for later
 	else {
-
+		// TODO save replace for later
 	}
 	return rowId;
 }
@@ -118,9 +116,8 @@ protected int update(String table, ContentValues values, String whereClause) {
 		rowsAffected = db.update(table, values, whereClause, null);
 		db.close();
 	}
-	// TODO save replace for later
 	else {
-
+		// TODO save replace for later
 	}
 	return rowsAffected;
 }
@@ -143,9 +140,8 @@ protected void execSQL(String sql) throws SQLException {
 		db.execSQL(sql);
 		db.close();
 	}
-	// TODO save execSql for later
 	else {
-
+		// TODO save execSql for later
 	}
 }
 
@@ -181,10 +177,12 @@ private static void waitUntilInitialized() {
  * @param cursor the cursor to close
  */
 protected void close(Cursor cursor) {
-	cursor.close();
-	SQLiteDatabase db = mOpenDbs.get(cursor);
-	if (db != null) {
-		db.close();
+	if (cursor != null) {
+		cursor.close();
+		SQLiteDatabase db = mOpenDbs.get(cursor);
+		if (db != null) {
+			db.close();
+		}
 	}
 }
 }
