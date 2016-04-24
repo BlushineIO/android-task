@@ -36,15 +36,16 @@ public static synchronized void setSqlite(SQLiteOpenHelper sqliteOpenHelper) {
  * whereClause.
  */
 protected int delete(String table, String whereClause) {
+	int rowsAffected = 0;
 	if (isInitialized()) {
 		SQLiteDatabase db = mSqlite.getWritableDatabase();
-		db.delete(table, whereClause, null);
+		rowsAffected = db.delete(table, whereClause, null);
 		db.close();
 	}
 	// TODO Save delete for later
 	else {
 	}
-	return 0;
+	return rowsAffected;
 }
 
 /**
@@ -63,10 +64,11 @@ private static synchronized boolean isInitialized() {
  * @return the row ID of the newly inserted row, or -1 if an error occurred
  */
 protected long insert(String table, ContentValues values) {
+	long rowId = -1;
 	if (isInitialized()) {
 		if (values.size() > 0) {
 			SQLiteDatabase db = mSqlite.getWritableDatabase();
-			db.insert(table, null, values);
+			rowId = db.insert(table, null, values);
 			db.close();
 		}
 	}
@@ -74,7 +76,7 @@ protected long insert(String table, ContentValues values) {
 	else {
 
 	}
-	return 0;
+	return rowId;
 }
 
 /**
@@ -85,10 +87,11 @@ protected long insert(String table, ContentValues values) {
  * @return the row ID of the newly inserted row, or -1 if an error occurred
  */
 protected long replace(String table, ContentValues initialValues) {
+	long rowId = -1;
 	if (isInitialized()) {
 		if (initialValues.size() > 0) {
 			SQLiteDatabase db = mSqlite.getWritableDatabase();
-			db.replace(table, null, initialValues);
+			rowId = db.replace(table, null, initialValues);
 			db.close();
 		}
 	}
@@ -96,7 +99,7 @@ protected long replace(String table, ContentValues initialValues) {
 	else {
 
 	}
-	return 0;
+	return rowId;
 }
 
 /**
@@ -109,16 +112,17 @@ protected long replace(String table, ContentValues initialValues) {
  * @return the number of rows affected
  */
 protected int update(String table, ContentValues values, String whereClause) {
+	int rowsAffected = 0;
 	if (isInitialized()) {
 		SQLiteDatabase db = mSqlite.getWritableDatabase();
-		db.update(table, values, whereClause, null);
+		rowsAffected = db.update(table, values, whereClause, null);
 		db.close();
 	}
 	// TODO save replace for later
 	else {
 
 	}
-	return 0;
+	return rowsAffected;
 }
 
 /**
@@ -167,6 +171,7 @@ private static void waitUntilInitialized() {
 		try {
 			Thread.sleep(20);
 		} catch (InterruptedException e) {
+			// Does nothing
 		}
 	}
 }
