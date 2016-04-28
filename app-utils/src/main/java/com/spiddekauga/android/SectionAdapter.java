@@ -3,7 +3,6 @@ package com.spiddekauga.android;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.support.annotation.LayoutRes;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
@@ -206,7 +205,6 @@ public int getItemViewType(int position) {
 
 		// Check if position is inside this section
 		if (innerPosition == 0) {
-			Log.d("T", "Bajs");
 			return VIEW_TYPE_HEADER_ID;
 		} else if (innerPosition < sectionCount) {
 			return type + adapter.getItemViewType(innerPosition - 1);
