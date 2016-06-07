@@ -51,7 +51,7 @@ protected int delete(String table, String whereClause) {
 /**
  * @return true if initialized
  */
-private static synchronized boolean isInitialized() {
+public static synchronized boolean isInitialized() {
 	return mSqlite != null;
 }
 
