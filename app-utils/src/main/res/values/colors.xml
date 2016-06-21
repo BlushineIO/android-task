@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="primary">@color/indigo_500</color>
-	<color name="primary_dark">@color/indigo_700</color>
 	<color name="accent">@color/pink_A200</color>
 	<color name="light_text">@color/white</color>
 	<color name="transparent">@color/white</color>
+	<color name="list_item_divider">@color/grey_400</color>
 
 	<!-- Buttons -->
 	<color name="button_cancel_up">@color/red_500</color>
 	<color name="button_cancel_focus">@color/red_400</color>
 	<color name="button_cancel_pressed">@color/red_600</color>
+	<color name="cancel">@color/button_cancel_up</color>
+	<color name="cancel_accent">@color/red_A400</color>
 	<color name="button_accept_up">@color/green_500</color>
 	<color name="button_accept_focus">@color/green_400</color>
 	<color name="button_accept_pressed">@color/green_600</color>
+	<color name="accept">@color/button_accept_up</color>
+	<color name="accept_accent">@color/green_A400</color>
 	<color name="button_primary_up">@color/light_blue_500</color>
 	<color name="button_primary_focus">@color/light_blue_400</color>
 	<color name="button_primary_pressed">@color/light_blue_600</color>
+	<color name="primary">@color/button_primary_up</color>
+	<color name="primary_dark">@color/light_blue_800</color>
+	<color name="primary_accent">@color/light_blue_A400</color>
 	<color name="button_default_up">@color/blue_grey_200</color>
 	<color name="button_default_focus">@color/blue_grey_100</color>
 	<color name="button_default_pressed">@color/blue_grey_300</color>

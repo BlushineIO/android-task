@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="item_removed">Borttagen</string>
+	<string name="validate_error_required">obligatorisk</string>
+	<string name="undo">Ångra</string>
+</resources>

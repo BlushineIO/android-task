@@ -1,4 +1,4 @@
-package com.spiddekauga.android;
+package com.spiddekauga.android.ui.list;
 
 import android.content.Context;
 import android.database.DataSetObserver;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+
+import com.spiddekauga.android.R;
 
 import java.util.HashMap;
 import java.util.Map;

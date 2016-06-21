@@ -1,4 +1,4 @@
-package com.spiddekauga.android;
+package com.spiddekauga.android.ui;
 
 import android.app.Activity;
 import android.support.annotation.IdRes;
@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.spiddekauga.android.AppActivity;
+import com.spiddekauga.android.R;
 
 /**
  * Creates toasts for the UI

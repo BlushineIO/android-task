@@ -1,4 +1,4 @@
-package com.spiddekauga.android;
+package com.spiddekauga.android.ui;
 
 import android.content.res.ColorStateList;
 import android.content.res.Resources;

@@ -1,4 +1,4 @@
-package com.spiddekauga.android;
+package com.spiddekauga.android.ui;
 
 import android.annotation.TargetApi;
 import android.content.res.ColorStateList;
@@ -6,6 +6,8 @@ import android.os.Build;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.widget.Button;
+
+import com.spiddekauga.android.AppActivity;
 
 /**
  * Helper methods for buttons

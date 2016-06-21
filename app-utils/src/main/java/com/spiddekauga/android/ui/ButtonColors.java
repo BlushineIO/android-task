@@ -1,6 +1,8 @@
-package com.spiddekauga.android;
+package com.spiddekauga.android.ui;
 
 import android.support.annotation.ColorRes;
+
+import com.spiddekauga.android.R;
 
 /**
  * Different button colors

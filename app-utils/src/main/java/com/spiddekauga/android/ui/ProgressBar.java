@@ -1,7 +1,9 @@
-package com.spiddekauga.android;
+package com.spiddekauga.android.ui;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+
+import com.spiddekauga.android.AppActivity;
 
 /**
  * Display a progress bar in the main window
