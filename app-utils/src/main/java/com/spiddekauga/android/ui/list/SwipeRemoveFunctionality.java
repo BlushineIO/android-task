@@ -3,6 +3,7 @@ package com.spiddekauga.android.ui.list;
 import android.graphics.Canvas;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.support.annotation.ColorInt;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,10 @@ import android.widget.TextView;
 import com.spiddekauga.android.AppActivity;
 import com.spiddekauga.android.R;
 import com.spiddekauga.android.ui.ColorHelper;
+import com.spiddekauga.android.ui.Toaster;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Add ability to remove items by swiping
@@ -27,6 +32,8 @@ private RemoveListener<T> mListener;
 @ColorInt
 private int mColor = ColorHelper.getColor(AppActivity.getActivity().getResources(), R.color.cancel, null);
 private AdvancedAdapter<T, ?> mAdapter;
+private Map<T, Runnable> mPendingRemoves = new HashMap<>();
+private Handler mHandler = new Handler();
 
 public SwipeRemoveFunctionality(AdvancedAdapter<T, ?> adapter, RemoveListener<T> listener) {
 	mAdapter = adapter;
@@ -68,11 +75,21 @@ public void onBindViewHolder(AdvancedAdapter<?, ?> adapter, RecyclerView.ViewHol
 	undoView.mRemovedTextView.setText(mRemovedMessage);
 
 	if (mUndoFunctionality) {
+		final T item = mAdapter.getItem(position);
 		undoView.mUndoButton.setVisibility(View.VISIBLE);
 		undoView.mUndoButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				// TODO
+				Runnable pendingRemovalRunnable = mPendingRemoves.get(item);
+				if (pendingRemovalRunnable != null) {
+					mPendingRemoves.remove(item);
+					mHandler.removeCallbacks(pendingRemovalRunnable);
+					mAdapter.removeItemViewHolder(item, SwipeRemoveFunctionality.this);
+					int currentPos = mAdapter.getItemPosition(item);
+					if (currentPos != -1) {
+						mAdapter.notifyItemChanged(currentPos);
+					}
+				}
 			}
 		});
 	} else {
@@ -86,7 +103,7 @@ protected void applyFunctionality(AdvancedAdapter<?, ?> adapter, RecyclerView re
 	ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new TransactionRemoveCallback());
 	itemTouchHelper.attachToRecyclerView(recyclerView);
 
-	// Background when dragging
+	// Red background when erasing
 	BackgroundDecoration backgroundDecoration = new BackgroundDecoration();
 	recyclerView.addItemDecoration(backgroundDecoration);
 
@@ -110,14 +127,20 @@ static class UndoViewHolder extends RecyclerView.ViewHolder {
  * Callback when a transaction has been swiped (and should be removed)
  */
 class TransactionRemoveCallback extends ItemTouchHelper.Callback {
+	private static final int UNDO_DURATION = 3000; // 3sec
 	private final int mXMargin = (int) AppActivity.getActivity().getResources().getDimension(R.dimen.margin);
 	private Drawable mBackground = new ColorDrawable(mColor);
 	private Drawable mXMark = ContextCompat.getDrawable(AppActivity.getActivity(), R.drawable.clear_36dp);
 
 	@Override
 	public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-		int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
-		return makeMovementFlags(0, swipeFlags);
+		// Don't allow undo view holders to be swiped
+		if (viewHolder instanceof UndoViewHolder) {
+			return 0;
+		} else {
+			int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
+			return makeMovementFlags(0, swipeFlags);
+		}
 	}
 
 	@Override
@@ -133,18 +156,25 @@ class TransactionRemoveCallback extends ItemTouchHelper.Callback {
 	@Override
 	public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
 		int swipedPosition = viewHolder.getAdapterPosition();
+		final T item = mAdapter.getItem(swipedPosition);
+
 		// Ability to undo
 		if (mUndoFunctionality) {
-			// TODO undo functionality
+			mAdapter.setItemViewHolder(item, SwipeRemoveFunctionality.this);
+			Runnable pendingRemovalRunnable = new Runnable() {
+				@Override
+				public void run() {
+					onRemove(item);
+				}
+			};
+			mPendingRemoves.put(item, pendingRemovalRunnable);
+			mAdapter.notifyItemChanged(swipedPosition);
+			mHandler.postDelayed(pendingRemovalRunnable, UNDO_DURATION);
 		}
 		// No undo
 		else {
-			T item = mAdapter.getItem(swipedPosition);
-			mAdapter.remove(swipedPosition);
-
-			if (mListener != null) {
-				mListener.onRemoved(item);
-			}
+			Toaster.show(mRemovedMessage);
+			onRemove(item);
 		}
 	}
 
@@ -193,6 +223,14 @@ class TransactionRemoveCallback extends ItemTouchHelper.Callback {
 		mXMark.draw(c);
 
 		super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+	}
+
+	private void onRemove(T item) {
+		mAdapter.remove(item);
+		mPendingRemoves.remove(item);
+		if (mListener != null) {
+			mListener.onRemoved(item);
+		}
 	}
 }
 

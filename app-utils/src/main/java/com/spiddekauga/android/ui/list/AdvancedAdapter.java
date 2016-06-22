@@ -20,6 +20,7 @@ private List<RecyclerView> mRecyclerViews = new ArrayList<>();
 private Map<Class<?>, AdapterFunctionality> mFunctionalities = new HashMap<>();
 private Map<Class<?>, ViewHolderFunctionality> mFunctionalityByViewHolder = new HashMap<>();
 private Map<Integer, ViewHolderFunctionality> mFunctionalityByViewType = new HashMap<>();
+private Map<T, ViewHolderFunctionality> mItemViewHolder = new HashMap<>();
 
 /**
  * Add ability to remove rows from the adapter by swiping. Doesn't enable undo functionality.
@@ -52,6 +53,35 @@ public void addFunctionality(AdapterFunctionality functionality) {
 }
 
 /**
+ * Set the {@link ViewHolderFunctionality} to create and manage the {@link
+ * android.support.v7.widget.RecyclerView.ViewHolder} for the specified item. If another view holder
+ * has been set, the new specified view holder will be used instead
+ * @param item the item to use a custom {@link android.support.v7.widget.RecyclerView.ViewHolder}.
+ * @param viewHolderFunctionality the instance which handles the item
+ * @see #removeItemViewHolder(Object, ViewHolderFunctionality) to remove it
+ */
+public void setItemViewHolder(T item, ViewHolderFunctionality viewHolderFunctionality) {
+	mItemViewHolder.put(item, viewHolderFunctionality);
+}
+
+/**
+ * Remove the {@link ViewHolderFunctionality} from managing the {@link
+ * android.support.v7.widget.RecyclerView.ViewHolder} for the item. Does nothing if
+ * viewHolderFunctionality isn't managing the item.
+ * @param item the item to remove the custom use of a {@link android.support.v7.widget.RecyclerView.ViewHolder}.
+ * @param viewHolderFunctionality the instance which handles the item
+ * @see #setItemViewHolder(Object, ViewHolderFunctionality)  to add the functionality
+ */
+public void removeItemViewHolder(T item, ViewHolderFunctionality viewHolderFunctionality) {
+	ViewHolderFunctionality overridingViewHolder = mItemViewHolder.get(item);
+
+	// Only remove if it's the same view holder
+	if (overridingViewHolder == viewHolderFunctionality) {
+		mItemViewHolder.remove(item);
+	}
+}
+
+/**
  * Add ability to remove rows from the adapter by swiping.
  * @param listener listen to when an item has been removed
  * @param undoFunctionality set to true to enable undo functionality. Lets the user undo the remove
@@ -71,15 +101,6 @@ public void addSwipeRemoveFunctionality(RemoveListener<T> listener, boolean undo
  */
 public void addSwipeRemoveFunctionality(RemoveListener<T> listener, boolean undoFunctionality, String removedMessage) {
 	addFunctionality(new SwipeRemoveFunctionality<>(this, listener, undoFunctionality, removedMessage));
-}
-
-/**
- * Get the item of the specified position
- * @param position get the item on this position
- * @return item
- */
-public T getItem(int position) {
-	return mItems.get(position);
 }
 
 /**
@@ -122,8 +143,12 @@ public void remove(T item) {
  * @param itemIndex index of the item to remove
  */
 public void remove(int itemIndex) {
-	mItems.remove(itemIndex);
+	T item = mItems.remove(itemIndex);
 	notifyItemRemoved(itemIndex);
+
+	if (item != null) {
+		mItemViewHolder.remove(item);
+	}
 }
 
 @Override
@@ -157,8 +182,22 @@ protected abstract void onBindView(VH view, int position);
  */
 @Override
 public int getItemViewType(int position) {
-	// TODO
-	return VIEW_TYPES_ALLOCATED;
+	T item = getItem(position);
+	ViewHolderFunctionality itemViewHolder = mItemViewHolder.get(item);
+	if (itemViewHolder != null) {
+		return itemViewHolder.getViewType();
+	} else {
+		return VIEW_TYPES_ALLOCATED;
+	}
+}
+
+/**
+ * Get the item of the specified position
+ * @param position get the item on this position
+ * @return item
+ */
+public T getItem(int position) {
+	return mItems.get(position);
 }
 
 @Override
@@ -182,6 +221,15 @@ public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
 }
 
 protected abstract VH onCreateView(ViewGroup parent, int viewType);
+
+/**
+ * Get item position
+ * @param item the item to get the position of
+ * @return position of the item, -1 if not found
+ */
+public int getItemPosition(T item) {
+	return mItems.indexOf(item);
+}
 
 @SuppressWarnings("unchecked")
 private <F extends AdapterFunctionality> F getFunctionality(Class<F> clazz) {
