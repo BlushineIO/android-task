@@ -17,10 +17,11 @@ public abstract class AdvancedAdapter<T, VH extends RecyclerView.ViewHolder> ext
 private static final int VIEW_TYPES_ALLOCATED = 10;
 private List<T> mItems = new ArrayList<>();
 private List<RecyclerView> mRecyclerViews = new ArrayList<>();
-private Map<Class<?>, AdapterFunctionality> mFunctionalities = new HashMap<>();
-private Map<Class<?>, ViewHolderFunctionality> mFunctionalityByViewHolder = new HashMap<>();
-private Map<Integer, ViewHolderFunctionality> mFunctionalityByViewType = new HashMap<>();
-private Map<T, ViewHolderFunctionality> mItemViewHolder = new HashMap<>();
+private Map<Class<?>, AdapterFunctionality<T>> mFunctionalities = new HashMap<>();
+private List<PostBindFunctionality<T>> mPostBindFunctionalities = new ArrayList<>();
+private Map<Class<?>, ViewHolderFunctionality<T>> mFunctionalityByViewHolder = new HashMap<>();
+private Map<Integer, ViewHolderFunctionality<T>> mFunctionalityByViewType = new HashMap<>();
+private Map<T, ViewHolderFunctionality<T>> mItemViewHolder = new HashMap<>();
 
 /**
  * Add ability to remove rows from the adapter by swiping. Doesn't enable undo functionality.
@@ -34,15 +35,19 @@ public void addSwipeRemoveFunctionality(RemoveListener<T> listener) {
  * Adds an adapter functionality
  * @param functionality the functionality to add
  */
-public void addFunctionality(AdapterFunctionality functionality) {
+public void addFunctionality(AdapterFunctionality<T> functionality) {
 	// Not added before
 	if (!mFunctionalities.containsKey(functionality.getClass())) {
 		mFunctionalities.put(functionality.getClass(), functionality);
 
 		if (functionality instanceof ViewHolderFunctionality) {
-			ViewHolderFunctionality viewHolderFunctionality = (ViewHolderFunctionality) functionality;
+			ViewHolderFunctionality viewHolderFunctionality = (ViewHolderFunctionality<T>) functionality;
 			mFunctionalityByViewType.put(viewHolderFunctionality.getViewType(), viewHolderFunctionality);
 			mFunctionalityByViewHolder.put(viewHolderFunctionality.getViewHolderClass(), viewHolderFunctionality);
+		}
+
+		if (functionality instanceof PostBindFunctionality) {
+			mPostBindFunctionalities.add((PostBindFunctionality<T>) functionality);
 		}
 
 		// Apply functionality to RecyclerViews
@@ -50,6 +55,22 @@ public void addFunctionality(AdapterFunctionality functionality) {
 			functionality.applyFunctionality(this, recyclerView);
 		}
 	}
+}
+
+/**
+ * Add ability to edit an item
+ * @param listener listen to when an item wants to be edited
+ */
+public void addEditFunctionality(EditListener<T> listener) {
+	addFunctionality(new EditFunctionality<T>(listener));
+}
+
+/**
+ * Add ability to view more information about an item
+ * @param listener listen to when an item wants to be viewed
+ */
+public void addViewInfoFunctionality(ViewInfoListener<T> listener) {
+	addFunctionality(new ViewInfoFunctionality<T>(listener));
 }
 
 /**
@@ -161,6 +182,8 @@ public final RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int vi
 	}
 }
 
+protected abstract VH onCreateView(ViewGroup parent, int viewType);
+
 @Override
 @SuppressWarnings("unchecked")
 public final void onBindViewHolder(RecyclerView.ViewHolder view, final int position) {
@@ -169,10 +192,13 @@ public final void onBindViewHolder(RecyclerView.ViewHolder view, final int posit
 		functionality.onBindViewHolder(this, view, position);
 	} else {
 		onBindView((VH) view, position);
+
+		// Call post bind functionalities
+		for (PostBindFunctionality<T> postBindFunctionality : mPostBindFunctionalities) {
+			postBindFunctionality.onPostBind(this, view, position);
+		}
 	}
 }
-
-protected abstract void onBindView(VH view, int position);
 
 /**
  * Be sure to override this method if you want to use more than 1 view type. View types should start
@@ -220,7 +246,7 @@ public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
 	mRecyclerViews.remove(recyclerView);
 }
 
-protected abstract VH onCreateView(ViewGroup parent, int viewType);
+protected abstract void onBindView(VH view, int position);
 
 /**
  * Get item position

@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 /**
  * Base class for adapter functionality
  */
-public abstract class AdapterFunctionality {
+public interface AdapterFunctionality<T> {
 
-protected abstract void applyFunctionality(AdvancedAdapter<?, ?> adapter, RecyclerView recyclerView);
+void applyFunctionality(AdvancedAdapter<T, ?> adapter, RecyclerView recyclerView);
 }

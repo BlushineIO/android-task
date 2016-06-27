@@ -15,9 +15,9 @@ import com.spiddekauga.android.AppActivity;
  * Adds a divider line between items for all {@link android.support.v7.widget.RecyclerView} the
  * {@link AdvancedAdapter} has been attached to.
  */
-class DividerFunctionality extends AdapterFunctionality {
+class DividerFunctionality implements AdapterFunctionality {
 @Override
-protected void applyFunctionality(AdvancedAdapter<?, ?> adapter, RecyclerView recyclerView) {
+public void applyFunctionality(AdvancedAdapter adapter, RecyclerView recyclerView) {
 	RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
 	if (layoutManager instanceof LinearLayoutManager) {
 		int orientation = ((LinearLayoutManager) layoutManager).getOrientation();

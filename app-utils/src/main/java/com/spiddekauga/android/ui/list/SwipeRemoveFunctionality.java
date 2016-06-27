@@ -25,7 +25,7 @@ import java.util.Map;
 /**
  * Add ability to remove items by swiping
  */
-class SwipeRemoveFunctionality<T> extends AdapterFunctionality implements ViewHolderFunctionality {
+class SwipeRemoveFunctionality<T> implements ViewHolderFunctionality<T> {
 private boolean mUndoFunctionality = false;
 private String mRemovedMessage = AppActivity.getActivity().getResources().getString(R.string.item_removed);
 private RemoveListener<T> mListener;
@@ -69,7 +69,7 @@ public Class<UndoViewHolder> getViewHolderClass() {
 }
 
 @Override
-public void onBindViewHolder(AdvancedAdapter<?, ?> adapter, RecyclerView.ViewHolder view, int position) {
+public void onBindViewHolder(AdvancedAdapter<T, ?> adapter, RecyclerView.ViewHolder view, int position) {
 	UndoViewHolder undoView = (UndoViewHolder) view;
 	undoView.itemView.setBackgroundColor(mColor);
 	undoView.mRemovedTextView.setText(mRemovedMessage);
@@ -98,7 +98,7 @@ public void onBindViewHolder(AdvancedAdapter<?, ?> adapter, RecyclerView.ViewHol
 }
 
 @Override
-protected void applyFunctionality(AdvancedAdapter<?, ?> adapter, RecyclerView recyclerView) {
+public void applyFunctionality(AdvancedAdapter<T, ?> adapter, RecyclerView recyclerView) {
 	// Item touch helper
 	ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new TransactionRemoveCallback());
 	itemTouchHelper.attachToRecyclerView(recyclerView);
