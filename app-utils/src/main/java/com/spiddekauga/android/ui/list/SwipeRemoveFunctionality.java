@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.spiddekauga.android.AppActivity;
 import com.spiddekauga.android.R;
 import com.spiddekauga.android.ui.ColorHelper;
-import com.spiddekauga.android.ui.Toaster;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -173,7 +172,6 @@ class TransactionRemoveCallback extends ItemTouchHelper.Callback {
 		}
 		// No undo
 		else {
-			Toaster.show(mRemovedMessage);
 			onRemove(item);
 		}
 	}
