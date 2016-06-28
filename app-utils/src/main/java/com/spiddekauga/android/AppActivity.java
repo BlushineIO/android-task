@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * Base class for Android Activities
@@ -51,6 +53,11 @@ public static void setTitle(String title) {
 	if (actionBar != null) {
 		actionBar.setTitle(title);
 	}
+}
+
+public static View getRootView() {
+	View contentView = mActivity.findViewById(android.R.id.content);
+	return ((ViewGroup) contentView).getChildAt(0);
 }
 
 @Override

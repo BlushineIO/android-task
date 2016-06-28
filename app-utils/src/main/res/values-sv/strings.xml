@@ -3,4 +3,9 @@
 	<string name="item_removed">Borttagen</string>
 	<string name="validate_error_required">obligatorisk</string>
 	<string name="undo">Ångra</string>
+	<string name="cancel">Avbryt</string>
+	<string name="delete">Ta bort</string>
+	<string name="save">Spara</string>
+	<string name="add">Lägg Till</string>
+	<string name="clear">Rensa</string>
 </resources>

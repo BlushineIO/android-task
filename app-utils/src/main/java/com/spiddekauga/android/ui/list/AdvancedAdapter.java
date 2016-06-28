@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +56,24 @@ public void addFunctionality(AdapterFunctionality<T> functionality) {
 			functionality.applyFunctionality(this, recyclerView);
 		}
 	}
+}
+
+/**
+ * Notify item changed
+ * @param item the item that was changed
+ */
+public void notifyItemChanged(T item) {
+	int position = getItemPosition(item);
+	notifyItemChanged(position);
+}
+
+/**
+ * Get item position
+ * @param item the item to get the position of
+ * @return position of the item, -1 if not found
+ */
+public int getItemPosition(T item) {
+	return mItems.indexOf(item);
 }
 
 /**
@@ -146,6 +165,27 @@ protected List<T> getItems() {
 public void setItems(List<T> items) {
 	mItems.clear();
 	mItems.addAll(items);
+}
+
+/**
+ * Add item(s) to the end of the list
+ * @param items the items to add
+ */
+public void addItem(T... items) {
+	int prevSize = mItems.size();
+	List<T> convertList = Arrays.asList(items);
+	mItems.addAll(convertList);
+	notifyItemRangeInserted(prevSize, items.length);
+}
+
+/**
+ * Add an item at the specified position
+ * @param position the position to add the item
+ * @param item the item to add at the specified position
+ */
+public void addItem(int position, T item) {
+	mItems.add(position, item);
+	notifyItemInserted(position);
 }
 
 /**
@@ -247,15 +287,6 @@ public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
 }
 
 protected abstract void onBindView(VH view, int position);
-
-/**
- * Get item position
- * @param item the item to get the position of
- * @return position of the item, -1 if not found
- */
-public int getItemPosition(T item) {
-	return mItems.indexOf(item);
-}
 
 @SuppressWarnings("unchecked")
 private <F extends AdapterFunctionality> F getFunctionality(Class<F> clazz) {
