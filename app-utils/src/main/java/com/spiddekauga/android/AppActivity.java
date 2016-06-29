@@ -1,6 +1,5 @@
 package com.spiddekauga.android;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -12,7 +11,8 @@ import android.view.ViewGroup;
  * Base class for Android Activities
  */
 public abstract class AppActivity extends AppCompatActivity {
-static private AppCompatActivity mActivity;
+static private AppCompatActivity mActivity = null;
+private static boolean mFirstTime = true;
 
 /**
  * Exit the application
@@ -37,7 +37,7 @@ public static AppCompatActivity getActivity() {
  * Switch to the specified activity
  * @param activityClass the activity to switch to
  */
-public static void switchTo(Class<? extends Activity> activityClass) {
+public static void switchTo(Class<? extends AppActivity> activityClass) {
 	if (mActivity != null) {
 		Intent intent = new Intent(mActivity, activityClass);
 		mActivity.startActivity(intent);
@@ -64,6 +64,18 @@ public static View getRootView() {
 protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	mActivity = this;
+
+	if (mFirstTime) {
+		mFirstTime = false;
+		onFirstTime();
+	}
+}
+
+/**
+ * Called first time the application is started
+ */
+protected void onFirstTime() {
+
 }
 
 @Override
