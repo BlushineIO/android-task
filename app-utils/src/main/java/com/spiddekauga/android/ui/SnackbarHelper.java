@@ -10,22 +10,33 @@ import com.spiddekauga.android.AppActivity;
  * Some helper methods for creating simple snackbars
  */
 public class SnackbarHelper {
-/**
- * Create a simple {@link android.support.design.widget.Snackbar} with a message
- * @param message the message to show
- */
-public static void showSnackbar(String message) {
-	View rootView = AppActivity.getRootView();
-	Snackbar.make(rootView, message, Snackbar.LENGTH_LONG).show();
-}
+@Snackbar.Duration
+private static final int DURATION_SHORT = Snackbar.LENGTH_SHORT;
+@Snackbar.Duration
+private static final int DURATION_MEDIUM = Snackbar.LENGTH_LONG;
+private static final int LENGTH_MEDIUM_CHARACTERS = 0;
+@Snackbar.Duration
+private static final int DURATION_LONG = 6000;
+private static final int LENGTH_LONG_CHARACTERS = 20;
 
 /**
  * Create a simple {@link android.support.design.widget.Snackbar} with a message
  * @param stringId id of the message to show
  */
 public static void showSnackbar(@StringRes int stringId) {
-	View rootView = AppActivity.getRootView();
-	Snackbar.make(rootView, stringId, Snackbar.LENGTH_LONG).show();
+	showSnackbar(getString(stringId));
+}
+
+/**
+ * Create a simple {@link android.support.design.widget.Snackbar} with a message
+ * @param message the message to show
+ */
+public static void showSnackbar(String message) {
+	showSnackbar(message, null, null);
+}
+
+private static String getString(@StringRes int stringId) {
+	return AppActivity.getActivity().getResources().getString(stringId);
 }
 
 /**
@@ -36,9 +47,22 @@ public static void showSnackbar(@StringRes int stringId) {
  */
 public static void showSnackbar(String message, String actionTitle, View.OnClickListener action) {
 	View rootView = AppActivity.getRootView();
-	Snackbar snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG);
-	snackbar.setAction(actionTitle, action);
+	int duration = calculateDuration(message);
+	Snackbar snackbar = Snackbar.make(rootView, message, duration);
+	if (actionTitle != null && action != null) {
+		snackbar.setAction(actionTitle, action);
+	}
 	snackbar.show();
+}
+
+private static int calculateDuration(String message) {
+	if (message.length() > LENGTH_LONG_CHARACTERS) {
+		return DURATION_LONG;
+	} else if (message.length() > LENGTH_MEDIUM_CHARACTERS) {
+		return DURATION_MEDIUM;
+	} else {
+		return DURATION_SHORT;
+	}
 }
 
 /**
@@ -48,9 +72,6 @@ public static void showSnackbar(String message, String actionTitle, View.OnClick
  * @param action the action to take
  */
 public static void showSnackbar(@StringRes int stringId, @StringRes int actionTitleId, View.OnClickListener action) {
-	View rootView = AppActivity.getRootView();
-	Snackbar snackbar = Snackbar.make(rootView, stringId, Snackbar.LENGTH_LONG);
-	snackbar.setAction(actionTitleId, action);
-	snackbar.show();
+	showSnackbar(getString(stringId), getString(actionTitleId), action);
 }
 }
