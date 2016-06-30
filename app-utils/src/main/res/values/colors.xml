@@ -3,7 +3,10 @@
 	<color name="accent">@color/pink_A200</color>
 	<color name="light_text">@color/white</color>
 	<color name="transparent">@color/white</color>
-	<color name="list_item_divider">@color/grey_400</color>
+	<color name="list_item_divider">#1E000000</color>
+	<color name="textColorPrimary">#DD000000</color>
+	<color name="textColorSecondary">#8A000000</color>
+	<color name="textColorHintDisabled">#61000000</color>
 
 	<!-- Buttons -->
 	<color name="button_cancel_up">@color/red_500</color>

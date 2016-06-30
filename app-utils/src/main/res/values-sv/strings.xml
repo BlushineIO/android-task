@@ -8,4 +8,9 @@
 	<string name="save">Spara</string>
 	<string name="add">Lägg Till</string>
 	<string name="clear">Rensa</string>
+	<string name="feedback_bug">Buggrapport</string>
+	<string name="feedback_header">Skicka Feedback</string>
+	<string name="feedback_message">Meddelande</string>
+	<string name="feedback_message_bug_info">Vad hände?\nDina steg innan buggen?</string>
+	<string name="feedback_title">Titel</string>
 </resources>
