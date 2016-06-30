@@ -8,4 +8,11 @@
 	<string name="cancel">Cancel</string>
 	<string name="delete">Delete</string>
 	<string name="undo">Undo</string>
+
+	<!-- Feedback -->
+	<string name="feedback_header">Send Feedback</string>
+	<string name="feedback_title">Title</string>
+	<string name="feedback_message">Message</string>
+	<string name="feedback_message_bug_info">Please describe what you did before the bug happend. This helps enourmously when trying to find the bug :)</string>
+	<string name="feedback_bug">Is it a bug?</string>
 </resources>

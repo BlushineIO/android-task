@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  android:layout_width="match_parent"
+			  android:layout_height="match_parent"
+			  android:layout_marginBottom="@dimen/list_margin_top_bottom"
+			  android:layout_marginTop="@dimen/list_margin_top_bottom"
+			  android:orientation="vertical">
+
+
+	<EditText
+		android:id="@+id/title_edit"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/list_item_height_one_line"
+		android:background="@null"
+		android:ems="10"
+		android:hint="@string/feedback_title"
+		android:inputType="textMultiLine"
+		android:paddingLeft="@dimen/list_item_padding"
+		android:paddingRight="@dimen/list_item_padding"
+		/>
+
+
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="?android:attr/listDivider"/>
+
+	<CheckBox
+		android:id="@+id/bug_checkbox"
+		android:layout_width="wrap_content"
+		android:layout_height="@dimen/list_item_height_one_line"
+		android:layout_gravity="center_vertical"
+		android:layout_marginLeft="@dimen/list_item_padding"
+		android:layout_marginStart="@dimen/list_item_padding"
+		android:text="@string/feedback_bug"/>
+
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="?android:attr/listDivider"/>
+
+	<EditText
+		android:id="@+id/message_edit"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@null"
+		android:ems="10"
+		android:gravity="top"
+		android:hint="@string/feedback_message"
+		android:inputType="textMultiLine"
+		android:minLines="3"
+		android:padding="@dimen/list_item_padding"/>
+
+
+</LinearLayout>
