@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
 	<!-- Base application theme. -->
 	<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -11,49 +11,134 @@
 		<item name="android:textColorHint">@color/textColorHintDisabled</item>
 	</style>
 
-	<style name="Material">
-
-	</style>
+	<!--****************-->
+	<!-- Material Style -->
+	<!--****************-->
+	<style name="Material"></style>
 
 	<!-- All List Items -->
-	<style name="Material.ListItem">
-		<item name="android:orientation">horizontal</item>
-		<item name="android:layout_centerVertical">true</item>
-		<item name="android:layout_width">match_parent</item>
+	<style name="Material.ListItem"></style>
+
+	<style name="Material.ListItem.Container">
 		<item name="android:paddingLeft">@dimen/list_item_padding</item>
-		<item name="android:paddingStart">@dimen/list_item_padding</item>
+		<item name="android:paddingStart" tools:targetApi="17">@dimen/list_item_padding</item>
 		<item name="android:paddingRight">@dimen/list_item_padding</item>
-		<item name="android:paddingEnd">@dimen/list_item_padding</item>
+		<item name="android:paddingEnd" tools:targetApi="17">@dimen/list_item_padding</item>
+		<item name="android:orientation">horizontal</item>
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:gravity">center_vertical</item>
+	</style>
+
+	<style name="Material.ListItem.Container.1">
+		<item name="android:layout_height">@dimen/list_item_height_one_line</item>
+	</style>
+
+	<style name="Material.ListItem.Container.2">
+		<item name="android:layout_height">@dimen/list_item_height_two_lines</item>
+	</style>
+
+	<style name="Material.ListItem.Container.3">
+		<item name="android:layout_height">@dimen/list_item_height_three_lines</item>
 	</style>
 
 	<style name="Material.ListItem.Icon">
-		<!--<item name="android:layout_alignParentLeft">true</item>-->
-		<!--<item name="android:layout_alignParentStart">true</item>-->
 		<item name="android:layout_width">wrap_content</item>
 		<item name="android:layout_height">wrap_content</item>
-		<!--<item name="android:layout_marginLeft">@dimen/list_item_padding</item>-->
-		<!--<item name="android:layout_marginStart">@dimen/list_item_padding</item>-->
 	</style>
 
-	<style name="Material.ListItem.IconTextContainer">
-		<!--<item name="android:layout_alignParentLeft">true</item>-->
-		<!--<item name="android:layout_alignParentStart">true</item>-->
+	<style name="Material.ListItem.Text">
 		<item name="android:layout_width">wrap_content</item>
 		<item name="android:layout_height">wrap_content</item>
-		<item name="android:paddingLeft">@dimen/list_item_margin_left_text_with_icon</item>
-		<item name="android:paddingStart">@dimen/list_item_margin_left_text_with_icon</item>
+		<item name="android:maxLines">1</item>
+		<item name="android:ellipsize">end</item>
+	</style>
+
+	<!-- Use this when there only is a single text line -->
+	<style name="Material.ListItem.Text.Single">
+		<item name="android:layout_width">0dp</item>
 		<item name="android:textSize">16sp</item>
 		<item name="android:textColor">@color/textColorPrimary</item>
-		<item name="android:maxLines">1</item>
+		<item name="android:layout_weight">1</item>
+	</style>
+
+	<style name="Material.ListItem.Text.Single.Icon36">
+		<item name="android:paddingLeft">@dimen/list_item_padding_left_text_with_icon_36</item>
+		<item name="android:paddingStart" tools:targetApi="17">
+			@dimen/list_item_padding_left_text_with_icon_36
+		</item>
+	</style>
+
+	<style name="Material.ListItem.Text.Single.Icon48">
+		<item name="android:paddingLeft">@dimen/list_item_padding_left_text_with_icon_48</item>
+		<item name="android:paddingStart" tools:targetApi="17">
+			@dimen/list_item_padding_left_text_with_icon_48
+		</item>
+	</style>
+
+	<style name="Material.ListItem.Text.Single.Action">
+		<item name="android:paddingRight">@dimen/list_item_padding</item>
+		<item name="android:paddingEnd" tools:targetApi="17">@dimen/list_item_padding</item>
+	</style>
+
+	<style name="Material.ListItem.Text.Single.Icon36.Action">
+		<item name="android:paddingRight">@dimen/list_item_padding</item>
+		<item name="android:paddingEnd" tools:targetApi="17">@dimen/list_item_padding</item>
+	</style>
+
+	<style name="Material.ListItem.Text.Single.Icon48.Action">
+		<item name="android:paddingRight">@dimen/list_item_padding</item>
+		<item name="android:paddingEnd" tools:targetApi="17">@dimen/list_item_padding</item>
+	</style>
+
+	<style name="Material.ListItem.Text.Container">
+		<item name="android:orientation">vertical</item>
+		<item name="android:layout_width">0dp</item>
+		<item name="android:layout_weight">1</item>
+	</style>
+
+	<style name="Material.ListItem.Text.Container.Icon36">
+		<item name="android:paddingLeft">@dimen/list_item_padding_left_text_with_icon_36</item>
+		<item name="android:paddingStart" tools:targetApi="17">
+			@dimen/list_item_padding_left_text_with_icon_36
+		</item>
+	</style>
+
+	<style name="Material.ListItem.Text.Container.Icon48">
+		<item name="android:paddingLeft">@dimen/list_item_padding_left_text_with_icon_48</item>
+		<item name="android:paddingStart" tools:targetApi="17">
+			@dimen/list_item_padding_left_text_with_icon_48
+		</item>
+	</style>
+
+	<style name="Material.ListItem.Text.Container.Action">
+		<item name="android:paddingRight">@dimen/list_item_padding</item>
+		<item name="android:paddingEnd" tools:targetApi="17">@dimen/list_item_padding</item>
+	</style>
+
+	<style name="Material.ListItem.Text.Container.Icon36.Action">
+		<item name="android:paddingRight">@dimen/list_item_padding</item>
+		<item name="android:paddingEnd" tools:targetApi="17">@dimen/list_item_padding</item>
+	</style>
+
+	<style name="Material.ListItem.Text.Container.Icon48.Action">
+		<item name="android:paddingRight">@dimen/list_item_padding</item>
+		<item name="android:paddingEnd" tools:targetApi="17">@dimen/list_item_padding</item>
+	</style>
+
+	<style name="Material.ListItem.Text.Primary">
+		<item name="android:textSize">16sp</item>
+		<item name="android:textColor">@color/textColorPrimary</item>
+		<item name="android:layout_width">match_parent</item>
+	</style>
+
+	<style name="Material.ListItem.Text.Secondary">
+		<item name="android:textSize">14sp</item>
+		<item name="android:textColor">@color/textColorSecondary</item>
 	</style>
 
 	<style name="Material.ListItem.Action">
 		<item name="android:layout_width">wrap_content</item>
 		<item name="android:layout_height">wrap_content</item>
-		<!--<item name="android:layout_alignParentRight">true</item>-->
-		<!--<item name="android:layout_alignParentEnd">true</item>-->
-		<!--<item name="android:paddingRight">@dimen/list_item_padding</item>-->
-		<!--<item name="android:paddingEnd">@dimen/list_item_padding</item>-->
 	</style>
 
 	<style name="Material.ListDivider">
@@ -63,28 +148,13 @@
 	</style>
 
 	<style name="Material.ListItem.EditFull">
+		<item name="android:paddingLeft">@dimen/list_item_padding</item>
+		<item name="android:paddingStart" tools:targetApi="17">@dimen/list_item_padding</item>
+		<item name="android:paddingRight">@dimen/list_item_padding</item>
+		<item name="android:paddingEnd" tools:targetApi="17">@dimen/list_item_padding</item>
 		<item name="android:layout_width">match_parent</item>
 		<item name="android:layout_height">@dimen/list_item_height_one_line</item>
 		<item name="android:background">@null</item>
 	</style>
 
-	<!--<style name="Widget.Button" parent="Widget.AppCompat.Button">-->
-	<!--<item name="android:layout_margin">@dimen/button_margin</item>-->
-	<!--</style>-->
-
-	<!--<style name="Widget.Button.Accept" parent="Widget.Button">-->
-	<!--<item name="android:background">@drawable/accept_selectable</item>-->
-	<!--</style>-->
-
-	<!--<style name="Widget.Button.Primary" parent="Widget.Button">-->
-	<!--<item name="android:background">@drawable/primary_selectable</item>-->
-	<!--</style>-->
-
-	<!--<style name="Widget.Button.Cancel" parent="Widget.Button">-->
-	<!--<item name="android:background">@drawable/cancel_selectable</item>-->
-	<!--</style>-->
-
-	<!--<style name="Widget.Button.Default" parent="Widget.Button">-->
-	<!--<item name="android:background">@drawable/default_selectable</item>-->
-	<!--</style>-->
 </resources>
