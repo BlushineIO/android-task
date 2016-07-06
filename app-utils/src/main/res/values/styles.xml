@@ -1,7 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+	<!--****************-->
+	<!-- Material Style -->
+	<!--****************-->
 	<!-- Base application theme. -->
-	<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+	<style name="Material" parent="Theme.AppCompat.Light.NoActionBar">
 		<!-- Customize your theme here. -->
 		<item name="colorPrimary">@color/primary</item>
 		<item name="colorPrimaryDark">@color/primary_dark</item>
@@ -9,12 +12,15 @@
 		<item name="android:textColorPrimary">@color/text_color_primary</item>
 		<item name="android:textColorSecondary">@color/text_color_secondary</item>
 		<item name="android:textColorHint">@color/text_color_hint_disabled</item>
+		<item name="android:textColorPrimaryInverse">@color/text_color_white_primary</item>
+		<item name="android:textColorSecondaryInverse">@color/text_color_white_secondary</item>
+		<item name="actionOverflowButtonStyle">@style/Material.MenuButtonOverflow</item>
+		<item name="android:actionOverflowButtonStyle">@style/Material.MenuButtonOverflow</item>
 	</style>
 
-	<!--****************-->
-	<!-- Material Style -->
-	<!--****************-->
-	<style name="Material"></style>
+	<style name="Material.MenuButtonOverflow" parent="Widget.AppCompat.ActionButton.Overflow">
+		<item name="android:tint">@color/icon_toolbar</item>
+	</style>
 
 	<!--****************-->
 	<!-- 	Toolbar		-->
@@ -22,7 +28,7 @@
 	<style name="Material.Toolbar">
 		<item name="android:layout_width">match_parent</item>
 		<item name="android:layout_height">?attr/actionBarSize</item>
-		<item name="android:background">@color/toolbar</item>
+		<item name="android:background">@color/primary</item>
 		<item name="android:elevation" tools:targetApi="21">4dp</item>
 		<item name="titleTextColor">@color/toolbar_title</item>
 	</style>

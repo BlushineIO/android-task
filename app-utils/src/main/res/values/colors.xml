@@ -4,7 +4,6 @@
 	<color name="light_text">@color/white</color>
 	<color name="transparent">@color/white</color>
 	<color name="list_item_divider">#1E000000</color>
-	<color name="toolbar">@color/light_blue_A700</color>
 	<color name="background">@color/white</color>
 
 	<!-- Text -->
@@ -17,6 +16,9 @@
 	<color name="text_color_primary">@color/text_color_black_primary</color>
 	<color name="text_color_secondary">@color/text_color_black_secondary</color>
 	<color name="text_color_hint_disabled">@color/text_color_black_hint_disabled</color>
+	<color name="text_color_primary_inverse">@color/text_color_white_primary</color>
+	<color name="text_color_secondary_inverse">@color/text_color_white_secondary</color>
+	<color name="text_color_hint_disabled_inverse">@color/text_color_white_hint_disabled</color>
 	<color name="toolbar_title">@color/text_color_white_primary</color>
 
 	<!-- Icons -->
@@ -32,6 +34,7 @@
 	<color name="icon_white_inactive">@color/text_color_white_secondary</color>
 	<color name="icon">@color/icon_black</color>
 	<color name="icon_inactive">@color/icon_black_inactive</color>
+	<color name="icon_toolbar">@color/icon_white</color>
 
 	<!-- Buttons -->
 	<color name="button_cancel_up">@color/red_500</color>
