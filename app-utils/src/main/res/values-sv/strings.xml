@@ -18,4 +18,7 @@
 	<string name="feedback_cancel">Radera feedback?</string>
 	<string name="discard">Radera</string>
 	<string name="feedback_sent">Tack för din feedback!</string>
+	<string name="bug_report_cancel">Radera buggrapport?</string>
+	<string name="bug_report_header">Rapportera Bug</string>
+	<string name="bug_report_sent">Tack för du skickade in en buggrapport!</string>
 </resources>
