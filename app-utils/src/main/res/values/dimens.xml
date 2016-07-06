@@ -15,6 +15,11 @@
 	<dimen name="list_item_padding_left_text_with_icon_36">18dp</dimen>
 	<dimen name="list_item_padding_left_text_with_icon_24">30dp</dimen>
 	<dimen name="list_margin_top_bottom">8dp</dimen>
+	<!-- Lists - Dense -->
+	<dimen name="list_item_height_one_line_dense">40dp</dimen>
+	<dimen name="list_item_height_avatar_dense">48dp</dimen>
+	<dimen name="list_item_height_two_lines_dense">60dp</dimen>
+	<dimen name="list_item_height_three_lines_dense">76dp</dimen>
 
 	<!-- Buttons -->
 	<dimen name="button_margin">6dp</dimen>

@@ -45,8 +45,6 @@
 	<style name="Material.ListItem.Container">
 		<item name="android:paddingLeft">@dimen/list_item_padding</item>
 		<item name="android:paddingStart" tools:targetApi="17">@dimen/list_item_padding</item>
-		<item name="android:paddingRight">@dimen/list_item_padding</item>
-		<item name="android:paddingEnd" tools:targetApi="17">@dimen/list_item_padding</item>
 		<item name="android:orientation">horizontal</item>
 		<item name="android:layout_width">match_parent</item>
 		<item name="android:gravity">center_vertical</item>
@@ -62,6 +60,26 @@
 
 	<style name="Material.ListItem.Container.3">
 		<item name="android:layout_height">@dimen/list_item_height_three_lines</item>
+	</style>
+
+	<style name="Material.ListItem.Container.Avatar">
+		<item name="android:layout_height">@dimen/list_item_height_avatar</item>
+	</style>
+
+	<style name="Material.ListItem.Container.1.Dense">
+		<item name="android:layout_height">@dimen/list_item_height_one_line_dense</item>
+	</style>
+
+	<style name="Material.ListItem.Container.2.Dense">
+		<item name="android:layout_height">@dimen/list_item_height_two_lines_dense</item>
+	</style>
+
+	<style name="Material.ListItem.Container.3.Dense">
+		<item name="android:layout_height">@dimen/list_item_height_three_lines_dense</item>
+	</style>
+
+	<style name="Material.ListItem.Container.Avatar.Dense">
+		<item name="android:layout_height">@dimen/list_item_height_avatar_dense</item>
 	</style>
 
 	<style name="Material.ListItem.Icon">
@@ -83,6 +101,8 @@
 		<item name="android:textSize">16sp</item>
 		<item name="android:textColor">@color/text_color_primary</item>
 		<item name="android:layout_weight">1</item>
+		<item name="android:paddingRight">@dimen/list_item_padding</item>
+		<item name="android:paddingEnd" tools:targetApi="17">@dimen/list_item_padding</item>
 	</style>
 
 	<style name="Material.ListItem.Text.Single.Icon24">
@@ -126,10 +146,40 @@
 		<item name="android:paddingEnd" tools:targetApi="17">@dimen/list_item_padding</item>
 	</style>
 
+	<style name="Material.ListItem.Text.Single.Dense">
+		<item name="android:layout_width">0dp</item>
+		<item name="android:textSize">13sp</item>
+		<item name="android:textColor">@color/text_color_primary</item>
+		<item name="android:layout_weight">1</item>
+	</style>
+
+	<style name="Material.ListItem.Text.Single.Dense.Icon24">
+		<item name="android:paddingLeft">@dimen/list_item_padding_left_text_with_icon_36</item>
+		<item name="android:paddingStart" tools:targetApi="17">
+			@dimen/list_item_padding_left_text_with_icon_24
+		</item>
+	</style>
+
+	<style name="Material.ListItem.Text.Single.Dense.Icon36">
+		<item name="android:paddingLeft">@dimen/list_item_padding_left_text_with_icon_36</item>
+		<item name="android:paddingStart" tools:targetApi="17">
+			@dimen/list_item_padding_left_text_with_icon_36
+		</item>
+	</style>
+
+	<style name="Material.ListItem.Text.Single.Dense.Icon48">
+		<item name="android:paddingLeft">@dimen/list_item_padding_left_text_with_icon_48</item>
+		<item name="android:paddingStart" tools:targetApi="17">
+			@dimen/list_item_padding_left_text_with_icon_48
+		</item>
+	</style>
+
 	<style name="Material.ListItem.Text.Container">
 		<item name="android:orientation">vertical</item>
 		<item name="android:layout_width">0dp</item>
 		<item name="android:layout_weight">1</item>
+		<item name="android:paddingRight">@dimen/list_item_padding</item>
+		<item name="android:paddingEnd" tools:targetApi="17">@dimen/list_item_padding</item>
 	</style>
 
 	<style name="Material.ListItem.Text.Container.Icon24">
@@ -153,27 +203,6 @@
 		</item>
 	</style>
 
-	<style name="Material.ListItem.Text.Container.Action">
-		<item name="android:paddingRight">@dimen/list_item_padding</item>
-		<item name="android:paddingEnd" tools:targetApi="17">@dimen/list_item_padding</item>
-	</style>
-
-	<style name="Material.ListItem.Text.Container.Icon24.Action">
-		<item name="android:paddingRight">@dimen/list_item_padding</item>
-		<item name="android:paddingEnd" tools:targetApi="17">@dimen/list_item_padding</item>
-	</style>
-
-
-	<style name="Material.ListItem.Text.Container.Icon36.Action">
-		<item name="android:paddingRight">@dimen/list_item_padding</item>
-		<item name="android:paddingEnd" tools:targetApi="17">@dimen/list_item_padding</item>
-	</style>
-
-	<style name="Material.ListItem.Text.Container.Icon48.Action">
-		<item name="android:paddingRight">@dimen/list_item_padding</item>
-		<item name="android:paddingEnd" tools:targetApi="17">@dimen/list_item_padding</item>
-	</style>
-
 	<style name="Material.ListItem.Text.Primary">
 		<item name="android:textSize">16sp</item>
 		<item name="android:textColor">@color/text_color_primary</item>
@@ -185,10 +214,33 @@
 		<item name="android:textColor">@color/text_color_secondary</item>
 	</style>
 
+	<style name="Material.ListItem.Text.Primary.Dense">
+		<item name="android:textSize">13sp</item>
+		<item name="android:textColor">@color/text_color_primary</item>
+		<item name="android:layout_width">match_parent</item>
+	</style>
+
+	<style name="Material.ListItem.Text.Secondary.Dense">
+		<item name="android:textSize">13sp</item>
+		<item name="android:textColor">@color/text_color_secondary</item>
+	</style>
+
 	<style name="Material.ListItem.Action">
-		<item name="android:layout_width">wrap_content</item>
-		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_width">36dp</item>
+		<item name="android:layout_height">36dp</item>
 		<item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+	</style>
+
+	<style name="Material.ListItem.ActionContainer">
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:paddingRight">8dp</item>
+		<item name="android:paddingEnd" tools:targetApi="17">8dp</item>
+	</style>
+
+	<style name="Material.ListItem.Action.Single">
+		<item name="android:layout_marginRight">8dp</item>
+		<item name="android:layout_marginEnd" tools:targetApi="17">8dp</item>
 	</style>
 
 	<style name="Material.ListDivider">

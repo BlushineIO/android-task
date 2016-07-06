@@ -26,7 +26,7 @@
 
 		<android.support.v7.widget.AppCompatCheckBox
 			android:id="@+id/bug_checkbox"
-			style="@style/Material.ListItem.Action"/>
+			style="@style/Material.ListItem.Action.Single"/>
 	</LinearLayout>
 
 	<View style="@style/Material.ListDivider"/>
