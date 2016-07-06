@@ -18,7 +18,6 @@ public class TextValidator implements TextWatcher, View.OnFocusChangeListener {
 protected final TextView mTextView;
 private List<Validate> mValidates = new ArrayList<>();
 private boolean mValid = false;
-private boolean mNeedsValidation = true;
 private boolean mValidateOnTextChange = true;
 private boolean mValidateOnLoseFocus = true;
 

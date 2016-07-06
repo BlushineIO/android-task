@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  xmlns:app="http://schemas.android.com/apk/res-auto"
 			  android:layout_width="match_parent"
 			  android:layout_height="match_parent"
 			  android:layout_marginBottom="@dimen/list_margin_top_bottom"
-			  android:layout_marginTop="@dimen/list_margin_top_bottom"
 			  android:orientation="vertical">
 
-	<LinearLayout
-		style="@style/Material.ListItem"
-		android:layout_height="@dimen/list_item_height_one_line">
+	<android.support.v7.widget.Toolbar
+		android:id="@+id/feedback_toolbar"
+		style="@style/Material.Toolbar"
+		android:layout_marginBottom="@dimen/list_margin_top_bottom"
+		app:navigationIcon="@drawable/clear_24dp"
+		app:title="@string/feedback_header"/>
 
-		<ImageView
+	<LinearLayout
+		style="@style/Material.ListItem.Container.1">
+
+		<android.support.v7.widget.AppCompatImageView
 			style="@style/Material.ListItem.Icon"
-			android:src="@drawable/clear_36dp"
-			android:tint="@color/accent"
-			/>
+			android:src="@drawable/bug_report_24dp"/>
 
 		<TextView
-			style="@style/Material.ListItem.IconTextContainer"
-			android:text="A really long text that doesn't fit the layout"
-			/>
+			style="@style/Material.ListItem.Text.Single.Icon24.Action"
+			android:text="@string/feedback_bug"/>
 
-		<CheckBox
+		<android.support.v7.widget.AppCompatCheckBox
 			android:id="@+id/bug_checkbox"
 			style="@style/Material.ListItem.Action"/>
 	</LinearLayout>
@@ -30,18 +33,17 @@
 
 	<EditText
 		android:id="@+id/title_edit"
-		style="@style/Material.ListItem.EditFull"
-		android:hint="@string/feedback_title"/>
+		style="@style/Material.Edit.Full"
+		android:hint="@string/feedback_title_hint"/>
 
 	<View style="@style/Material.ListDivider"/>
 
-
 	<EditText
 		android:id="@+id/message_edit"
-		style="@style/Material.ListItem.EditFull"
+		style="@style/Material.Edit.Full"
 		android:layout_height="match_parent"
 		android:gravity="top"
-		android:hint="@string/feedback_message"
+		android:hint="@string/feedback_message_hint"
 		android:inputType="textMultiLine"
 		android:minLines="4"
 		android:padding="@dimen/list_item_padding"/>

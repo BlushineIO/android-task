@@ -4,13 +4,18 @@
 	<string name="validate_error_required">obligatorisk</string>
 	<string name="undo">Ångra</string>
 	<string name="cancel">Avbryt</string>
-	<string name="delete">Ta bort</string>
+	<string name="delete">Radera</string>
 	<string name="save">Spara</string>
 	<string name="add">Lägg Till</string>
 	<string name="clear">Rensa</string>
 	<string name="feedback_bug">Buggrapport</string>
 	<string name="feedback_header">Skicka Feedback</string>
-	<string name="feedback_message">Meddelande</string>
-	<string name="feedback_message_bug_info">Vad hände?\nDina steg innan buggen?</string>
-	<string name="feedback_title">Titel</string>
+	<string name="feedback_message_hint">Meddelande</string>
+	<string name="bug_report_message_hint">Vad hände?\nDina steg innan buggen?</string>
+	<string name="feedback_title_hint">Titel</string>
+	<string name="feedback_menu">Feedback</string>
+	<string name="send">Skicka</string>
+	<string name="feedback_cancel">Radera feedback?</string>
+	<string name="discard">Radera</string>
+	<string name="feedback_sent">Tack för din feedback!</string>
 </resources>

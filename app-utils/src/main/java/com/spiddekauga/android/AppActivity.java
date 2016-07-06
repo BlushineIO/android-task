@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.spiddekauga.android.feedback.FeedbackRepo;
+
 /**
  * Base class for Android Activities
  */
@@ -75,7 +77,9 @@ protected void onCreate(Bundle savedInstanceState) {
  * Called first time the application is started
  */
 protected void onFirstTime() {
-
+	FeedbackRepo feedbackRepo = FeedbackRepo.getInstance();
+	feedbackRepo.resetSyncingFeedbacks();
+	feedbackRepo.syncUnsyncedFeedbacks();
 }
 
 @Override

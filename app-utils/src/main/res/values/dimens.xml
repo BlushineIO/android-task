@@ -13,6 +13,7 @@
 	<dimen name="list_item_padding">16dp</dimen>
 	<dimen name="list_item_padding_left_text_with_icon_48">6dp</dimen>
 	<dimen name="list_item_padding_left_text_with_icon_36">18dp</dimen>
+	<dimen name="list_item_padding_left_text_with_icon_24">30dp</dimen>
 	<dimen name="list_margin_top_bottom">8dp</dimen>
 
 	<!-- Buttons -->
