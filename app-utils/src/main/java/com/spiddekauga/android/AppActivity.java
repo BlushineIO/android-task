@@ -2,6 +2,7 @@ package com.spiddekauga.android;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -13,7 +14,7 @@ import com.spiddekauga.android.feedback.FeedbackRepo;
  * Base class for Android Activities
  */
 public abstract class AppActivity extends AppCompatActivity {
-static private AppCompatActivity mActivity = null;
+static private AppActivity mActivity = null;
 private static boolean mFirstTime = true;
 
 /**
@@ -31,7 +32,7 @@ public static void exit() {
 /**
  * @return the context for this app
  */
-public static AppCompatActivity getActivity() {
+public static AppActivity getActivity() {
 	return mActivity;
 }
 
@@ -80,6 +81,16 @@ protected void onFirstTime() {
 	FeedbackRepo feedbackRepo = FeedbackRepo.getInstance();
 	feedbackRepo.resetSyncingFeedbacks();
 	feedbackRepo.syncUnsyncedFeedbacks();
+}
+
+@Override
+public void onBackPressed() {
+	Fragment visibleFragment = AppFragment.getVisibleFragment();
+	if (visibleFragment instanceof AppFragment) {
+		((AppFragment) visibleFragment).back();
+	} else {
+		super.onBackPressed();
+	}
 }
 
 @Override

@@ -1,30 +1,24 @@
 package com.spiddekauga.android.feedback;
 
-import android.content.DialogInterface;
 import android.content.res.Resources;
-import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
+import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.spiddekauga.android.AppActivity;
+import com.spiddekauga.android.AppFragment;
 import com.spiddekauga.android.BuildConfig;
 import com.spiddekauga.android.R;
-import com.spiddekauga.android.ui.ColorHelper;
 import com.spiddekauga.android.ui.SnackbarHelper;
 import com.spiddekauga.android.validate.TextValidator;
 import com.spiddekauga.android.validate.TextValidatorGroup;
@@ -35,7 +29,7 @@ import com.spiddekauga.utils.Strings;
 /**
  * Displays a dialog for sending feedback to Spiddekauga's mail
  */
-public class FeedbackDialogFragment extends DialogFragment {
+public class FeedbackFragment extends AppFragment {
 private static final String TITLE_KEY = "title";
 private static final String MESSAGE_KEY = "message";
 private static final String EXCEPTION_KEY = "exception";
@@ -48,13 +42,9 @@ private Toolbar mToolbar = null;
 private String mException = null;
 private String mName = null;
 private String mEmail = null;
-private String mCancelText = null;
-private String mSuccessText = null;
+@StringRes
+private int mSuccessText = -1;
 private TextValidatorGroup mTextValidatorGroup = new TextValidatorGroup();
-
-public FeedbackDialogFragment() {
-	setStyle(DialogFragment.STYLE_NORMAL, R.style.Material_Dialog_Fullscreen);
-}
 
 /**
  * Set the exception
@@ -85,7 +75,7 @@ public void setUserInfo(String name, String email) {
 @Nullable
 @Override
 public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-	View view = inflater.inflate(R.layout.fragment_feedback, container);
+	View view = inflater.inflate(R.layout.fragment_feedback, container, false);
 
 	mBugReport = (CheckBox) view.findViewById(R.id.bug_checkbox);
 	mBugReport.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -106,7 +96,7 @@ public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
 	mTextValidatorGroup.add(messageValidator);
 
 	// Set dialog title
-	mToolbar = (Toolbar) view.findViewById(R.id.feedback_toolbar);
+	mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
 	mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -124,27 +114,6 @@ public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
 		}
 	});
 
-
-	// Color everything black
-	if (isBlack()) {
-		Resources resources = AppActivity.getActivity().getResources();
-		@ColorInt int color = ColorHelper.getColor(resources, R.color.icon, null);
-		mToolbar.getNavigationIcon().setColorFilter(color, PorterDuff.Mode.SRC_IN);
-
-		MenuItem sendMenuItem = mToolbar.getMenu().findItem(R.id.action_send);
-		sendMenuItem.getIcon().setColorFilter(color, PorterDuff.Mode.SRC_IN);
-	}
-	setCancelable(false);
-	getDialog().setOnKeyListener(new DialogInterface.OnKeyListener() {
-		@Override
-		public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-			if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
-				back();
-				return true;
-			}
-			return false;
-		}
-	});
 
 	// Set previous values
 	if (savedInstanceState != null) {
@@ -184,33 +153,15 @@ private void switchFeedbackType(FeedbackTypes feedbackType) {
 	case FEEDBACK:
 		mToolbar.setTitle(resources.getString(R.string.feedback_header));
 		mMessage.setHint(resources.getString(R.string.feedback_message_hint));
-		mCancelText = resources.getString(R.string.feedback_cancel);
-		mSuccessText = resources.getString(R.string.feedback_sent);
+		setBackMessage(R.string.feedback_cancel);
+		mSuccessText = R.string.feedback_sent;
 		break;
 	case BUG_REPORT:
 		mToolbar.setTitle(resources.getString(R.string.bug_report_header));
 		mMessage.setHint(resources.getString(R.string.bug_report_message_hint));
-		mCancelText = resources.getString(R.string.bug_report_cancel);
-		mSuccessText = resources.getString(R.string.bug_report_sent);
+		setBackMessage(R.string.bug_report_cancel);
+		mSuccessText = R.string.bug_report_sent;
 		break;
-	}
-}
-
-private void back() {
-	// Prompt user if they want to discard the message
-	if (!isEmpty()) {
-		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
-		dialogBuilder.setMessage(mCancelText);
-		dialogBuilder.setPositiveButton(R.string.discard, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dismiss();
-			}
-		});
-		dialogBuilder.setNegativeButton(R.string.cancel, null);
-		dialogBuilder.create().show();
-	} else {
-		dismiss();
 	}
 }
 
@@ -223,24 +174,9 @@ private void sendFeedback() {
 	dismiss();
 }
 
-/**
- * Check if we should tint everything black
- * @return true if we want to tint everything black
- */
-private boolean isBlack() {
-	Resources resources = AppActivity.getActivity().getResources();
-	int titleColor = ColorHelper.getColor(resources, R.color.toolbar_title, null);
-	int black = ColorHelper.getColor(resources, R.color.text_color_black_primary, null);
-	return titleColor == black;
-}
-
-private boolean isEmpty() {
-	return mTitle.getText().toString().isEmpty() && mMessage.getText().toString().isEmpty();
-}
-
 private Feedback createFeedback() {
 	Feedback feedback = new Feedback();
-	
+
 	feedback.setTitle(mTitle.getText().toString());
 	feedback.setMessage(mMessage.getText().toString());
 	feedback.setException(mException);
@@ -249,7 +185,7 @@ private Feedback createFeedback() {
 	feedback.setEmail(mEmail);
 	feedback.setDeviceInfo(getDeviceInfo());
 	feedback.setAppVersion(BuildConfig.VERSION_NAME);
-	
+
 	int appStringId = AppActivity.getActivity().getApplicationInfo().labelRes;
 	feedback.setAppName(AppActivity.getActivity().getResources().getString(appStringId));
 
@@ -265,24 +201,12 @@ private String getDeviceInfo() {
 }
 
 @Override
-public void onResume() {
-	WindowManager.LayoutParams params = getDialog().getWindow().getAttributes();
-	
-	params.width = WindowManager.LayoutParams.MATCH_PARENT;
-	params.height = WindowManager.LayoutParams.MATCH_PARENT;
-	
-	getDialog().getWindow().setAttributes(params);
-	
-	super.onResume();
-}
-
-@Override
 public void onSaveInstanceState(Bundle outState) {
 	super.onSaveInstanceState(outState);
-	
+
 	outState.putString(TITLE_KEY, mTitle.getText().toString());
 	outState.putString(MESSAGE_KEY, mMessage.getText().toString());
-	
+
 	if (mException != null) {
 		outState.putString(EXCEPTION_KEY, mException);
 	}
@@ -292,6 +216,10 @@ public void onSaveInstanceState(Bundle outState) {
 	if (mEmail != null) {
 		outState.putString(EMAIL_KEY, mEmail);
 	}
+}
+
+protected boolean isChanged() {
+	return !mTitle.getText().toString().isEmpty() || !mMessage.getText().toString().isEmpty();
 }
 
 private enum FeedbackTypes {

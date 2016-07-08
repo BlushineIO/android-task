@@ -6,15 +6,17 @@
 	<string name="clear">Clear</string>
 	<string name="save">Save</string>
 	<string name="cancel">Cancel</string>
-	<string name="delete">Erase</string>
+	<string name="erase">Erase</string>
 	<string name="undo">Undo</string>
 	<string name="send">Send</string>
 	<string name="discard">Discard</string>
+	<string name="discard_changes">Discard changes?</string>
+	<string name="edit">Edit</string>
 
 	<!-- Feedback -->
 	<string name="feedback_menu">Feedback</string>
-	<string name="feedback_header">Send Feedback</string>
-	<string name="bug_report_header">Report Bug</string>
+	<string name="feedback_header">Send feedback</string>
+	<string name="bug_report_header">Report bug</string>
 	<string name="feedback_sent">Thank you for your feedback!</string>
 	<string name="bug_report_sent">Thank you for submitting a bug report!</string>
 	<string name="feedback_cancel">Discard feedback?</string>

@@ -7,7 +7,7 @@
 			  android:orientation="vertical">
 
 	<android.support.v7.widget.Toolbar
-		android:id="@+id/feedback_toolbar"
+		android:id="@+id/toolbar"
 		style="@style/Material.Toolbar"
 		android:layout_marginBottom="@dimen/list_margin_top_bottom"
 		app:navigationIcon="@drawable/clear_24dp"
@@ -21,7 +21,7 @@
 			android:src="@drawable/bug_report_24dp"/>
 
 		<TextView
-			style="@style/Material.ListItem.Text.Single.Icon24.Action"
+			style="@style/Material.ListItem.Text.Single.Icon24"
 			android:text="@string/feedback_bug"/>
 
 		<android.support.v7.widget.AppCompatCheckBox
@@ -40,13 +40,12 @@
 
 	<EditText
 		android:id="@+id/message_edit"
-		style="@style/Material.Edit.Full"
+		style="@style/Material.Edit.Full.Multiline"
 		android:layout_height="match_parent"
 		android:gravity="top"
 		android:hint="@string/feedback_message_hint"
 		android:inputType="textMultiLine"
-		android:minLines="4"
-		android:padding="@dimen/list_item_padding"/>
+		android:minLines="4"/>
 
 
 </LinearLayout>

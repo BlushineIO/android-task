@@ -21,6 +21,13 @@
 	<dimen name="list_item_height_two_lines_dense">60dp</dimen>
 	<dimen name="list_item_height_three_lines_dense">76dp</dimen>
 
+	<!-- Edit Text -->
+	<dimen name="edit_container_height">72dp</dimen>
+	<dimen name="edit_height_full">56dp</dimen>
+	<dimen name="edit_height_full_dense">48dp</dimen>
+	<dimen name="edit_padding_full_top_bottom">20dp</dimen>
+	<dimen name="edit_padding_full_top_bottom_dense">16dp</dimen>
+
 	<!-- Buttons -->
 	<dimen name="button_margin">6dp</dimen>
 	<dimen name="button_padding">8dp</dimen>
