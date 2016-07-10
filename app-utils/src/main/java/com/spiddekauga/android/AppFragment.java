@@ -111,7 +111,8 @@ private void colorToolbar(Toolbar toolbar) {
 }
 
 /**
- * Display the back message. Called when going back
+ * Display back dialog discard message if something has been changed in the fragment. If nothing has
+ * been changed it simply dismisses the window.
  */
 public void back() {
 	if (isChanged()) {
@@ -138,8 +139,14 @@ protected boolean isChanged() {
 	return false;
 }
 
+/**
+ * Dismiss this window.
+ * @return true if this window is dismissable.
+ */
 public void dismiss() {
-	getFragmentManager().popBackStackImmediate();
+	if (!getFragmentManager().popBackStackImmediate()) {
+		AppActivity.getActivity().supportFinishAfterTransition();
+	}
 }
 
 /**
