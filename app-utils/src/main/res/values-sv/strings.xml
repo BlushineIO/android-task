@@ -24,4 +24,5 @@
 	<string name="edit">Redigera</string>
 	<string name="discard_changes">Kasta ändringar?</string>
 	<string name="settings">Inställningar</string>
+	<string name="got_it">OK</string>
 </resources>
