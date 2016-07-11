@@ -50,6 +50,19 @@ protected void setToolbarColor(@ColorRes int toolbarColor, @ColorRes int statusb
 	mStatusbarColor = ColorHelper.getColor(resources, statusbarColor, null);
 }
 
+static Fragment getVisibleFragment() {
+	FragmentManager fragmentManager = AppActivity.getActivity().getSupportFragmentManager();
+	List<Fragment> fragments = fragmentManager.getFragments();
+	if (fragments != null) {
+		for (Fragment fragment : fragments) {
+			if (fragment != null && fragment.isVisible()) {
+				return fragment;
+			}
+		}
+	}
+	return null;
+}
+
 /**
  * Set the message when back is pressed. This will be displayed in a small dialog
  * @param message the message to display in a small dialog
@@ -144,7 +157,11 @@ protected boolean isChanged() {
  * @return true if this window is dismissable.
  */
 public void dismiss() {
-	if (!getFragmentManager().popBackStackImmediate()) {
+	// Never pop the first fragment in back stack as the activity will be left empty then
+	FragmentManager fragmentManager = getFragmentManager();
+	if (fragmentManager.getBackStackEntryCount() > 1) {
+		fragmentManager.popBackStackImmediate();
+	} else {
 		AppActivity.getActivity().supportFinishAfterTransition();
 	}
 }
@@ -156,23 +173,23 @@ public void show() {
 	AppActivity activity = AppActivity.getActivity();
 	FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
 	fragmentTransaction.replace(R.id.fragment_container, this);
-	Fragment currentFragment = getVisibleFragment();
-	if (currentFragment != null) {
-		fragmentTransaction.addToBackStack(currentFragment.getClass().getSimpleName());
-	}
+	fragmentTransaction.addToBackStack(getClass().getSimpleName());
 	fragmentTransaction.commit();
 }
 
-static Fragment getVisibleFragment() {
+/**
+ * Checks if a fragment class exists in the back stack
+ * @param fragmentClass the fragment class to check if it exists in the back stack
+ * @return true if the fragmentClass exists in the back stack
+ */
+protected boolean existsInBackStack(Class<? extends Fragment> fragmentClass) {
 	FragmentManager fragmentManager = AppActivity.getActivity().getSupportFragmentManager();
-	List<Fragment> fragments = fragmentManager.getFragments();
-	if (fragments != null) {
-		for (Fragment fragment : fragments) {
-			if (fragment != null && fragment.isVisible()) {
-				return fragment;
-			}
+	for (int i = 0; i < fragmentManager.getBackStackEntryCount(); i++) {
+		FragmentManager.BackStackEntry backStackEntry = fragmentManager.getBackStackEntryAt(0);
+		if (fragmentClass.getSimpleName().equals(backStackEntry.getName())) {
+			return true;
 		}
 	}
-	return null;
+	return false;
 }
 }
