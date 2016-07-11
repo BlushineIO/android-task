@@ -1,5 +1,6 @@
 package com.spiddekauga.android;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -40,7 +41,7 @@ public static AppActivity getActivity() {
  * Switch to the specified activity
  * @param activityClass the activity to switch to
  */
-public static void switchTo(Class<? extends AppActivity> activityClass) {
+public static void switchTo(Class<? extends Activity> activityClass) {
 	if (mActivity != null) {
 		Intent intent = new Intent(mActivity, activityClass);
 		mActivity.startActivity(intent);
