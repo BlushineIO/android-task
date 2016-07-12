@@ -59,6 +59,10 @@ public static void setTitle(String title) {
 	}
 }
 
+/**
+ * Return the root view, also known as content view
+ * @return the root view, also known as content view
+ */
 public static View getRootView() {
 	View contentView = mActivity.findViewById(android.R.id.content);
 	return ((ViewGroup) contentView).getChildAt(0);

@@ -1,10 +1,15 @@
 package com.spiddekauga.android.ui;
 
 import android.support.annotation.StringRes;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.spiddekauga.android.AppActivity;
+import com.spiddekauga.android.AppFragment;
+import com.spiddekauga.utils.EventBus;
+import com.squareup.otto.Subscribe;
 
 /**
  * Some helper methods for creating simple snackbars
@@ -18,6 +23,13 @@ private static final int LENGTH_MEDIUM_CHARACTERS = 0;
 @Snackbar.Duration
 private static final int DURATION_LONG = 6000;
 private static final int LENGTH_LONG_CHARACTERS = 20;
+
+/**
+ * Can't instantiate the class
+ */
+private SnackbarHelper() {
+
+}
 
 /**
  * Create a simple {@link android.support.design.widget.Snackbar} with a message
@@ -46,13 +58,9 @@ private static String getString(@StringRes int stringId) {
  * @param action the action to take
  */
 public static void showSnackbar(String message, String actionTitle, View.OnClickListener action) {
-	View rootView = AppActivity.getRootView();
 	int duration = calculateDuration(message);
-	Snackbar snackbar = Snackbar.make(rootView, message, duration);
-	if (actionTitle != null && action != null) {
-		snackbar.setAction(actionTitle, action);
-	}
-	snackbar.show();
+	SnackbarMessage snackbarMessage = new SnackbarMessage(message, actionTitle, action, duration);
+	snackbarMessage.show();
 }
 
 private static int calculateDuration(String message) {
@@ -73,5 +81,78 @@ private static int calculateDuration(String message) {
  */
 public static void showSnackbar(@StringRes int stringId, @StringRes int actionTitleId, View.OnClickListener action) {
 	showSnackbar(getString(stringId), getString(actionTitleId), action);
+}
+
+/**
+ * Container for snackbar messages
+ */
+private static class SnackbarMessage {
+	private static final EventBus mEventBus = EventBus.getInstance();
+	private static SnackbarMessage mLastMessage = null;
+	private String mMessage;
+	private String mActionTitle;
+	private int mDuration;
+	private View.OnClickListener mAction;
+	private Snackbar mSnackbar;
+
+	SnackbarMessage(String message, String actionTitle, View.OnClickListener action, int duration) {
+		mMessage = message;
+		mActionTitle = actionTitle;
+		mAction = action;
+		mDuration = duration;
+	}
+
+	@Subscribe
+	public void onFragmentResume(AppFragment.FragmentResumeEvent event) {
+		mEventBus.unregister(this);
+		if (isShown() && this == mLastMessage) {
+			show();
+		}
+	}
+
+	private boolean isShown() {
+		if (mSnackbar != null) {
+			return mSnackbar.isShown();
+		} else {
+			return false;
+		}
+	}
+
+	void show() {
+		final View view = getView();
+		mSnackbar = Snackbar.make(view, mMessage, mDuration);
+		if (mActionTitle != null && mAction != null) {
+			mSnackbar.setAction(mActionTitle, mAction);
+		}
+		mSnackbar.setCallback(new Snackbar.Callback() {
+			@Override
+			public void onDismissed(Snackbar snackbar, int event) {
+				if (view instanceof FloatingActionButton) {
+					fixFloatingActionButtonPosition((FloatingActionButton) view);
+				}
+			}
+		});
+		mSnackbar.show();
+		mEventBus.register(this);
+		mLastMessage = this;
+	}
+
+	private View getView() {
+		View rootView = AppActivity.getRootView();
+		if (rootView instanceof ViewGroup) {
+			ViewGroup viewGroup = (ViewGroup) rootView;
+			for (int i = 0; i < viewGroup.getChildCount(); i++) {
+				View child = viewGroup.getChildAt(i);
+				if (child instanceof FloatingActionButton) {
+					return child;
+				}
+			}
+		}
+		return rootView;
+	}
+
+	private void fixFloatingActionButtonPosition(FloatingActionButton button) {
+		button.setTranslationY(0);
+	}
 }
 }

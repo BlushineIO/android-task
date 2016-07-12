@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.spiddekauga.android.ui.ColorHelper;
+import com.spiddekauga.utils.EventBus;
 
 import java.util.List;
 
@@ -26,6 +27,7 @@ import java.util.List;
  * Base class for fullscreen dialog fragments
  */
 public abstract class AppFragment extends Fragment {
+private static final EventBus mEventBus = EventBus.getInstance();
 @StringRes
 int mBackMessage;
 @StringRes
@@ -123,6 +125,12 @@ private void colorToolbar(Toolbar toolbar) {
 	}
 }
 
+@Override
+public void onResume() {
+	super.onResume();
+	mEventBus.post(new FragmentResumeEvent(this));
+}
+
 /**
  * Display back dialog discard message if something has been changed in the fragment. If nothing has
  * been changed it simply dismisses the window.
@@ -172,7 +180,7 @@ public void dismiss() {
 public void show() {
 	AppActivity activity = AppActivity.getActivity();
 	FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
-	fragmentTransaction.replace(R.id.fragment_container, this);
+	fragmentTransaction.replace(android.R.id.content, this);
 	fragmentTransaction.addToBackStack(getClass().getSimpleName());
 	fragmentTransaction.commit();
 }
@@ -191,5 +199,24 @@ protected boolean existsInBackStack(Class<? extends Fragment> fragmentClass) {
 		}
 	}
 	return false;
+}
+
+/**
+ * Fired when onResume() is called in a AppFragment
+ */
+public class FragmentResumeEvent {
+	private AppFragment mFragment;
+
+	private FragmentResumeEvent(AppFragment fragment) {
+		mFragment = fragment;
+	}
+
+	/**
+	 * Get the fragment that was resumed
+	 * @return fragment that was resumed
+	 */
+	public AppFragment getFragment() {
+		return mFragment;
+	}
 }
 }
