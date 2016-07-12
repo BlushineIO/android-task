@@ -7,6 +7,7 @@
 	<dimen name="fab_margin">16dp</dimen>
 
 	<!-- Lists -->
+	<dimen name="list_fab_bottom_padding">88dp</dimen>
 	<dimen name="list_item_height_one_line">48dp</dimen>
 	<dimen name="list_item_height_avatar">56dp</dimen>
 	<dimen name="list_item_height_two_lines">72dp</dimen>
