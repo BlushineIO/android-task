@@ -165,6 +165,7 @@ protected List<T> getItems() {
 public void setItems(List<T> items) {
 	mItems.clear();
 	mItems.addAll(items);
+	notifyDataSetChanged();
 }
 
 /**

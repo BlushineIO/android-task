@@ -129,7 +129,7 @@ class TransactionRemoveCallback extends ItemTouchHelper.Callback {
 	private static final int UNDO_DURATION = 3000; // 3sec
 	private final int mXMargin = (int) AppActivity.getActivity().getResources().getDimension(R.dimen.margin);
 	private Drawable mBackground = new ColorDrawable(mColor);
-	private Drawable mXMark = ContextCompat.getDrawable(AppActivity.getActivity(), R.drawable.clear_36dp);
+	private Drawable mXMark = ContextCompat.getDrawable(AppActivity.getActivity(), R.drawable.delete_24dp);
 
 	@Override
 	public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
@@ -204,8 +204,8 @@ class TransactionRemoveCallback extends ItemTouchHelper.Callback {
 		int intrinsicHeight = mXMark.getIntrinsicWidth();
 		int xMarkTop = itemView.getTop() + (itemHeight - intrinsicHeight) / 2;
 		int xMarkBottom = xMarkTop + intrinsicHeight;
-		int xMarkLeft;
-		int xMarkRight;
+		int xMarkLeft = Integer.MIN_VALUE;
+		int xMarkRight = Integer.MIN_VALUE;
 
 		// Right
 		if (dX < 0) {
@@ -213,7 +213,7 @@ class TransactionRemoveCallback extends ItemTouchHelper.Callback {
 			xMarkRight = itemView.getRight() - mXMargin;
 		}
 		// Left
-		else {
+		else if (dX > 0) {
 			xMarkLeft = itemView.getLeft() + mXMargin;
 			xMarkRight = itemView.getLeft() + mXMargin + intrinsicWidth;
 		}
