@@ -112,7 +112,7 @@ private static class SnackbarMessage {
 
 	private boolean isShown() {
 		if (mSnackbar != null) {
-			return mSnackbar.isShown();
+			return mSnackbar.isShownOrQueued();
 		} else {
 			return false;
 		}
