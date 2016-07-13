@@ -34,7 +34,9 @@ public boolean enoughToFilter() {
 
 @Override
 public void onFilterComplete(int count) {
-	showDropDown();
+	if (isFocused()) {
+		showDropDown();
+	}
 }
 
 @Override
