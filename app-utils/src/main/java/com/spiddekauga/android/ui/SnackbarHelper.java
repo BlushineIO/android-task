@@ -84,6 +84,14 @@ public static void showSnackbar(@StringRes int stringId, @StringRes int actionTi
 }
 
 /**
+ * Check if any snackbar message is shown
+ * @return true if any snackbar message is shown or queued
+ */
+public static boolean isShownOrQueued() {
+	return SnackbarMessage.mLastMessage != null && SnackbarMessage.mLastMessage.isShown();
+}
+
+/**
  * Container for snackbar messages
  */
 private static class SnackbarMessage {
@@ -130,6 +138,7 @@ private static class SnackbarMessage {
 				if (view instanceof FloatingActionButton) {
 					fixFloatingActionButtonPosition((FloatingActionButton) view);
 				}
+				mEventBus.post(new SnackbarDismissEvent());
 			}
 		});
 		mSnackbar.show();
