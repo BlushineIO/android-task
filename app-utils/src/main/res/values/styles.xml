@@ -18,6 +18,8 @@
 		<item name="android:actionOverflowButtonStyle">@style/Material.MenuButtonOverflow</item>
 		<item name="android:actionMenuTextColor">@color/toolbar_title</item>
 		<item name="actionMenuTextColor">@color/toolbar_title</item>
+		<item name="colorButtonNormal">@color/accent</item>
+		<item name="alertDialogTheme">@style/Material.Dialog</item>
 	</style>
 
 	<!--****************-->
@@ -48,11 +50,8 @@
 	<!--****************-->
 	<!-- 	Dialogs		-->
 	<!--****************-->
-	<style name="Material.Dialog"></style>
-
-	<style name="Material.Dialog.Fullscreen" parent="Theme.AppCompat.Light.Dialog">
-		<item name="android:padding">0dp</item>
-		<item name="android:windowBackground">@color/background</item>
+	<style name="Material.Dialog" parent="Base.Theme.AppCompat.Light.Dialog.Alert">
+		<item name="colorAccent">@color/accent</item>
 	</style>
 
 	<!--****************-->

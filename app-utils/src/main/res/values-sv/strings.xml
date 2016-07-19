@@ -13,7 +13,7 @@
 	<string name="feedback_message_hint">Meddelande</string>
 	<string name="bug_report_message_hint">Vad hände?\nDina steg innan buggen?</string>
 	<string name="feedback_title_hint">Titel</string>
-	<string name="feedback_menu">Feedback</string>
+	<string name="feedback_menu">Skicka feedback</string>
 	<string name="send">Skicka</string>
 	<string name="feedback_cancel">Radera feedback?</string>
 	<string name="discard">Kasta</string>
@@ -25,4 +25,5 @@
 	<string name="discard_changes">Kasta ändringar?</string>
 	<string name="settings">Inställningar</string>
 	<string name="got_it">OK</string>
+	<string name="reset">Återställ</string>
 </resources>
