@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
@@ -87,7 +88,9 @@ protected void setBackMessage(@StringRes int message, @StringRes int positiveAct
 @Override
 public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 	super.onViewCreated(view, savedInstanceState);
-	getActivity().getWindow().setStatusBarColor(mStatusbarColor);
+	if (Build.VERSION.SDK_INT >= 21) {
+		getActivity().getWindow().setStatusBarColor(mStatusbarColor);
+	}
 	Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
 	if (toolbar != null) {
 		colorToolbar(toolbar);
