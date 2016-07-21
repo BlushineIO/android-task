@@ -29,7 +29,7 @@ private boolean mUndoFunctionality = false;
 private String mRemovedMessage = AppActivity.getActivity().getResources().getString(R.string.item_removed);
 private RemoveListener<T> mListener;
 @ColorInt
-private int mColor = ColorHelper.getColor(AppActivity.getActivity().getResources(), R.color.cancel, null);
+private int mColor = ColorHelper.getColor(AppActivity.getActivity().getResources(), R.color.remove, null);
 private AdvancedAdapter<T, ?> mAdapter;
 private Map<T, Runnable> mPendingRemoves = new HashMap<>();
 private Handler mHandler = new Handler();

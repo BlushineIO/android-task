@@ -34,13 +34,13 @@ public void setListener(Listener listener) {
 	mListener = listener;
 }
 
-@Override
-protected void onDialogClosed(boolean positiveResult) {
-	super.onDialogClosed(positiveResult);
-	if (mListener != null) {
-		mListener.onDialogClosed(positiveResult);
-	}
-}
+//@Override
+//protected void onDialogClosed(boolean positiveResult) {
+//	super.onDialogClosed(positiveResult);
+//	if (mListener != null) {
+//		mListener.onDialogClosed(positiveResult);
+//	}
+//}
 
 public interface Listener {
 	/**

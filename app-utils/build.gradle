@@ -1,16 +1,15 @@
 apply plugin: 'com.android.library'
-apply plugin: 'maven'
 
 group = 'com.spiddekauga.android'
 version = '0.1.0-SNAPSHOT'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 23
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
     }
@@ -53,10 +52,6 @@ configurations {
     provided
 }
 
-sourceSets {
-    main { compileClasspath += configurations.provided }
-}
-
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
@@ -65,31 +60,10 @@ dependencies {
     compile "com.squareup.okhttp3:okhttp-urlconnection:3.2.0"
     compile 'com.github.franmontiel:PersistentCookieJar:v0.9.3'
     compile 'com.google.code.gson:gson:2.7'
-    compile project(path: ':cloudshine', configuration: 'android-endpoints')
-    compile 'com.android.support:appcompat-v7:23.2.1'
-    compile 'com.android.support:recyclerview-v7:23.2.1'
-    compile 'com.android.support:design:23.2.1'
-    deployerJars 'org.apache.maven.wagon:wagon-ssh:2.2'
-}
-
-//install {
-//    repositories.mavenInstaller {
-//        pom.artifactId = project.name
-//    }
-//}
-
-uploadArchives {
-    repositories {
-        // Set mavenRepositoryUrl & mavenUserName inside gradle.properties
-        mavenDeployer {
-            configuration = configurations.deployerJars
-            pom.artifactId = project.name
-            repository(url: mavenRepositoryUrl + '/releases') {
-                authentication(userName: mavenUserName)
-            }
-            snapshotRepository(url: mavenRepositoryUrl + '/snapshots') {
-                authentication(userName: mavenUserName)
-            }
-        }
+    compile(project(path: ':cloudshine', configuration: 'android-endpoints')) {
+        exclude(module: 'guava-jdk5')
     }
+    compile "com.android.support:appcompat-v7:$supportLibraryVersion"
+    compile "com.android.support:recyclerview-v7:$supportLibraryVersion"
+    compile "com.android.support:design:$supportLibraryVersion"
 }

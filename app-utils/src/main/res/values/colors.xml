@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<color name="accent">@color/pink_A200</color>
-	<color name="light_text">@color/white</color>
-	<color name="transparent">@color/white</color>
+	<color name="primary">@color/light_blue_600</color>
+	<color name="primary_dark">@color/light_blue_800</color>
+
+	<!-- Various -->
+	<color name="remove">@color/red_500</color>
 	<color name="list_item_divider">#1E000000</color>
-	<color name="background">@color/white</color>
+	<color name="preferenceTint">@color/accent</color>
 
 	<!-- Text -->
-	<color name="text_color_black_primary">#DD000000</color>
-	<color name="text_color_black_secondary">#8A000000</color>
-	<color name="text_color_black_hint_disabled">#61000000</color>
-	<color name="text_color_white_primary">#FFFFFFFF</color>
-	<color name="text_color_white_secondary">#B2FFFFFF</color>
-	<color name="text_color_white_hint_disabled">#7FFFFFFF</color>
-	<color name="text_color_primary">@color/text_color_black_primary</color>
-	<color name="text_color_secondary">@color/text_color_black_secondary</color>
-	<color name="text_color_hint_disabled">@color/text_color_black_hint_disabled</color>
-	<color name="text_color_primary_inverse">@color/text_color_white_primary</color>
-	<color name="text_color_secondary_inverse">@color/text_color_white_secondary</color>
-	<color name="text_color_hint_disabled_inverse">@color/text_color_white_hint_disabled</color>
-	<color name="toolbar_title">@color/text_color_white_primary</color>
+	<color name="text_highlight">@color/pink_A100</color>
+	<color name="text_black_primary">#DD000000</color>
+	<color name="text_black_secondary">#8A000000</color>
+	<color name="text_black_hint_disabled">#61000000</color>
+	<color name="text_white_primary">#FFFFFFFF</color>
+	<color name="text_white_secondary">#B2FFFFFF</color>
+	<color name="text_white_hint_disabled">#7FFFFFFF</color>
+	<color name="text_primary">@color/text_black_primary</color>
+	<color name="text_secondary">@color/text_black_secondary</color>
+	<color name="text_hint_disabled">@color/text_black_hint_disabled</color>
+	<color name="text_primary_inverse">@color/text_white_primary</color>
+	<color name="text_secondary_inverse">@color/text_white_secondary</color>
+	<color name="text_hint_disabled_inverse">@color/text_white_hint_disabled</color>
+	<color name="toolbar_title">@color/text_white_primary</color>
 
 	<!-- Icons -->
 	<integer name="alpha_icon_black_active">138</integer>
@@ -28,33 +32,11 @@
 	<integer name="alpha_icon_white_Inactive">77</integer>
 	<integer name="alpha_icon_title">@integer/alpha_icon_black_active</integer>
 	<integer name="alpha_icon_active">@integer/alpha_icon_black_active</integer>
-	<color name="icon_black">@color/text_color_black_secondary</color>
-	<color name="icon_black_inactive">@color/text_color_black_hint_disabled</color>
-	<color name="icon_white">@color/text_color_white_primary</color>
-	<color name="icon_white_inactive">@color/text_color_white_secondary</color>
+	<color name="icon_black">@color/text_black_secondary</color>
+	<color name="icon_black_inactive">@color/text_black_hint_disabled</color>
+	<color name="icon_white">@color/text_white_primary</color>
+	<color name="icon_white_inactive">@color/text_white_secondary</color>
 	<color name="icon">@color/icon_black</color>
 	<color name="icon_inactive">@color/icon_black_inactive</color>
 	<color name="icon_toolbar">@color/icon_white</color>
-
-	<!-- Buttons -->
-	<color name="button_cancel_up">@color/red_500</color>
-	<color name="button_cancel_focus">@color/red_400</color>
-	<color name="button_cancel_pressed">@color/red_600</color>
-	<color name="cancel">@color/button_cancel_up</color>
-	<color name="cancel_accent">@color/red_A400</color>
-	<color name="button_accept_up">@color/green_500</color>
-	<color name="button_accept_focus">@color/green_400</color>
-	<color name="button_accept_pressed">@color/green_600</color>
-	<color name="accept">@color/button_accept_up</color>
-	<color name="accept_accent">@color/green_A400</color>
-	<color name="button_primary_up">@color/light_blue_500</color>
-	<color name="button_primary_focus">@color/light_blue_400</color>
-	<color name="button_primary_pressed">@color/light_blue_600</color>
-	<color name="primary">@color/button_primary_up</color>
-	<color name="primary_dark">@color/light_blue_800</color>
-	<color name="primary_accent">@color/light_blue_A400</color>
-	<color name="button_default_up">@color/blue_grey_200</color>
-	<color name="button_default_focus">@color/blue_grey_100</color>
-	<color name="button_default_pressed">@color/blue_grey_300</color>
-	<color name="button_disabled">@color/grey_500</color>
 </resources>
