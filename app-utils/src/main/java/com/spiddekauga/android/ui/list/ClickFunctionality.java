@@ -6,10 +6,10 @@ import android.view.View;
 /**
  * Edit an item by long clicking on it
  */
-class EditFunctionality<T> implements PostBindFunctionality<T> {
-private EditListener<T> mListener;
+class ClickFunctionality<T> implements PostBindFunctionality<T> {
+private ClickListener<T> mListener;
 
-public EditFunctionality(EditListener<T> listener) {
+public ClickFunctionality(ClickListener<T> listener) {
 	if (listener == null) {
 		throw new IllegalArgumentException("listener is null");
 	}
@@ -24,12 +24,11 @@ public void applyFunctionality(AdvancedAdapter<T, ?> adapter, RecyclerView recyc
 
 @Override
 public void onPostBind(final AdvancedAdapter<T, ?> adapter, RecyclerView.ViewHolder viewHolder, final int position) {
-	viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+	viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
 		@Override
-		public boolean onLongClick(View v) {
+		public void onClick(View view) {
 			T item = adapter.getItem(position);
-			mListener.onEdit(item);
-			return true;
+			mListener.onClick(item);
 		}
 	});
 }

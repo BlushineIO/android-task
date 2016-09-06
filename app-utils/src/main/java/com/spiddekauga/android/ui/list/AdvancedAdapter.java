@@ -80,8 +80,8 @@ public int getItemPosition(T item) {
  * Add ability to edit an item
  * @param listener listen to when an item wants to be edited
  */
-public void addEditFunctionality(EditListener<T> listener) {
-	addFunctionality(new EditFunctionality<T>(listener));
+public void addEditFunctionality(ClickListener<T> listener) {
+	addFunctionality(new ClickFunctionality<T>(listener));
 }
 
 /**
