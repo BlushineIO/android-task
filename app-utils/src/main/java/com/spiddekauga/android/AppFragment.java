@@ -1,5 +1,6 @@
 package com.spiddekauga.android;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
@@ -18,6 +19,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import com.spiddekauga.android.ui.ColorHelper;
 import com.spiddekauga.utils.EventBus;
@@ -134,11 +137,31 @@ public void onResume() {
 	mEventBus.post(new FragmentResumeEvent(this));
 }
 
+@Override
+public void onStop() {
+	super.onStop();
+
+	// Always hide the keyboard
+	hideKeyboard();
+}
+
+/**
+ * Hide the keyboard
+ */
+protected void hideKeyboard() {
+	View focus = getActivity().getCurrentFocus();
+	if (focus instanceof EditText) {
+		InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+		inputMethodManager.hideSoftInputFromWindow(focus.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+	}
+}
+
 /**
  * Display back dialog discard message if something has been changed in the fragment. If nothing has
  * been changed it simply dismisses the window.
  */
 public void back() {
+	hideKeyboard();
 	if (isChanged()) {
 		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
 		dialogBuilder.setMessage(mBackMessage);
