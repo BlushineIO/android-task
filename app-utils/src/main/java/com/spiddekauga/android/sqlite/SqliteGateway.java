@@ -7,8 +7,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -19,7 +17,6 @@ public abstract class SqliteGateway {
 private static final String TAG = SqliteGateway.class.getSimpleName();
 private static SQLiteOpenHelper mSqlite = null;
 private static BlockingQueue<SqlExecute> mExecuteLater = new ArrayBlockingQueue<>(10);
-private Map<Cursor, SQLiteDatabase> mOpenDbs = new HashMap<>();
 
 /**
  * Initialize SQLite
@@ -47,7 +44,6 @@ protected int delete(String table, String whereClause) {
 	if (isInitialized()) {
 		SQLiteDatabase db = mSqlite.getWritableDatabase();
 		rowsAffected = db.delete(table, whereClause, null);
-		db.close();
 	} else {
 		mExecuteLater.add(new SqlExecute(ExecuteTypes.DELETE, table, null, whereClause, null));
 	}
@@ -74,7 +70,6 @@ protected long insert(String table, ContentValues values) {
 		if (values.size() > 0) {
 			SQLiteDatabase db = mSqlite.getWritableDatabase();
 			rowId = db.insert(table, null, values);
-			db.close();
 		}
 	} else {
 		mExecuteLater.add(new SqlExecute(ExecuteTypes.INSERT, table, values, null, null));
@@ -94,7 +89,6 @@ protected long replace(String table, ContentValues initialValues) {
 		if (initialValues.size() > 0) {
 			SQLiteDatabase db = mSqlite.getWritableDatabase();
 			rowId = db.replace(table, null, initialValues);
-			db.close();
 		}
 	} else {
 		mExecuteLater.add(new SqlExecute(ExecuteTypes.REPLACE, table, initialValues, null, null));
@@ -116,7 +110,6 @@ protected int update(String table, ContentValues values, String whereClause) {
 	if (isInitialized()) {
 		SQLiteDatabase db = mSqlite.getWritableDatabase();
 		rowsAffected = db.update(table, values, whereClause, null);
-		db.close();
 	} else {
 		mExecuteLater.add(new SqlExecute(ExecuteTypes.UPDATE, table, values, whereClause, null));
 	}
@@ -136,7 +129,6 @@ protected void execSQL(String sql) throws SQLException {
 	if (isInitialized()) {
 		SQLiteDatabase db = mSqlite.getWritableDatabase();
 		db.execSQL(sql);
-		db.close();
 	} else {
 		mExecuteLater.add(new SqlExecute(ExecuteTypes.EXEC, null, null, null, sql));
 	}
@@ -150,10 +142,8 @@ protected void execSQL(String sql) throws SQLException {
  */
 protected Cursor rawQuery(String sql) {
 	waitUntilInitialized();
-	SQLiteDatabase db = mSqlite.getReadableDatabase();
-	Cursor cursor = db.rawQuery(sql, null);
-	mOpenDbs.put(cursor, db);
-	return cursor;
+	SQLiteDatabase db = mSqlite.getWritableDatabase();
+	return db.rawQuery(sql, null);
 }
 
 
@@ -177,10 +167,6 @@ protected static void waitUntilInitialized() {
 protected void close(Cursor cursor) {
 	if (cursor != null) {
 		cursor.close();
-		SQLiteDatabase db = mOpenDbs.get(cursor);
-		if (db != null) {
-			db.close();
-		}
 	}
 }
 
