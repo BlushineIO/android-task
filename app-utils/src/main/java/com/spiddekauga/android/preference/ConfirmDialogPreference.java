@@ -1,13 +1,16 @@
-package com.spiddekauga.android.ui;
+package com.spiddekauga.android.preference;
 
 import android.content.Context;
-import android.preference.DialogPreference;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+
+import de.mrapp.android.dialog.MaterialDialog;
+import de.mrapp.android.preference.AbstractDialogPreference;
 
 /**
  * A confirm dialog preference screen
  */
-public class ConfirmDialogPreference extends DialogPreference {
+public class ConfirmDialogPreference extends AbstractDialogPreference {
 private Listener mListener = null;
 
 public ConfirmDialogPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
@@ -35,8 +38,17 @@ public void setListener(Listener listener) {
 }
 
 @Override
+protected boolean needInputMethod() {
+	return false;
+}
+
+@Override
+protected void onPrepareDialog(@NonNull MaterialDialog.Builder dialogBuilder) {
+	// Does nothing
+}
+
+@Override
 protected void onDialogClosed(boolean positiveResult) {
-	super.onDialogClosed(positiveResult);
 	if (mListener != null) {
 		mListener.onDialogClosed(positiveResult);
 	}
