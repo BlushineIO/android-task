@@ -49,8 +49,8 @@ public static void switchTo(Class<? extends Activity> activityClass) {
 }
 
 /**
- * Set the title of the action bar (if it exists)
- * @param title title of the action bar
+ * Set the title of the toolbar (if it exists)
+ * @param title title of the toolbar
  */
 public static void setTitle(String title) {
 	ActionBar actionBar = mActivity.getSupportActionBar();

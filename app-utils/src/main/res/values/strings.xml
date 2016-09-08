@@ -14,6 +14,7 @@
 	<string name="edit">Edit</string>
 	<string name="settings">Settings</string>
 	<string name="got_it">Got it</string>
+	<string name="ok">OK</string>
 	<string name="reset">Reset</string>
 
 	<!-- Feedback -->
@@ -28,4 +29,7 @@
 	<string name="feedback_message_hint">Message</string>
 	<string name="bug_report_message_hint">What happened?\nYour actions before the bug?</string>
 	<string name="feedback_bug">Bug report</string>
+
+	<!-- Info -->
+	<string name="info_download_failed">Check connection</string>
 </resources>

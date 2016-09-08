@@ -22,7 +22,7 @@ import okhttp3.Response;
 /**
  * Base class for all tasks requiring an Internet connection
  */
-public abstract class WebTask<Params, Progress, Event extends ResponseEvent> extends EventTask<Params, Progress> {
+public abstract class WebTask<Params, Progress, Event extends ResponseEvent> extends EventTask<Params, Progress, Event> {
 protected static final int RETRIES = 5;
 private static final long SLEEP_TIME = 10 * 1000; // IN MS
 private static OkHttpClient mOkHttpClient = new OkHttpClient();
@@ -63,7 +63,7 @@ protected void setWaitType(WaitTypes waitType) {
 
 @Override
 @SafeVarargs
-protected final Object doInBackground(Params... params) {
+protected final Event doInBackground(Params... params) {
 	Event event = newEvent(params);
 
 	switch (mWaitType) {

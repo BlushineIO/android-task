@@ -185,7 +185,6 @@ public void back() {
 protected boolean isChanged() {
 	return false;
 }
-
 /**
  * Dismiss this window.
  * @return true if this window is dismissable.
