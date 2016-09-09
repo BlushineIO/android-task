@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.spiddekauga.android.AppActivity;
-import com.spiddekauga.android.AppFragment;
+import com.spiddekauga.android.FragmentResumeEvent;
 import com.spiddekauga.utils.EventBus;
 import com.squareup.otto.Subscribe;
 
@@ -111,7 +111,7 @@ private static class SnackbarMessage {
 	}
 
 	@Subscribe
-	public void onFragmentResume(AppFragment.FragmentResumeEvent event) {
+	public void onFragmentResume(FragmentResumeEvent event) {
 		mEventBus.unregister(this);
 		if (isShown() && this == mLastMessage) {
 			show();
