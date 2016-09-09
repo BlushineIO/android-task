@@ -23,6 +23,7 @@
 		<item name="materialDialogTheme">@style/Material.Dialog</item>
 		<item name="dialogTheme">@style/Material.Dialog</item>
 		<item name="alertDialogTheme">@style/Material.Dialog.Alert</item>
+
 	</style>
 
 	<!--****************-->

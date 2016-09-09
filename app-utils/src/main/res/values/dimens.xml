@@ -35,4 +35,8 @@
 	<dimen name="button_padding">8dp</dimen>
 	<dimen name="button_inner_padding">16dp</dimen>
 	<dimen name="button_height">36dp</dimen>
+
+	<!-- Font sizes (in SP) -->
+	<integer name="font_title_size">20</integer>
+	<integer name="font_button_size">14</integer>
 </resources>
