@@ -127,23 +127,24 @@ private static class SnackbarMessage {
 	}
 
 	void show() {
-		final View view = getView();
-		mSnackbar = Snackbar.make(view, mMessage, mDuration);
-		if (mActionTitle != null && mAction != null) {
-			mSnackbar.setAction(mActionTitle, mAction);
-		}
-		mSnackbar.setCallback(new Snackbar.Callback() {
-			@Override
-			public void onDismissed(Snackbar snackbar, int event) {
-				if (view instanceof FloatingActionButton) {
-					fixFloatingActionButtonPosition((FloatingActionButton) view);
-				}
-				mEventBus.post(new SnackbarDismissEvent());
-			}
-		});
-		mSnackbar.show();
-		mEventBus.register(this);
-		mLastMessage = this;
+		// TODO uncomment when support library 24.2.1 has been released
+//		final View view = getView();
+//		mSnackbar = Snackbar.make(view, mMessage, mDuration);
+//		if (mActionTitle != null && mAction != null) {
+//			mSnackbar.setAction(mActionTitle, mAction);
+//		}
+//		mSnackbar.setCallback(new Snackbar.Callback() {
+//			@Override
+//			public void onDismissed(Snackbar snackbar, int event) {
+//				if (view instanceof FloatingActionButton) {
+//					fixFloatingActionButtonPosition((FloatingActionButton) view);
+//				}
+//				mEventBus.post(new SnackbarDismissEvent());
+//			}
+//		});
+//		mSnackbar.show();
+//		mEventBus.register(this);
+//		mLastMessage = this;
 	}
 
 	private View getView() {
