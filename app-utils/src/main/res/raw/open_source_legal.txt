@@ -19,6 +19,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 -------------
 
 AndroidMaterialPreferences
+https://github.com/michael-rapp/AndroidMaterialPreferences
 Copyright 2016 Michael Rapp
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
@@ -30,6 +31,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 -------------
 
 Google gson
+https://github.com/google/gson
 Copyright 2008 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
@@ -41,6 +43,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 -------------
 
 Guava: Google Core Libraries for Java
+https://github.com/google/guava
 Copyright 2015 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
@@ -52,6 +55,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 -------------
 
 OkHttp, OkHttp-urlconnection
+http://square.github.io/okhttp/
 Copyright 2016 Square, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
@@ -63,6 +67,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 -------------
 
 Otto
+http://square.github.io/otto/
 Copyright 2013 Square, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
@@ -74,6 +79,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 -------------
 
 PersistentCookieJar
+https://github.com/franmontiel/PersistentCookieJar
 Copyright 2016 Francisco José Montiel Navarro
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
