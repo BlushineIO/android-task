@@ -60,7 +60,7 @@ dependencies {
     compile "com.squareup.okhttp3:okhttp-urlconnection:3.2.0"
     compile 'com.github.franmontiel:PersistentCookieJar:v0.9.3'
     compile 'com.google.code.gson:gson:2.7'
-    compile 'com.github.michael-rapp:android-material-preferences:2.5.2'
+    compile 'com.github.michael-rapp:android-material-preferences:2.6.0'
     compile(project(path: ':cloudshine', configuration: 'android-endpoints')) {
         exclude(module: 'guava-jdk5')
     }
