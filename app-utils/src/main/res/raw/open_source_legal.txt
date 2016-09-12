@@ -1,8 +1,8 @@
 -------------
 
 recycler-view-swipe-to-delete
-by Nemanja Kovacevic
 https://github.com/nemanja-kovacevic/recycler-view-swipe-to-delete
+by Nemanja Kovacevic
 
 -------------
 
