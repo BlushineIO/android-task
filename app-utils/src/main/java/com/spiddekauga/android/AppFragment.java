@@ -10,7 +10,6 @@ import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -18,6 +17,8 @@ import android.widget.EditText;
 import com.spiddekauga.utils.EventBus;
 
 import java.util.List;
+
+import de.mrapp.android.dialog.MaterialDialog;
 
 /**
  * Base class for fullscreen fragments
@@ -111,7 +112,7 @@ protected void hideKeyboard() {
 public void back() {
 	hideKeyboard();
 	if (isChanged()) {
-		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+		MaterialDialog.Builder dialogBuilder = new MaterialDialog.Builder(getContext());
 		dialogBuilder.setMessage(mBackMessage);
 		dialogBuilder.setPositiveButton(mBackPositiveActionText, new DialogInterface.OnClickListener() {
 			@Override
@@ -133,9 +134,9 @@ public void back() {
 protected boolean isChanged() {
 	return false;
 }
+
 /**
  * Dismiss this window.
- * @return true if this window is dismissable.
  */
 public void dismiss() {
 	// Never pop the first fragment in back stack as the activity will be left empty then

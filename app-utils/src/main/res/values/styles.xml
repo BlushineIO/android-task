@@ -23,9 +23,6 @@
 		<item name="materialDialogTheme">@style/Material.Dialog</item>
 		<item name="dialogTheme">@style/Material.Dialog</item>
 		<item name="alertDialogTheme">@style/Material.Dialog.Alert</item>
-		<item name="buttonStyle">@style/Material.Button</item>
-		<item name="borderlessButtonStyle">@style/Material.ButtonBorderless</item>
-		<item name="android:borderlessButtonStyle">@style/Material.ButtonBorderless</item>
 	</style>
 
 	<!--****************-->
@@ -41,19 +38,6 @@
 
 	<style name="Material.MenuButtonOverflow" parent="Widget.AppCompat.ActionButton.Overflow">
 		<item name="android:tint">@color/icon_toolbar</item>
-	</style>
-
-	<!--****************-->
-	<!-- 	Buttons		-->
-	<!--****************-->
-	<style name="Material.Button" parent="Widget.AppCompat.Button">
-		<item name="android:textStyle">bold</item>
-	</style>
-
-
-	<style name="Material.ButtonBorderless" parent="Widget.AppCompat.Button.Borderless">
-		<item name="android:textStyle">bold</item>
-		<item name="android:textSize">20sp</item>
 	</style>
 
 	<!--************************-->
