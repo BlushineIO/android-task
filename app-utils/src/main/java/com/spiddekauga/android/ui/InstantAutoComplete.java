@@ -2,13 +2,13 @@ package com.spiddekauga.android.ui;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.util.AttributeSet;
-import android.widget.AutoCompleteTextView;
 
 /**
  * Instantly auto-complete whenever the field is focus, even when nothing has been written.
  */
-public class InstantAutoComplete extends AutoCompleteTextView {
+public class InstantAutoComplete extends AppCompatAutoCompleteTextView {
 
 public InstantAutoComplete(Context context) {
 	this(context, null);
@@ -20,11 +20,6 @@ public InstantAutoComplete(Context context, AttributeSet attrs) {
 
 public InstantAutoComplete(Context context, AttributeSet attrs, int defStyleAttr) {
 	super(context, attrs, defStyleAttr);
-}
-
-public InstantAutoComplete(
-		Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-	super(context, attrs, defStyleAttr, defStyleRes);
 }
 
 @Override
