@@ -36,6 +36,7 @@ public void addSwipeRemoveFunctionality(RemoveListener<T> listener) {
  * Adds an adapter functionality
  * @param functionality the functionality to add
  */
+@SuppressWarnings("unchecked")
 public void addFunctionality(AdapterFunctionality<T> functionality) {
 	// Not added before
 	if (!mFunctionalities.containsKey(functionality.getClass())) {
@@ -68,8 +69,8 @@ public void notifyItemChanged(T item) {
 }
 
 /**
- * Get item position
- * @param item the item to get the position of
+ * Get item position. Test against reference
+ * @param item the item to get the position of. Has to be same reference, i.e tests with itemA == itemB.
  * @return position of the item, -1 if not found
  */
 public int getItemPosition(T item) {
@@ -77,11 +78,26 @@ public int getItemPosition(T item) {
 }
 
 /**
+ * Search for the item position. Uses {@link Object#equals(Object)} to find the object
+ * @param item the item to get the position of.
+ * @return position of the item, -1 if not found
+ */
+public int findItemPosition(T item) {
+	for (int i = 0; i < mItems.size(); i++) {
+		T arrayItem = mItems.get(i);
+		if (arrayItem.equals(item)) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+/**
  * Add ability to edit an item
  * @param listener listen to when an item wants to be edited
  */
 public void addEditFunctionality(ClickListener<T> listener) {
-	addFunctionality(new ClickFunctionality<T>(listener));
+	addFunctionality(new ClickFunctionality<>(listener));
 }
 
 /**
@@ -89,7 +105,7 @@ public void addEditFunctionality(ClickListener<T> listener) {
  * @param listener listen to when an item wants to be viewed
  */
 public void addViewInfoFunctionality(ViewInfoListener<T> listener) {
-	addFunctionality(new ViewInfoFunctionality<T>(listener));
+	addFunctionality(new ViewInfoFunctionality<>(listener));
 }
 
 /**
@@ -100,6 +116,7 @@ public void addViewInfoFunctionality(ViewInfoListener<T> listener) {
  * @param viewHolderFunctionality the instance which handles the item
  * @see #removeItemViewHolder(Object, ViewHolderFunctionality) to remove it
  */
+@SuppressWarnings("unchecked")
 public void setItemViewHolder(T item, ViewHolderFunctionality viewHolderFunctionality) {
 	mItemViewHolder.put(item, viewHolderFunctionality);
 }
@@ -277,7 +294,7 @@ public void onAttachedToRecyclerView(RecyclerView recyclerView) {
 	mRecyclerViews.add(recyclerView);
 
 	// Apply previously added functionalities
-	for (AdapterFunctionality functionality : mFunctionalities.values()) {
+	for (AdapterFunctionality<T> functionality : mFunctionalities.values()) {
 		functionality.applyFunctionality(this, recyclerView);
 	}
 }
