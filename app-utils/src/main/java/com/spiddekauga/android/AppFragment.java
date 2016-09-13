@@ -1,14 +1,15 @@
 package com.spiddekauga.android;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -18,7 +19,6 @@ import com.spiddekauga.utils.EventBus;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 
 import de.mrapp.android.dialog.MaterialDialog;
 
@@ -28,6 +28,7 @@ import de.mrapp.android.dialog.MaterialDialog;
 public abstract class AppFragment extends Fragment {
 private static final String TAG = AppFragment.class.getSimpleName();
 private static final EventBus mEventBus = EventBus.getInstance();
+private static AppFragment mActiveFragment = null;
 @StringRes
 int mBackMessage;
 @StringRes
@@ -41,7 +42,7 @@ private AppFragmentHelper mFragmentHelper = new AppFragmentHelper();
  */
 public static void gotoFragment(Class<? extends AppFragment> fragmentClass) {
 	if (existsInBackStack(fragmentClass)) {
-		AppActivity.getActivity().getSupportFragmentManager().popBackStackImmediate(fragmentClass.getSimpleName(), 0);
+		AppActivity.getActivity().getFragmentManager().popBackStackImmediate(fragmentClass.getSimpleName(), 0);
 	} else {
 		try {
 			Constructor<? extends AppFragment> constructor = fragmentClass.getConstructor();
@@ -59,7 +60,7 @@ public static void gotoFragment(Class<? extends AppFragment> fragmentClass) {
  * @return true if the fragmentClass exists in the back stack
  */
 public static boolean existsInBackStack(Class<? extends Fragment> fragmentClass) {
-	FragmentManager fragmentManager = AppActivity.getActivity().getSupportFragmentManager();
+	FragmentManager fragmentManager = AppActivity.getActivity().getFragmentManager();
 	for (int i = 0; i < fragmentManager.getBackStackEntryCount(); i++) {
 		FragmentManager.BackStackEntry backStackEntry = fragmentManager.getBackStackEntryAt(0);
 		if (fragmentClass.getSimpleName().equals(backStackEntry.getName())) {
@@ -74,23 +75,18 @@ public static boolean existsInBackStack(Class<? extends Fragment> fragmentClass)
  */
 public void show() {
 	AppActivity activity = AppActivity.getActivity();
-	FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+	FragmentTransaction fragmentTransaction = activity.getFragmentManager().beginTransaction();
 	fragmentTransaction.replace(android.R.id.content, this);
 	fragmentTransaction.addToBackStack(getClass().getSimpleName());
 	fragmentTransaction.commit();
 }
 
-static Fragment getVisibleFragment() {
-	FragmentManager fragmentManager = AppActivity.getActivity().getSupportFragmentManager();
-	List<Fragment> fragments = fragmentManager.getFragments();
-	if (fragments != null) {
-		for (Fragment fragment : fragments) {
-			if (fragment != null && fragment.isVisible()) {
-				return fragment;
-			}
-		}
+static AppFragment getVisibleFragment() {
+	if (mActiveFragment != null && mActiveFragment.isVisible()) {
+		return mActiveFragment;
+	} else {
+		return null;
 	}
-	return null;
 }
 
 /**
@@ -121,37 +117,6 @@ protected void setBackMessage(@StringRes int message, @StringRes int positiveAct
 	mBackPositiveActionText = positiveActionText;
 }
 
-@Override
-public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-	super.onViewCreated(view, savedInstanceState);
-	mFragmentHelper.onViewCreated(view, savedInstanceState);
-}
-
-@Override
-public void onResume() {
-	super.onResume();
-	mEventBus.post(new FragmentResumeEvent(this));
-}
-
-@Override
-public void onStop() {
-	super.onStop();
-
-	// Always hide the keyboard
-	hideKeyboard();
-}
-
-/**
- * Hide the keyboard
- */
-protected void hideKeyboard() {
-	View focus = getActivity().getCurrentFocus();
-	if (focus instanceof EditText) {
-		InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-		inputMethodManager.hideSoftInputFromWindow(focus.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-	}
-}
-
 /**
  * Display back dialog discard message if something has been changed in the fragment. If nothing has
  * been changed it simply dismisses the window.
@@ -175,11 +140,51 @@ public void back() {
 }
 
 /**
+ * Hide the keyboard
+ */
+protected void hideKeyboard() {
+	View focus = getActivity().getCurrentFocus();
+	if (focus instanceof EditText) {
+		InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+		inputMethodManager.hideSoftInputFromWindow(focus.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+	}
+}
+
+/**
  * Override this to check if values have been changed
  * @return true if values have been changed/edited
  */
 protected boolean isChanged() {
 	return false;
+}
+
+public Context getContext() {
+	if (Build.VERSION.SDK_INT >= 23) {
+		return super.getContext();
+	} else {
+		return getActivity();
+	}
+}
+
+@Override
+public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+	super.onViewCreated(view, savedInstanceState);
+	mFragmentHelper.onViewCreated(view, savedInstanceState);
+}
+
+@Override
+public void onResume() {
+	super.onResume();
+	mActiveFragment = this;
+	mEventBus.post(new FragmentResumeEvent(this));
+}
+
+@Override
+public void onStop() {
+	super.onStop();
+
+	// Always hide the keyboard
+	hideKeyboard();
 }
 
 /**

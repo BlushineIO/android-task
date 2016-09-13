@@ -10,11 +10,9 @@ import com.spiddekauga.android.AppActivity;
 
 /**
  * Display some text information in a fragment. If you can, preferably use {@link InfoFragment}
- * directly instead as this requires less resources. Info fragment can, however, only be used if you
- * use the v4 {@link android.support.v4.app.FragmentManager}.
+ * directly instead as this requires less resources.
  */
 public class InfoActivity extends AppActivity {
-private static final String TAG = InfoActivity.class.getSimpleName();
 
 /**
  * Create and show an instance of this class

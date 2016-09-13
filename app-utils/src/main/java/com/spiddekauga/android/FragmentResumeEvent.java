@@ -1,60 +1,34 @@
 package com.spiddekauga.android;
 
+import android.app.Fragment;
+
 /**
  * Fired when onResume() is called in a AppFragment
  */
 public class FragmentResumeEvent {
-private AppFragment mAppFragment;
-private AppPreferenceFragment mPreferenceFragment;
+private Fragment mFragment;
 private FragmentTypes mType;
 
 /**
- * Create AppFragment type
+ * Create the fragment
  * @param fragment the fragment that was resumed
  */
-FragmentResumeEvent(AppFragment fragment) {
-	mAppFragment = fragment;
-	mType = FragmentTypes.APP;
-}
-
-/**
- * Create AppPreferenceFragment type
- * @param fragment the preference fragment that was resumed
- */
-FragmentResumeEvent(AppPreferenceFragment fragment) {
-	mPreferenceFragment = fragment;
-	mType = FragmentTypes.PREFERENCE;
+FragmentResumeEvent(Fragment fragment) {
+	mFragment = fragment;
+	if (fragment instanceof AppFragment) {
+		mType = FragmentTypes.APP;
+	} else if (fragment instanceof AppPreferenceFragment) {
+		mType = FragmentTypes.PREFERENCE;
+	}
 }
 
 /**
  * Get the fragment that was resumed
  * @return fragment that was resumed
  */
-public Object getFragment() {
-	switch (mType) {
-	case APP:
-		return mAppFragment;
-	case PREFERENCE:
-		return mPreferenceFragment;
-	}
-
-	return null;
-}
-
-/**
- * Get the {@link AppFragment} that was resumed
- * @return the {@link AppFragment} that was resumed
- */
-public AppFragment getAppFragment() {
-	return mAppFragment;
-}
-
-/**
- * Get the {@link AppPreferenceFragment} that was resumed
- * @return the {@link AppPreferenceFragment} that was resumed
- */
-public AppPreferenceFragment getPreferenceFragment() {
-	return mPreferenceFragment;
+@SuppressWarnings("unchecked")
+public <FragmentType> FragmentType getFragment() {
+	return (FragmentType) mFragment;
 }
 
 /**

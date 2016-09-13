@@ -3,7 +3,6 @@ package com.spiddekauga.android;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -90,9 +89,9 @@ protected void onFirstTime() {
 
 @Override
 public void onBackPressed() {
-	Fragment visibleFragment = AppFragment.getVisibleFragment();
-	if (visibleFragment instanceof AppFragment) {
-		((AppFragment) visibleFragment).back();
+	AppFragment visibleFragment = AppFragment.getVisibleFragment();
+	if (visibleFragment != null) {
+		visibleFragment.back();
 	} else {
 		super.onBackPressed();
 	}
