@@ -2,7 +2,6 @@ package com.spiddekauga.android;
 
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,6 +17,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.spiddekauga.android.ui.ColorHelper;
+import com.spiddekauga.android.ui.Fonts;
 import com.spiddekauga.utils.EventBus;
 
 /**
@@ -25,7 +25,6 @@ import com.spiddekauga.utils.EventBus;
  */
 class AppFragmentHelper {
 private static final EventBus mEventBus = EventBus.getInstance();
-private static Typeface mToolbarFont = null;
 @ColorInt
 private int mToolbarColor;
 @ColorInt
@@ -103,10 +102,6 @@ private void colorToolbar(Toolbar toolbar) {
  * @param toolbar the toolbar to fix the fonts on
  */
 private void fixToolbarFonts(Toolbar toolbar) {
-	if (mToolbarFont == null) {
-		mToolbarFont = Typeface.createFromAsset(AppActivity.getActivity().getAssets(), "fonts/Roboto-Medium.ttf");
-	}
-
 	Resources resources = AppActivity.getActivity().getResources();
 
 	for (int childIndex = 0; childIndex < toolbar.getChildCount(); childIndex++) {
@@ -116,7 +111,7 @@ private void fixToolbarFonts(Toolbar toolbar) {
 		if (view instanceof TextView) {
 			TextView textView = (TextView) view;
 			if (textView.getText().equals(toolbar.getTitle())) {
-				textView.setTypeface(mToolbarFont);
+				textView.setTypeface(Fonts.MEDIUM.getTypeface());
 			}
 		}
 		// Menu buttons
@@ -124,7 +119,7 @@ private void fixToolbarFonts(Toolbar toolbar) {
 			ActionMenuView menuView = (ActionMenuView) view;
 			for (int menuItemIndex = 0; menuItemIndex < menuView.getChildCount(); menuItemIndex++) {
 				ActionMenuItemView itemView = (ActionMenuItemView) menuView.getChildAt(menuItemIndex);
-				itemView.setTypeface(mToolbarFont);
+				itemView.setTypeface(Fonts.MEDIUM.getTypeface());
 			}
 		}
 	}

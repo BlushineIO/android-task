@@ -133,7 +133,7 @@ public void back() {
 			}
 		});
 		dialogBuilder.setNegativeButton(R.string.cancel, null);
-		dialogBuilder.create().show();
+		dialogBuilder.show();
 	} else {
 		dismiss();
 	}

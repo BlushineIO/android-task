@@ -1,4 +1,4 @@
-package com.spiddekauga.android.ui;
+package com.spiddekauga.android.ui.view;
 
 import android.content.Context;
 import android.graphics.Rect;
