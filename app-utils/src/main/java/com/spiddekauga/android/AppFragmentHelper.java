@@ -1,5 +1,8 @@
 package com.spiddekauga.android;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -14,6 +17,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.spiddekauga.android.ui.ColorHelper;
@@ -23,14 +28,21 @@ import com.spiddekauga.utils.EventBus;
 /**
  * Various common helper methods for both {@link AppFragment} and {@link AppPreferenceFragment}.
  */
-class AppFragmentHelper {
+public class AppFragmentHelper {
 private static final EventBus mEventBus = EventBus.getInstance();
+private static AppFragmentHelper mCurrentFragment = null;
 @ColorInt
 private int mToolbarColor;
 @ColorInt
 private int mStatusbarColor;
+private Fragment mFragment;
 
-AppFragmentHelper() {
+
+/**
+ * Current fragment
+ */
+AppFragmentHelper(Fragment fragment) {
+	mFragment = fragment;
 	setToolbarColor(R.color.primary, R.color.primary_dark);
 }
 
@@ -44,6 +56,54 @@ void setToolbarColor(@ColorRes int toolbarColor, @ColorRes int statusbarColor) {
 	Resources resources = AppActivity.getActivity().getResources();
 	mToolbarColor = ColorHelper.getColor(resources, toolbarColor, null);
 	mStatusbarColor = ColorHelper.getColor(resources, statusbarColor, null);
+}
+
+/**
+ * Get current active (and visible) fragment
+ */
+public static AppFragmentHelper getCurrentFragment() {
+	if (mCurrentFragment != null && mCurrentFragment.getFragment().isVisible()) {
+		return mCurrentFragment;
+	} else {
+		return null;
+	}
+}
+
+/**
+ * Get the fragment associated with this helper
+ */
+public Fragment getFragment() {
+	return mFragment;
+}
+
+/**
+ * Called when the fragment has resumed
+ */
+void onResume() {
+	mCurrentFragment = this;
+	mEventBus.post(new FragmentEvent(mFragment, FragmentEvent.EventTypes.RESUME));
+}
+
+/**
+ * Called when the fragment has stopped
+ */
+void onStop() {
+	if (mCurrentFragment == this) {
+		mCurrentFragment = null;
+	}
+	hideKeyboard();
+	mEventBus.post(new FragmentEvent(mFragment, FragmentEvent.EventTypes.STOP));
+}
+
+/**
+ * Hide the keyboard
+ */
+public static void hideKeyboard() {
+	View focus = AppActivity.getActivity().getCurrentFocus();
+	if (focus instanceof EditText) {
+		InputMethodManager inputMethodManager = (InputMethodManager) AppActivity.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+		inputMethodManager.hideSoftInputFromWindow(focus.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+	}
 }
 
 /**
@@ -102,8 +162,6 @@ private void colorToolbar(Toolbar toolbar) {
  * @param toolbar the toolbar to fix the fonts on
  */
 private void fixToolbarFonts(Toolbar toolbar) {
-	Resources resources = AppActivity.getActivity().getResources();
-
 	for (int childIndex = 0; childIndex < toolbar.getChildCount(); childIndex++) {
 		View view = toolbar.getChildAt(childIndex);
 
@@ -122,6 +180,31 @@ private void fixToolbarFonts(Toolbar toolbar) {
 				itemView.setTypeface(Fonts.MEDIUM.getTypeface());
 			}
 		}
+	}
+}
+
+/**
+ * Go back, i.e. dismiss the window. If the AppFragment has unsaved changes a discard messages will
+ * be shown
+ */
+public void back() {
+	hideKeyboard();
+	if (mFragment instanceof AppFragment) {
+		((AppFragment) mFragment).back();
+	} else if (mFragment instanceof AppPreferenceFragment) {
+		((AppPreferenceFragment) mFragment).back();
+	}
+}
+
+/**
+ * Dismiss the fragment associated with this helper
+ */
+public void dismiss() {
+	FragmentManager fragmentManager = mFragment.getFragmentManager();
+	if (fragmentManager.getBackStackEntryCount() > 1) {
+		fragmentManager.popBackStackImmediate();
+	} else {
+		AppActivity.getActivity().supportFinishAfterTransition();
 	}
 }
 }

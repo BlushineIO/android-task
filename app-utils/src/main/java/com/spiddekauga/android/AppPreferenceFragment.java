@@ -12,12 +12,18 @@ import com.spiddekauga.utils.EventBus;
  */
 public abstract class AppPreferenceFragment extends PreferenceFragment {
 private static final EventBus mEventBus = EventBus.getInstance();
-private AppFragmentHelper mFragmentHelper = new AppFragmentHelper();
+private AppFragmentHelper mFragmentHelper = new AppFragmentHelper(this);
 
 @Override
 public void onViewCreated(View view, Bundle savedInstanceState) {
 	super.onViewCreated(view, savedInstanceState);
 	mFragmentHelper.onViewCreated(view.getRootView(), savedInstanceState);
+}
+
+@Override
+public void onStop() {
+	super.onStop();
+	mFragmentHelper.onStop();
 }
 
 /**
@@ -34,6 +40,20 @@ public void show() {
 @Override
 public void onResume() {
 	super.onResume();
-	mEventBus.post(new FragmentResumeEvent(this));
+	mFragmentHelper.onResume();
+}
+
+/**
+ * Dismiss this window.
+ */
+public void back() {
+	dismiss();
+}
+
+/**
+ * Dismiss this window.
+ */
+public void dismiss() {
+	mFragmentHelper.dismiss();
 }
 }

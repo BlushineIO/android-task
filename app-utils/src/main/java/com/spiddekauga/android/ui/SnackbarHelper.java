@@ -3,13 +3,17 @@ package com.spiddekauga.android.ui;
 import android.support.annotation.StringRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.spiddekauga.android.AppActivity;
-import com.spiddekauga.android.FragmentResumeEvent;
+import com.spiddekauga.android.AppFragmentHelper;
+import com.spiddekauga.android.FragmentEvent;
 import com.spiddekauga.utils.EventBus;
 import com.squareup.otto.Subscribe;
+
+import java.util.Arrays;
 
 /**
  * Some helper methods for creating simple snackbars
@@ -95,6 +99,7 @@ public static boolean isShownOrQueued() {
  * Container for snackbar messages
  */
 private static class SnackbarMessage {
+	private static final String TAG = SnackbarMessage.class.getSimpleName();
 	private static final EventBus mEventBus = EventBus.getInstance();
 	private static SnackbarMessage mLastMessage = null;
 	private String mMessage;
@@ -111,10 +116,12 @@ private static class SnackbarMessage {
 	}
 
 	@Subscribe
-	public void onFragmentResume(FragmentResumeEvent event) {
-		mEventBus.unregister(this);
-		if (isShown() && this == mLastMessage) {
-			show();
+	public void onFragment(FragmentEvent event) {
+		if (event.getEventType() == FragmentEvent.EventTypes.RESUME) {
+			mEventBus.unregister(this);
+			if (isShown() && this == mLastMessage) {
+				show();
+			}
 		}
 	}
 
@@ -127,24 +134,33 @@ private static class SnackbarMessage {
 	}
 
 	void show() {
-		// TODO uncomment when support library 24.2.1 has been released
-//		final View view = getView();
-//		mSnackbar = Snackbar.make(view, mMessage, mDuration);
-//		if (mActionTitle != null && mAction != null) {
-//			mSnackbar.setAction(mActionTitle, mAction);
-//		}
-//		mSnackbar.setCallback(new Snackbar.Callback() {
-//			@Override
-//			public void onDismissed(Snackbar snackbar, int event) {
-//				if (view instanceof FloatingActionButton) {
-//					fixFloatingActionButtonPosition((FloatingActionButton) view);
-//				}
-//				mEventBus.post(new SnackbarDismissEvent());
-//			}
-//		});
-//		mSnackbar.show();
-//		mEventBus.register(this);
-//		mLastMessage = this;
+		String stackTrace = Arrays.toString(Thread.currentThread().getStackTrace());
+		stackTrace = stackTrace.replace(", ", "\n");
+		Log.d(TAG, "show() — Show snackbar: " + mMessage + "\n" + stackTrace); // Stacktrace
+
+		if (AppFragmentHelper.getCurrentFragment() != null) {
+			final View view = getView();
+			mSnackbar = Snackbar.make(view, mMessage, mDuration);
+			if (mActionTitle != null && mAction != null) {
+				mSnackbar.setAction(mActionTitle, mAction);
+			}
+			mSnackbar.setCallback(new Snackbar.Callback() {
+				@Override
+				public void onDismissed(Snackbar snackbar, int event) {
+					if (view instanceof FloatingActionButton) {
+						fixFloatingActionButtonPosition((FloatingActionButton) view);
+					}
+					if (mLastMessage == SnackbarMessage.this) {
+						mLastMessage = null;
+					}
+					mEventBus.post(new SnackbarDismissEvent());
+				}
+			});
+			mSnackbar.show();
+		}
+
+		mEventBus.register(this);
+		mLastMessage = this;
 	}
 
 	private View getView() {

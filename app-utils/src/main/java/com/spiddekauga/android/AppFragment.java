@@ -12,8 +12,6 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 
 import com.spiddekauga.utils.EventBus;
 
@@ -28,12 +26,11 @@ import de.mrapp.android.dialog.MaterialDialog;
 public abstract class AppFragment extends Fragment {
 private static final String TAG = AppFragment.class.getSimpleName();
 private static final EventBus mEventBus = EventBus.getInstance();
-private static AppFragment mActiveFragment = null;
 @StringRes
 int mBackMessage;
 @StringRes
 int mBackPositiveActionText = R.string.discard;
-private AppFragmentHelper mFragmentHelper = new AppFragmentHelper();
+private AppFragmentHelper mFragmentHelper = new AppFragmentHelper(this);
 
 /**
  * Go to the specified fragment. If the fragment exists in the back stack it will pop to this
@@ -81,14 +78,6 @@ public void show() {
 	fragmentTransaction.commit();
 }
 
-static AppFragment getVisibleFragment() {
-	if (mActiveFragment != null && mActiveFragment.isVisible()) {
-		return mActiveFragment;
-	} else {
-		return null;
-	}
-}
-
 /**
  * Set the toolbar and statusbar colors. Only works before {@link #onResume()} is called.
  * @param toolbarColor color of the toolbar
@@ -122,7 +111,6 @@ protected void setBackMessage(@StringRes int message, @StringRes int positiveAct
  * been changed it simply dismisses the window.
  */
 public void back() {
-	hideKeyboard();
 	if (isChanged()) {
 		MaterialDialog.Builder dialogBuilder = new MaterialDialog.Builder(getContext());
 		dialogBuilder.setMessage(mBackMessage);
@@ -139,16 +127,7 @@ public void back() {
 	}
 }
 
-/**
- * Hide the keyboard
- */
-protected void hideKeyboard() {
-	View focus = getActivity().getCurrentFocus();
-	if (focus instanceof EditText) {
-		InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-		inputMethodManager.hideSoftInputFromWindow(focus.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-	}
-}
+
 
 /**
  * Override this to check if values have been changed
@@ -175,29 +154,20 @@ public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 @Override
 public void onResume() {
 	super.onResume();
-	mActiveFragment = this;
-	mEventBus.post(new FragmentResumeEvent(this));
+	mFragmentHelper.onResume();
 }
 
 @Override
 public void onStop() {
 	super.onStop();
-
-	// Always hide the keyboard
-	hideKeyboard();
+	mFragmentHelper.onStop();
 }
 
 /**
  * Dismiss this window.
  */
 public void dismiss() {
-	// Never pop the first fragment in back stack as the activity will be left empty then
-	FragmentManager fragmentManager = getFragmentManager();
-	if (fragmentManager.getBackStackEntryCount() > 1) {
-		fragmentManager.popBackStackImmediate();
-	} else {
-		AppActivity.getActivity().supportFinishAfterTransition();
-	}
+	mFragmentHelper.dismiss();
 }
 
 }
