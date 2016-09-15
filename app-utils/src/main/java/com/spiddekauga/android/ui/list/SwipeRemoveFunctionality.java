@@ -33,6 +33,7 @@ private int mColor = ColorHelper.getColor(AppActivity.getActivity().getResources
 private AdvancedAdapter<T, ?> mAdapter;
 private Map<T, Runnable> mPendingRemoves = new HashMap<>();
 private Handler mHandler = new Handler();
+private boolean mRemoving = false;
 
 public SwipeRemoveFunctionality(AdvancedAdapter<T, ?> adapter, RemoveListener<T> listener) {
 	mAdapter = adapter;
@@ -70,7 +71,7 @@ public Class<UndoViewHolder> getViewHolderClass() {
 @Override
 public void onBindViewHolder(AdvancedAdapter<T, ?> adapter, RecyclerView.ViewHolder view, int position) {
 	UndoViewHolder undoView = (UndoViewHolder) view;
-	undoView.itemView.setBackgroundColor(mColor);
+//	undoView.itemView.setBackgroundColor(mColor);
 	undoView.mRemovedTextView.setText(mRemovedMessage);
 
 	if (mUndoFunctionality) {
@@ -124,12 +125,13 @@ static class UndoViewHolder extends RecyclerView.ViewHolder {
 
 /**
  * Callback when a transaction has been swiped (and should be removed)
+ * Draws the red background together with the trash can while the list item is being swiped
  */
 class TransactionRemoveCallback extends ItemTouchHelper.Callback {
 	private static final int UNDO_DURATION = 3000; // 3sec
-	private final int mXMargin = (int) AppActivity.getActivity().getResources().getDimension(R.dimen.margin);
+	private final int mTrashMargin = (int) AppActivity.getActivity().getResources().getDimension(R.dimen.margin);
 	private Drawable mBackground = new ColorDrawable(mColor);
-	private Drawable mXMark = ContextCompat.getDrawable(AppActivity.getActivity(), R.drawable.delete_24dp);
+	private Drawable mTrash = ContextCompat.getDrawable(AppActivity.getActivity(), R.drawable.delete_24dp);
 
 	@Override
 	public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
@@ -198,32 +200,33 @@ class TransactionRemoveCallback extends ItemTouchHelper.Callback {
 
 		mBackground.draw(c);
 
-		// draw x mark
+		// draw trash mark
 		int itemHeight = itemView.getBottom() - itemView.getTop();
-		int intrinsicWidth = mXMark.getIntrinsicWidth();
-		int intrinsicHeight = mXMark.getIntrinsicWidth();
-		int xMarkTop = itemView.getTop() + (itemHeight - intrinsicHeight) / 2;
-		int xMarkBottom = xMarkTop + intrinsicHeight;
-		int xMarkLeft = Integer.MIN_VALUE;
-		int xMarkRight = Integer.MIN_VALUE;
+		int intrinsicWidth = mTrash.getIntrinsicWidth();
+		int intrinsicHeight = mTrash.getIntrinsicWidth();
+		int trashTop = itemView.getTop() + (itemHeight - intrinsicHeight) / 2;
+		int trashBottom = trashTop + intrinsicHeight;
+		int trashLeft = Integer.MIN_VALUE;
+		int trashRight = Integer.MIN_VALUE;
 
 		// Right
 		if (dX < 0) {
-			xMarkLeft = itemView.getRight() - mXMargin - intrinsicWidth;
-			xMarkRight = itemView.getRight() - mXMargin;
+			trashLeft = itemView.getRight() - mTrashMargin - intrinsicWidth;
+			trashRight = itemView.getRight() - mTrashMargin;
 		}
 		// Left
 		else if (dX > 0) {
-			xMarkLeft = itemView.getLeft() + mXMargin;
-			xMarkRight = itemView.getLeft() + mXMargin + intrinsicWidth;
+			trashLeft = itemView.getLeft() + mTrashMargin;
+			trashRight = itemView.getLeft() + mTrashMargin + intrinsicWidth;
 		}
-		mXMark.setBounds(xMarkLeft, xMarkTop, xMarkRight, xMarkBottom);
-		mXMark.draw(c);
+		mTrash.setBounds(trashLeft, trashTop, trashRight, trashBottom);
+		mTrash.draw(c);
 
 		super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
 	}
 
 	private void onRemove(T item) {
+		mRemoving = true;
 		mAdapter.remove(item);
 		mPendingRemoves.remove(item);
 		if (mListener != null) {
@@ -232,13 +235,16 @@ class TransactionRemoveCallback extends ItemTouchHelper.Callback {
 	}
 }
 
+/**
+ * Draws the red background during the remove animation. I.e. after the list item has been removed
+ */
 class BackgroundDecoration extends RecyclerView.ItemDecoration {
 	private Drawable mBackground = new ColorDrawable(mColor);
 
 	@Override
 	public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
 		// only if animation is in progress
-		if (parent.getItemAnimator().isRunning()) {
+		if (mRemoving && parent.getItemAnimator().isRunning()) {
 
 			// some items might be animating down and some items might be animating up to close the gap left by the removed item
 			// this is not exclusive, both movement can be happening at the same time
@@ -290,8 +296,11 @@ class BackgroundDecoration extends RecyclerView.ItemDecoration {
 
 			mBackground.setBounds(left, top, right, bottom);
 			mBackground.draw(c);
-
+		} else {
+			mRemoving = false;
 		}
+
+
 		super.onDraw(c, parent, state);
 	}
 }
