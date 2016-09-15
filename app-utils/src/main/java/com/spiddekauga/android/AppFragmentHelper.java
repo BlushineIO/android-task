@@ -124,19 +124,21 @@ public static Fragment getFragment() {
  * Called when the fragment has resumed
  */
 void onResume() {
+	Log.d(TAG, "onResume() — " + mFragment.getClass().getSimpleName());
 	mCurrentHelper = this;
 	mEventBus.post(new FragmentEvent(mFragment, FragmentEvent.EventTypes.RESUME));
 }
 
 /**
- * Called when the fragment has stopped
+ * Called when the fragment has paused
  */
-void onStop() {
+void onPause() {
+	Log.d(TAG, "onPause() — " + mFragment.getClass().getSimpleName());
 	if (mCurrentHelper == this) {
 		mCurrentHelper = null;
 	}
 	hideKeyboard();
-	mEventBus.post(new FragmentEvent(mFragment, FragmentEvent.EventTypes.STOP));
+	mEventBus.post(new FragmentEvent(mFragment, FragmentEvent.EventTypes.PAUSE));
 }
 
 /**
@@ -148,6 +150,14 @@ public static void hideKeyboard() {
 		InputMethodManager inputMethodManager = (InputMethodManager) AppActivity.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 		inputMethodManager.hideSoftInputFromWindow(focus.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 	}
+}
+
+/**
+ * Called when the fragment has stopped
+ */
+void onStop() {
+	Log.d(TAG, "onStop() — " + mFragment.getClass().getSimpleName());
+	mEventBus.post(new FragmentEvent(mFragment, FragmentEvent.EventTypes.STOP));
 }
 
 /**

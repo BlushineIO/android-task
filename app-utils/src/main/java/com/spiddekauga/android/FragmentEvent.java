@@ -61,6 +61,7 @@ public enum FragmentTypes {
  */
 public enum EventTypes {
 	RESUME,
+	PAUSE,
 	STOP
 }
 }

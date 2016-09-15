@@ -112,6 +112,12 @@ public void onResume() {
 }
 
 @Override
+public void onPause() {
+	super.onPause();
+	mFragmentHelper.onPause();
+}
+
+@Override
 public void onStop() {
 	super.onStop();
 	mFragmentHelper.onStop();

@@ -108,6 +108,12 @@ public void onResume() {
 	mFragmentHelper.onResume();
 }
 
+@Override
+public void onPause() {
+	super.onPause();
+	mFragmentHelper.onPause();
+}
+
 /**
  * Dismiss this window.
  */

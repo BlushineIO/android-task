@@ -102,6 +102,7 @@ private static class SnackbarMessage {
 	private static final String TAG = SnackbarMessage.class.getSimpleName();
 	private static final EventBus mEventBus = EventBus.getInstance();
 	private static SnackbarMessage mLastMessage = null;
+	private boolean mNeverShown = true;
 	private String mMessage;
 	private String mActionTitle;
 	private int mDuration;
@@ -119,7 +120,7 @@ private static class SnackbarMessage {
 	public void onFragment(FragmentEvent event) {
 		if (event.getEventType() == FragmentEvent.EventTypes.RESUME) {
 			mEventBus.unregister(this);
-			if (isShown() && this == mLastMessage) {
+			if (this == mLastMessage && (!mNeverShown || isShown())) {
 				show();
 			}
 		}
@@ -157,6 +158,7 @@ private static class SnackbarMessage {
 				}
 			});
 			mSnackbar.show();
+			mNeverShown = false;
 		}
 
 		mEventBus.register(this);
