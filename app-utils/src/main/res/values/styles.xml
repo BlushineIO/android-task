@@ -23,6 +23,9 @@
 		<item name="materialDialogTheme">@style/Material.Dialog</item>
 		<item name="dialogTheme">@style/Material.Dialog</item>
 		<item name="alertDialogTheme">@style/Material.Dialog.Alert</item>
+		<item name="android:preferenceScreenStyle">@style/Material.PreferenceScreen</item>
+		<item name="android:preferenceFragmentStyle">@style/Material.PreferenceScreen</item>
+		<item name="android:listViewStyle">@style/Material.List</item>
 	</style>
 
 	<!--****************-->
@@ -38,6 +41,15 @@
 
 	<style name="Material.MenuButtonOverflow" parent="Widget.AppCompat.ActionButton.Overflow">
 		<item name="android:tint">@color/icon_toolbar</item>
+	</style>
+
+	<!--****************-->
+	<!--   Preferences	-->
+	<!--****************-->
+	<style name="Material.PreferenceScreen">
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:padding">0dp</item>
 	</style>
 
 	<!--************************-->
@@ -69,6 +81,9 @@
 	<style name="Material.List">
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:layout_width">match_parent</item>
+		<item name="android:padding">0dp</item>
+		<item name="android:divider">@color/list_item_divider</item>
+		<item name="android:dividerHeight">1dp</item>
 	</style>
 
 	<style name="Material.List.WithFloatingActionButton">
@@ -136,15 +151,19 @@
 
 	<!-- Use this when there only is a single text line -->
 	<style name="Material.ListItem.Text.Single">
-		<item name="android:layout_width">0dp</item>
+		<item name="android:paddingLeft">@dimen/list_item_padding</item>
+		<item name="android:paddingStart" tools:targetApi="17">@dimen/list_item_padding</item>
 		<item name="android:textSize">16sp</item>
+		<item name="android:gravity">center_vertical</item>
+		<item name="android:layout_height">@dimen/list_item_height_one_line</item>
 		<item name="android:textColor">@color/text_primary</item>
-		<item name="android:layout_weight">1</item>
 		<item name="android:paddingRight">@dimen/list_item_padding</item>
 		<item name="android:paddingEnd" tools:targetApi="17">@dimen/list_item_padding</item>
 	</style>
 
 	<style name="Material.ListItem.Text.Single.Icon24">
+		<item name="android:layout_width">0dp</item>
+		<item name="android:layout_weight">1</item>
 		<item name="android:paddingLeft">@dimen/list_item_padding_left_text_with_icon_36</item>
 		<item name="android:paddingStart" tools:targetApi="17">
 			@dimen/list_item_padding_left_text_with_icon_24
@@ -152,6 +171,8 @@
 	</style>
 
 	<style name="Material.ListItem.Text.Single.Icon36">
+		<item name="android:layout_width">0dp</item>
+		<item name="android:layout_weight">1</item>
 		<item name="android:paddingLeft">@dimen/list_item_padding_left_text_with_icon_36</item>
 		<item name="android:paddingStart" tools:targetApi="17">
 			@dimen/list_item_padding_left_text_with_icon_36
@@ -159,6 +180,8 @@
 	</style>
 
 	<style name="Material.ListItem.Text.Single.Icon48">
+		<item name="android:layout_width">0dp</item>
+		<item name="android:layout_weight">1</item>
 		<item name="android:paddingLeft">@dimen/list_item_padding_left_text_with_icon_48</item>
 		<item name="android:paddingStart" tools:targetApi="17">
 			@dimen/list_item_padding_left_text_with_icon_48
@@ -166,13 +189,13 @@
 	</style>
 
 	<style name="Material.ListItem.Text.Single.Dense">
-		<item name="android:layout_width">0dp</item>
 		<item name="android:textSize">13sp</item>
 		<item name="android:textColor">@color/text_primary</item>
-		<item name="android:layout_weight">1</item>
 	</style>
 
 	<style name="Material.ListItem.Text.Single.Dense.Icon24">
+		<item name="android:layout_width">0dp</item>
+		<item name="android:layout_weight">1</item>
 		<item name="android:paddingLeft">@dimen/list_item_padding_left_text_with_icon_36</item>
 		<item name="android:paddingStart" tools:targetApi="17">
 			@dimen/list_item_padding_left_text_with_icon_24
@@ -180,6 +203,8 @@
 	</style>
 
 	<style name="Material.ListItem.Text.Single.Dense.Icon36">
+		<item name="android:layout_width">0dp</item>
+		<item name="android:layout_weight">1</item>
 		<item name="android:paddingLeft">@dimen/list_item_padding_left_text_with_icon_36</item>
 		<item name="android:paddingStart" tools:targetApi="17">
 			@dimen/list_item_padding_left_text_with_icon_36
@@ -187,6 +212,8 @@
 	</style>
 
 	<style name="Material.ListItem.Text.Single.Dense.Icon48">
+		<item name="android:layout_width">0dp</item>
+		<item name="android:layout_weight">1</item>
 		<item name="android:paddingLeft">@dimen/list_item_padding_left_text_with_icon_48</item>
 		<item name="android:paddingStart" tools:targetApi="17">
 			@dimen/list_item_padding_left_text_with_icon_48
@@ -231,6 +258,7 @@
 	<style name="Material.ListItem.Text.Secondary">
 		<item name="android:textSize">14sp</item>
 		<item name="android:textColor">@color/text_secondary</item>
+		<item name="android:maxLines">10</item>
 	</style>
 
 	<style name="Material.ListItem.Text.Primary.Dense">

@@ -13,8 +13,6 @@ import android.support.annotation.StringRes;
 import android.util.Log;
 import android.view.View;
 
-import com.spiddekauga.utils.EventBus;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
@@ -25,7 +23,6 @@ import de.mrapp.android.dialog.MaterialDialog;
  */
 public abstract class AppFragment extends Fragment {
 private static final String TAG = AppFragment.class.getSimpleName();
-private static final EventBus mEventBus = EventBus.getInstance();
 @StringRes
 int mBackMessage;
 @StringRes
