@@ -1,7 +1,6 @@
 package com.spiddekauga.android;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,11 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.util.Log;
 import android.view.View;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 import de.mrapp.android.dialog.MaterialDialog;
 
@@ -22,47 +17,11 @@ import de.mrapp.android.dialog.MaterialDialog;
  * Base class for fullscreen fragments
  */
 public abstract class AppFragment extends Fragment {
-private static final String TAG = AppFragment.class.getSimpleName();
 @StringRes
 int mBackMessage;
 @StringRes
 int mBackPositiveActionText = R.string.discard;
 private AppFragmentHelper mFragmentHelper = new AppFragmentHelper(this);
-
-/**
- * Go to the specified fragment. If the fragment exists in the back stack it will pop to this
- * fragment. Otherwise it will create a new fragment
- * @param fragmentClass the fragment class to goto to (or create)
- */
-public static void gotoFragment(Class<? extends AppFragment> fragmentClass) {
-	if (existsInBackStack(fragmentClass)) {
-		AppActivity.getActivity().getFragmentManager().popBackStackImmediate(fragmentClass.getSimpleName(), 0);
-	} else {
-		try {
-			Constructor<? extends AppFragment> constructor = fragmentClass.getConstructor();
-			AppFragment appFragment = constructor.newInstance();
-			appFragment.show();
-		} catch (NoSuchMethodException | IllegalAccessException | java.lang.InstantiationException | InvocationTargetException e) {
-			Log.e(TAG, "newFirstScreenInstance() - Failed to find Constructor", e);
-		}
-	}
-}
-
-/**
- * Checks if a fragment class exists in the back stack
- * @param fragmentClass the fragment class to check if it exists in the back stack
- * @return true if the fragmentClass exists in the back stack
- */
-public static boolean existsInBackStack(Class<? extends Fragment> fragmentClass) {
-	FragmentManager fragmentManager = AppActivity.getActivity().getFragmentManager();
-	for (int i = 0; i < fragmentManager.getBackStackEntryCount(); i++) {
-		FragmentManager.BackStackEntry backStackEntry = fragmentManager.getBackStackEntryAt(0);
-		if (fragmentClass.getSimpleName().equals(backStackEntry.getName())) {
-			return true;
-		}
-	}
-	return false;
-}
 
 /**
  * Show the current fragment
@@ -123,8 +82,6 @@ public void back() {
 		dismiss();
 	}
 }
-
-
 
 /**
  * Override this to check if values have been changed
