@@ -138,7 +138,7 @@ private static class SnackbarMessage {
 		stackTrace = stackTrace.replace(", ", "\n");
 		Log.d(TAG, "show() — Show snackbar: " + mMessage + "\n" + stackTrace); // Stacktrace
 
-		if (AppFragmentHelper.getCurrentFragment() != null) {
+		if (AppFragmentHelper.getHelper() != null) {
 			final View view = getView();
 			mSnackbar = Snackbar.make(view, mMessage, mDuration);
 			if (mActionTitle != null && mAction != null) {

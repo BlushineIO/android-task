@@ -59,9 +59,9 @@ void setToolbarColor(@ColorRes int toolbarColor, @ColorRes int statusbarColor) {
 }
 
 /**
- * Get current active (and visible) fragment
+ * @return the current active fragment helper, null if none is active
  */
-public static AppFragmentHelper getCurrentFragment() {
+public static AppFragmentHelper getHelper() {
 	if (mCurrentFragment != null && mCurrentFragment.getFragment().isVisible()) {
 		return mCurrentFragment;
 	} else {
@@ -70,10 +70,14 @@ public static AppFragmentHelper getCurrentFragment() {
 }
 
 /**
- * Get the fragment associated with this helper
+ * @return current active fragment, null if none is active
  */
-public Fragment getFragment() {
-	return mFragment;
+public static Fragment getFragment() {
+	if (mCurrentFragment != null) {
+		return mCurrentFragment.mFragment;
+	} else {
+		return null;
+	}
 }
 
 /**

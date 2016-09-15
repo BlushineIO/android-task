@@ -89,7 +89,7 @@ protected void onFirstTime() {
 
 @Override
 public void onBackPressed() {
-	AppFragmentHelper visibleFragment = AppFragmentHelper.getCurrentFragment();
+	AppFragmentHelper visibleFragment = AppFragmentHelper.getHelper();
 	if (visibleFragment != null) {
 		visibleFragment.back();
 	} else {
