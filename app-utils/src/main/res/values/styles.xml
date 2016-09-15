@@ -25,7 +25,7 @@
 		<item name="alertDialogTheme">@style/Material.Dialog.Alert</item>
 		<item name="android:preferenceScreenStyle">@style/Material.PreferenceScreen</item>
 		<item name="android:preferenceFragmentStyle">@style/Material.PreferenceScreen</item>
-		<item name="android:listViewStyle">@style/Material.List</item>
+		<item name="android:listViewStyle">@style/Material.List.General</item>
 	</style>
 
 	<!--****************-->
@@ -81,12 +81,18 @@
 	<style name="Material.List">
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:layout_width">match_parent</item>
+	</style>
+
+	<style name="Material.List.General">
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_width">match_parent</item>
 		<item name="android:padding">0dp</item>
 		<item name="android:divider">@color/list_item_divider</item>
 		<item name="android:dividerHeight">1dp</item>
 	</style>
 
 	<style name="Material.List.WithFloatingActionButton">
+		<item name="android:layout_height">match_parent</item>
 		<item name="android:clipToPadding">false</item>
 		<item name="android:paddingBottom">@dimen/list_fab_bottom_padding</item>
 	</style>
