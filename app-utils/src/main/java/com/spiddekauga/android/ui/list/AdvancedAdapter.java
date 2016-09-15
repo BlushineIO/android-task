@@ -204,6 +204,7 @@ public void addItem(T... items) {
 public void addItem(int position, T item) {
 	mItems.add(position, item);
 	notifyItemInserted(position);
+
 }
 
 /**
