@@ -1,11 +1,10 @@
 package com.spiddekauga.android.validate;
 
-import android.widget.TextView;
-
 /**
- * Base class for various validators
+ * Base class for validating that a field contains a valid value
+ * @param <Field> field class to validate
  */
-public abstract class Validate {
+public abstract class Validate<Field> {
 private String mErrorMessage;
 
 /**
@@ -16,17 +15,16 @@ protected Validate(String errorMessage) {
 }
 
 /**
- * Validate the text
- * @param textView the text view to validate
- * @param text the text within the textView to validate
+ * Validate the field
+ * @param field the field to validate
  * @return true if validation was successful, false if an error occurred
  */
-protected abstract boolean validate(TextView textView, String text);
+public abstract boolean validate(Field field);
 
 /**
  * @return error message to print if the validation fails
  */
-String getErrorMessage() {
+public String getErrorMessage() {
 	return mErrorMessage;
 }
 }

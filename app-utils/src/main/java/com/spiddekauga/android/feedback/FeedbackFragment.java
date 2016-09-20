@@ -21,8 +21,8 @@ import com.spiddekauga.android.BuildConfig;
 import com.spiddekauga.android.R;
 import com.spiddekauga.android.ui.SnackbarHelper;
 import com.spiddekauga.android.validate.TextValidator;
-import com.spiddekauga.android.validate.TextValidatorGroup;
 import com.spiddekauga.android.validate.Validate;
+import com.spiddekauga.android.validate.ValidatorGroup;
 import com.spiddekauga.cloudshine.feedbackApi.model.Feedback;
 import com.spiddekauga.utils.Strings;
 
@@ -44,7 +44,7 @@ private String mName = null;
 private String mEmail = null;
 @StringRes
 private int mSuccessText = -1;
-private TextValidatorGroup mTextValidatorGroup = new TextValidatorGroup();
+private ValidatorGroup mValidatorGroup = new ValidatorGroup();
 
 /**
  * Set the exception
@@ -86,14 +86,18 @@ public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
 	});
 
 	mTitle = (EditText) view.findViewById(R.id.title_edit);
-	TextValidator titleValidator = new TextValidator(mTitle);
-	titleValidator.addValidation(new RequiredWhenNotException());
-	mTextValidatorGroup.add(titleValidator);
+	TextValidator titleValidator = new TextValidator
+			.Builder(mTitle)
+			.addValidation(new RequiredWhenNotException())
+			.build();
+	mValidatorGroup.add(titleValidator);
 
 	mMessage = (EditText) view.findViewById(R.id.message_edit);
-	TextValidator messageValidator = new TextValidator(mMessage);
-	messageValidator.addValidation(new RequiredWhenNotException());
-	mTextValidatorGroup.add(messageValidator);
+	TextValidator messageValidator = new TextValidator
+			.Builder(mMessage)
+			.addValidation(new RequiredWhenNotException())
+			.build();
+	mValidatorGroup.add(messageValidator);
 
 	// Set dialog title
 	mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
@@ -107,7 +111,7 @@ public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
 	mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
 		@Override
 		public boolean onMenuItemClick(MenuItem item) {
-			if (mTextValidatorGroup.validate()) {
+			if (mValidatorGroup.validate()) {
 				sendFeedback();
 			}
 			return true;
@@ -227,14 +231,14 @@ private enum FeedbackTypes {
 	BUG_REPORT
 }
 
-private class RequiredWhenNotException extends Validate {
+private class RequiredWhenNotException extends Validate<TextView> {
 	private RequiredWhenNotException() {
 		super(AppActivity.getActivity().getResources().getString(R.string.validate_error_required));
 	}
 
 	@Override
-	protected boolean validate(TextView textView, String text) {
-		return mException != null || !text.isEmpty();
+	public boolean validate(TextView field) {
+		return mException != null || !field.getText().toString().isEmpty();
 	}
 }
 }

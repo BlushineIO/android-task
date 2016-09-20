@@ -6,25 +6,25 @@ import com.spiddekauga.android.AppActivity;
 import com.spiddekauga.android.R;
 
 /**
- * Makes the field required
+ * Makes the field setRequired
  */
-class ValidateRequired extends Validate {
+class ValidateRequiredText extends Validate<TextView> {
 /**
- * Uses the default_selectable message
+ * Uses the default setRequired message
  */
-ValidateRequired() {
+ValidateRequiredText() {
 	this(AppActivity.getActivity().getResources().getString(R.string.validate_error_required));
 }
 
 /**
  * @param errorMessage print this message if the validation fails
  */
-ValidateRequired(String errorMessage) {
+ValidateRequiredText(String errorMessage) {
 	super(errorMessage);
 }
 
 @Override
-protected boolean validate(TextView textView, String text) {
-	return text != null && !text.isEmpty();
+public boolean validate(TextView field) {
+	return field != null && !field.getText().toString().isEmpty();
 }
 }

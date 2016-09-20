@@ -27,4 +27,9 @@
 	<string name="got_it">OK</string>
 	<string name="reset">Återställ</string>
 	<string name="ok">OK</string>
+	<string name="password">Lösenord</string>
+	<string name="login">Logga in</string>
+	<string name="logout">Logga ut</string>
+	<string name="username">Användarnamn</string>
+	<string name="exit">Avsluta app</string>
 </resources>
