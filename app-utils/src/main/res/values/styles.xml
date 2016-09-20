@@ -44,12 +44,41 @@
 	</style>
 
 	<!--****************-->
+	<!-- 	Headers 	-->
+	<!--****************-->
+	<style name="Material.Subheader">
+		<item name="android:layout_height">@dimen/list_item_height_one_line</item>
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:gravity">center_vertical</item>
+		<item name="android:textSize">14sp</item>
+		<item name="android:textColor">@color/text_black_secondary</item>
+		<item name="android:paddingLeft">@dimen/list_item_padding</item>
+		<item name="android:paddingStart">@dimen/list_item_padding</item>
+		<item name="android:paddingRight">@dimen/list_item_padding</item>
+		<item name="android:paddingEnd">@dimen/list_item_padding</item>
+		<item name="materialFontFamily">medium</item>
+	</style>
+
+	<!--****************-->
 	<!--   Preferences	-->
 	<!--****************-->
 	<style name="Material.PreferenceScreen">
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:layout_width">wrap_content</item>
 		<item name="android:padding">0dp</item>
+	</style>
+
+	<!--****************-->
+	<!--   Buttons	-->
+	<!--****************-->
+	<style name="Material.Button" parent="Widget.AppCompat.Button">
+	</style>
+
+	<style name="Material.Button.Borderless" parent="Widget.AppCompat.Button.Borderless">
+	</style>
+
+	<style name="Material.Button.Borderless.Color">
+		<item name="android:textColor">@color/accent</item>
 	</style>
 
 	<!--************************-->
@@ -302,7 +331,9 @@
 		<item name="android:layout_height">1dp</item>
 	</style>
 
-	<!-- Edit fields -->
+	<!--****************-->
+	<!--   Edit Fields	-->
+	<!--****************-->
 	<style name="Material.Edit">
 		<item name="android:textColor">@color/text_primary</item>
 		<item name="android:textColorHint">@color/text_hint_disabled</item>
