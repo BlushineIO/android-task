@@ -15,7 +15,7 @@ import com.spiddekauga.cloudshine.feedbackApi.model.FeedbackResponse;
 import java.io.IOException;
 
 /**
- * Send feedback task
+ * Send menu_feedback task
  */
 class FeedbackSendTask extends WebTask<Feedback, Void, FeedbackResponseEvent> {
 private static final String TAG = FeedbackSendTask.class.getSimpleName();
@@ -58,7 +58,7 @@ protected void doInBackground(FeedbackResponseEvent event, Feedback... feedbacks
 				break;
 			}
 		} catch (IOException e) {
-			Log.w(TAG, "doInBackground() - Couldn't send feedback", e);
+			Log.w(TAG, "doInBackground() - Couldn't send menu_feedback", e);
 			event.setStatus(ResponseEvent.ResponseStatuses.FAILED);
 			break;
 		}

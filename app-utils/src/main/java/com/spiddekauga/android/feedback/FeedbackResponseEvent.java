@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Event Response after sending feedback to the server
+ * Event Response after sending menu_feedback to the server
  */
 public class FeedbackResponseEvent extends ResponseEvent {
 private List<Feedback> mFeedbacks = new ArrayList<>();

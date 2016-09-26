@@ -18,15 +18,18 @@
 	<string name="reset">Reset</string>
 	<string name="username">Username</string>
 	<string name="password">Password</string>
+	<string name="password_confirm">Confirm password</string>
 	<string name="login">Login</string>
 	<string name="logout">Logout</string>
 	<string name="exit">Exit</string>
 
 	<!-- Validate -->
-	<string name="validate_error_required">required</string>
-	<string name="validate_error_checked">should be checked</string>
-	<string name="validate_error_unchecked">should be unchecked</string>
-	<string name="validate_error_password_mismatch">passwords don\'t match</string>
+	<string name="validate_required">Field required</string>
+	<string name="validate_password_mismatch">Passwords don\'t match</string>
+	<string name="validate_checkbox_not_checked">Check off the box</string>
+	<string name="validate_checkbox_not_unchecked">Uncheck the box</string>
+	<string name="validate_min_length">Use # characters or more</string>
+	<string name="validate_password_min_length">Use # characters or more for passwords</string>
 
 	<!-- Feedback -->
 	<string name="feedback_menu">Send feedback</string>

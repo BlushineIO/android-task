@@ -1,30 +1,65 @@
 package com.spiddekauga.android.validate;
 
+import android.content.res.Resources;
+import android.support.design.widget.CheckableImageButton;
+import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.ViewParent;
+import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import com.spiddekauga.android.AppActivity;
+import com.spiddekauga.android.R;
 
 /**
  * Use this class to validate text fields.
  */
-public class TextValidator extends ViewValidator<TextView> implements TextWatcher {
+public class TextValidator extends Validator<TextView> implements TextWatcher {
+private TextInputLayout mTextInputLayout = null;
 
 /**
  * Create a new text validator
  * @param textView the text to validate
  */
-private TextValidator(TextView textView) {
+protected TextValidator(TextView textView) {
 	super(textView);
+
+	ViewParent parent = textView.getParent().getParent();
+	if (parent instanceof TextInputLayout) {
+		mTextInputLayout = (TextInputLayout) parent;
+
+		// Fix bottom padding on passwords image
+		FrameLayout frameLayout = (FrameLayout) mTextInputLayout.getChildAt(0);
+		if (frameLayout.getChildCount() == 2) {
+			frameLayout.setClipChildren(true);
+			Resources resources = AppActivity.getActivity().getResources();
+			int height = resources.getDimensionPixelSize(R.dimen.edit_inner_height);
+			CheckableImageButton image = (CheckableImageButton) frameLayout.getChildAt(1);
+			FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) image.getLayoutParams();
+			layoutParams.height = height;
+			image.setLayoutParams(layoutParams);
+		}
+	}
 }
 
 @Override
 protected void showError(String errorMessage) {
-	mField.setError(errorMessage);
+	if (mTextInputLayout != null) {
+		mTextInputLayout.setError(errorMessage);
+	} else {
+		mField.setError(errorMessage);
+	}
 }
 
 @Override
 public void clearError() {
-	mField.setError(null);
+	if (mTextInputLayout != null) {
+		mTextInputLayout.setError(null);
+		mTextInputLayout.setErrorEnabled(false);
+	} else {
+		mField.setError(null);
+	}
 }
 
 /**
@@ -41,35 +76,35 @@ public final void beforeTextChanged(CharSequence s, int start, int count, int af
 
 @Override
 public final void onTextChanged(CharSequence s, int start, int before, int count) {
-	validate();
+	// Does nothing
 }
 
 @Override
 public final void afterTextChanged(Editable s) {
-	invalidate();
+	validate();
 }
 
 /**
  * Builder for building {@link TextValidator}
  */
-public static class Builder extends ViewValidator.Builder<TextValidator, Builder> {
+public static class Builder extends Validator.Builder<TextValidator, Builder> {
+	private boolean mValidateOnTextChange = true;
+
 	/**
 	 * Required parameters for creating a text validator
 	 * @param textView the text view to validate
 	 */
 	public Builder(TextView textView) {
 		super(new TextValidator(textView));
-		setValidateOnLoseFocus(true);
 	}
 
-//	/**
-//	 * Will validate after each new or removed character is typed.
-//	 */
-//	public Builder setValidateOnTextChange() {
-//		mValidator.setValidateOnTextChange();
-//
-//		return this;
-//	}
+	/**
+	 * Won't validate after each text change
+	 */
+	public Builder setSkipValidateOnTextChange() {
+		mValidateOnTextChange = false;
+		return this;
+	}
 
 	/**
 	 * Set the text field as setRequired
@@ -86,6 +121,34 @@ public static class Builder extends ViewValidator.Builder<TextValidator, Builder
 	public Builder setRequired(String errorMessage) {
 		addValidation(new ValidateRequiredText(errorMessage));
 		return this;
+	}
+
+	/**
+	 * Set the minimum length of the text.
+	 * @param minLength minimum length of the text.
+	 */
+	public Builder setMinLength(int minLength) {
+		addValidation(new ValidateMinLengthText(minLength, null));
+		return this;
+	}
+
+	/**
+	 * Set the minimum length of the text.
+	 * @param minLength minimum length of the text.
+	 * @param errorMessage the error message to display. If the message has an '#' it will be
+	 * replaced with minLength.
+	 */
+	public Builder setMinLength(int minLength, String errorMessage) {
+		addValidation(new ValidateMinLengthText(minLength, errorMessage));
+		return this;
+	}
+
+	@Override
+	public TextValidator build() {
+		if (mValidateOnTextChange) {
+			mValidator.setValidateOnTextChange();
+		}
+		return super.build();
 	}
 }
 }

@@ -42,5 +42,4 @@ protected void onFocusChanged(boolean focused, int direction,
 		performFiltering(getText(), 0);
 	}
 }
-
 }

@@ -10,9 +10,15 @@ import java.util.List;
  * @param <Field> the field to validate
  */
 public abstract class Validator<Field> {
-protected final Field mField;
+protected Field mField = null;
 private boolean mValid = false;
 private List<Validate<Field>> mValidates = new ArrayList<>();
+
+/**
+ * Create empty validator
+ */
+protected Validator() {
+}
 
 /**
  * Create a new validator
@@ -37,6 +43,10 @@ public boolean validate() {
 		}
 	}
 
+	if (mValid) {
+		clearError();
+	}
+
 	return mValid;
 }
 
@@ -56,6 +66,14 @@ public abstract void clearError();
  */
 public boolean isValid() {
 	return mValid;
+}
+
+/**
+ * Make the validator valid. Only use this method if you override {@link #validate()}.
+ * @param valid if the validator is valid or not
+ */
+protected void setValid(boolean valid) {
+	mValid = valid;
 }
 
 /**

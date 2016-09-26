@@ -16,15 +16,15 @@
 			android:id="@+id/toolbar"
 			style="@style/Material.Toolbar"
 			android:layout_marginBottom="@dimen/list_margin_top_bottom"
-			app:navigationIcon="@drawable/clear_24dp"
+			app:navigationIcon="@drawable/ic_clear_24dp"
 			app:title="@string/feedback_header"/>
 
 		<LinearLayout
-			style="@style/Material.ListItem.Container.1">
+			style="@style/Material.ListItem.Container">
 
 			<android.support.v7.widget.AppCompatImageView
 				style="@style/Material.ListItem.Icon"
-				android:src="@drawable/bug_report_24dp"/>
+				android:src="@drawable/ic_bug_report_24dp"/>
 
 			<TextView
 				style="@style/Material.ListItem.Text.Single.Icon24"

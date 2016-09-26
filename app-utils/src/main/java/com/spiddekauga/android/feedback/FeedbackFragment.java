@@ -27,7 +27,7 @@ import com.spiddekauga.cloudshine.feedbackApi.model.Feedback;
 import com.spiddekauga.utils.Strings;
 
 /**
- * Displays a dialog for sending feedback to Spiddekauga's mail
+ * Displays a dialog for sending menu_feedback to Spiddekauga's mail
  */
 public class FeedbackFragment extends AppFragment {
 private static final String TITLE_KEY = "title";
@@ -148,8 +148,8 @@ public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
 }
 
 /**
- * Update the texts to use depending on which type of feedback it is
- * @param feedbackType the type of feedback it is
+ * Update the texts to use depending on which type of menu_feedback it is
+ * @param feedbackType the type of menu_feedback it is
  */
 private void switchFeedbackType(FeedbackTypes feedbackType) {
 	Resources resources = AppActivity.getActivity().getResources();
@@ -233,7 +233,7 @@ private enum FeedbackTypes {
 
 private class RequiredWhenNotException extends Validate<TextView> {
 	private RequiredWhenNotException() {
-		super(AppActivity.getActivity().getResources().getString(R.string.validate_error_required));
+		super(AppActivity.getActivity().getResources().getString(R.string.validate_required));
 	}
 
 	@Override

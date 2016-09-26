@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Group of validators
  */
-public class ValidatorGroup {
+public class ValidatorGroup extends Validator {
 private List<Validator<?>> mValidators = new ArrayList<>();
 
 /**
@@ -24,36 +24,29 @@ public void add(Validator<?> validator) {
  * @return true if the entire group is valid
  */
 public boolean validate() {
-	boolean valid = true;
+	setValid(true);
 
 	for (Validator<?> validator : mValidators) {
 		if (!validator.validate()) {
-			valid = false;
+			setValid(false);
 		}
 	}
 
-	return valid;
+	return isValid();
+}
+
+@Override
+protected void showError(String errorMessage) {
+	// Does nothing
 }
 
 /**
  * Clear all errors
  */
-public void clearErrors() {
+@Override
+public void clearError() {
 	for (Validator<?> validator : mValidators) {
 		validator.clearError();
 	}
-}
-
-/**
- * @return true if all text views are valid
- */
-public boolean isValid() {
-	for (Validator<?> validator : mValidators) {
-		if (!validator.isValid()) {
-			return false;
-		}
-	}
-
-	return true;
 }
 }

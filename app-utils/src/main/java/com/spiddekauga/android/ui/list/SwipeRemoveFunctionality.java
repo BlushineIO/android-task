@@ -131,7 +131,7 @@ class TransactionRemoveCallback extends ItemTouchHelper.Callback {
 	private static final int UNDO_DURATION = 3000; // 3sec
 	private final int mTrashMargin = (int) AppActivity.getActivity().getResources().getDimension(R.dimen.margin);
 	private Drawable mBackground = new ColorDrawable(mColor);
-	private Drawable mTrash = ContextCompat.getDrawable(AppActivity.getActivity(), R.drawable.delete_24dp);
+	private Drawable mTrash = ContextCompat.getDrawable(AppActivity.getActivity(), R.drawable.ic_delete_24dp);
 
 	@Override
 	public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="item_removed">Borttagen</string>
-	<string name="validate_error_required">obligatorisk</string>
+	<string name="validate_required">Fält obligatoriskt</string>
 	<string name="undo">Ångra</string>
 	<string name="cancel">Avbryt</string>
 	<string name="erase">Radera</string>
@@ -28,8 +28,16 @@
 	<string name="reset">Återställ</string>
 	<string name="ok">OK</string>
 	<string name="password">Lösenord</string>
+	<string name="password_confirm">Bekräfta lösenord</string>
 	<string name="login">Logga in</string>
 	<string name="logout">Logga ut</string>
 	<string name="username">Användarnamn</string>
 	<string name="exit">Avsluta app</string>
+	<string name="register">Registrera</string>
+	<string name="validate_password_mismatch">Lösenorden matchar inte.</string>
+	<string name="info_download_failed">Kolla anslutning</string>
+	<string name="validate_min_length">Använd # bokstäver eller mer</string>
+	<string name="validate_password_min_length">Använd # bokstäver eller mer för lösenord</string>
+	<string name="validate_checkbox_not_checked">Bocka av rutan</string>
+	<string name="validate_checkbox_not_unchecked">Bocka ur rutan</string>
 </resources>

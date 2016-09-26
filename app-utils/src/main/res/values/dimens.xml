@@ -24,7 +24,9 @@
 	<dimen name="list_item_height_three_lines_dense">76dp</dimen>
 
 	<!-- Edit Text -->
+	<dimen name="edit_padding_left_right">13dp</dimen>
 	<dimen name="edit_container_height">72dp</dimen>
+	<dimen name="edit_inner_height">32dp</dimen>
 	<dimen name="edit_height_full">56dp</dimen>
 	<dimen name="edit_height_full_dense">48dp</dimen>
 	<dimen name="edit_padding_full_top_bottom">20dp</dimen>

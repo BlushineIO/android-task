@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
 /**
@@ -21,8 +22,26 @@ public void save(Bundle outState) {
 	Field[] fields = getClass().getDeclaredFields();
 
 	for (Field field : fields) {
-		save(field, outState);
+		if (!skipField(field)) {
+			save(field, outState);
+		}
 	}
+}
+
+/**
+ * Check if the field should be skip save and restore
+ * @param field the field to check
+ * @return true if the field should be skipped
+ */
+private boolean skipField(Field field) {
+	Annotation[] annotations = field.getDeclaredAnnotations();
+	for (Annotation annotation : annotations) {
+		if (annotation.getClass() == Skip.class) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 /**
@@ -37,16 +56,26 @@ private void save(Field field, Bundle outState) {
 		if (fieldInstance != null) {
 			String fieldName = field.getName();
 
-			if (fieldInstance instanceof EditText) {
-				save((EditText) fieldInstance, fieldName, outState);
-			} else if (fieldInstance instanceof CheckBox) {
-				save((CheckBox) fieldInstance, fieldName, outState);
-			} else {
-				Log.w(TAG, "save() — no saving method for " + fieldName + ", class: " + field.getType().getSimpleName());
+			save(fieldInstance, fieldName, outState);
 			}
-		}
 	} catch (IllegalAccessException e) {
 		e.printStackTrace();
+	}
+}
+
+/**
+ * Save the specified variable
+ * @param object the object to save
+ * @param fieldName the name of the object
+ * @param outState save the object to this bundle
+ */
+protected void save(Object object, String fieldName, Bundle outState) {
+	if (object instanceof EditText) {
+		save((EditText) object, fieldName, outState);
+	} else if (object instanceof CheckBox) {
+		save((CheckBox) object, fieldName, outState);
+	} else {
+		Log.w(TAG, "save() — no saving method for " + fieldName + ", class: " + object.getClass().getSimpleName());
 	}
 }
 
@@ -79,7 +108,9 @@ public void restore(Bundle savedInstanceState) {
 		Field[] fields = getClass().getDeclaredFields();
 
 		for (Field field : fields) {
-			restore(field, savedInstanceState);
+			if (!skipField(field)) {
+				restore(field, savedInstanceState);
+			}
 		}
 	}
 }
@@ -96,16 +127,26 @@ private void restore(Field field, Bundle savedInstanceState) {
 		if (fieldInstance != null) {
 			String fieldName = field.getName();
 
-			if (fieldInstance instanceof EditText) {
-				restore((EditText) fieldInstance, fieldName, savedInstanceState);
-			} else if (fieldInstance instanceof CheckBox) {
-				restore((CheckBox) fieldInstance, fieldName, savedInstanceState);
-			} else {
-				Log.w(TAG, "save() — no saving method for " + fieldName + ", class: " + field.getType().getSimpleName());
+			restore(fieldInstance, fieldName, savedInstanceState);
 			}
-		}
 	} catch (IllegalAccessException e) {
 		e.printStackTrace();
+	}
+}
+
+/**
+ * Restore the specified field
+ * @param object the object to restore
+ * @param fieldName variable name of the object to restore
+ * @param savedInstanceState restore the field from this bundle
+ */
+protected void restore(Object object, String fieldName, Bundle savedInstanceState) {
+	if (object instanceof EditText) {
+		restore((EditText) object, fieldName, savedInstanceState);
+	} else if (object instanceof CheckBox) {
+		restore((CheckBox) object, fieldName, savedInstanceState);
+	} else {
+		Log.w(TAG, "save() — no saving method for " + fieldName + ", class: " + object.getClass().getSimpleName());
 	}
 }
 
@@ -129,4 +170,10 @@ private void restore(CheckBox checkBox, String fieldName, Bundle savedInstanceSt
 	checkBox.setChecked(savedInstanceState.getBoolean(fieldName, false));
 }
 
+/**
+ * Annotation to skip save and restore on those fields
+ */
+public @interface Skip {
+
+}
 }

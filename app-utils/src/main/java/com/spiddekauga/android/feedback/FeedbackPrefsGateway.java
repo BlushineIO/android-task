@@ -28,8 +28,8 @@ FeedbackPrefsGateway() {
 }
 
 /**
- * Add a feedback
- * @param feedback the feedback to add
+ * Add a menu_feedback
+ * @param feedback the menu_feedback to add
  */
 void addFeedback(Feedback feedback) {
 	List<Feedback> allFeedbacks = getAllFeedbacks();

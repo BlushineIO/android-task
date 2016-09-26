@@ -44,19 +44,45 @@
 	</style>
 
 	<!--****************-->
-	<!-- 	Headers 	-->
+	<!-- Headers & Text	-->
 	<!--****************-->
-	<style name="Material.Subheader">
-		<item name="android:layout_height">@dimen/list_item_height_one_line</item>
+	<style name="Material.Text">
+		<item name="android:layout_height">wrap_content</item>
 		<item name="android:layout_width">match_parent</item>
 		<item name="android:gravity">center_vertical</item>
-		<item name="android:textSize">14sp</item>
-		<item name="android:textColor">@color/text_black_secondary</item>
+	</style>
+
+	<style name="Material.Text.H2">
+		<item name="android:textSize">20sp</item>
+		<item name="android:paddingTop">32dp</item>
+		<item name="android:paddingBottom">16dp</item>
 		<item name="android:paddingLeft">@dimen/list_item_padding</item>
 		<item name="android:paddingStart">@dimen/list_item_padding</item>
 		<item name="android:paddingRight">@dimen/list_item_padding</item>
 		<item name="android:paddingEnd">@dimen/list_item_padding</item>
+	</style>
+
+	<style name="Material.Text.H2.First">
+		<item name="android:paddingTop">16dp</item>
+	</style>
+
+	<style name="Material.Text.Category">
+		<item name="android:paddingLeft">@dimen/list_item_padding</item>
+		<item name="android:paddingStart">@dimen/list_item_padding</item>
+		<item name="android:paddingRight">@dimen/list_item_padding</item>
+		<item name="android:paddingEnd">@dimen/list_item_padding</item>
+		<item name="android:layout_height">@dimen/list_item_height_one_line</item>
+		<item name="android:textSize">14sp</item>
+		<item name="android:textColor">@color/text_black_secondary</item>
 		<item name="materialFontFamily">medium</item>
+	</style>
+
+	<style name="Material.Text.Error">
+		<item name="android:textSize">12sp</item>
+		<item name="android:textColor">@color/default_error_color</item>
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:visibility">gone</item>
 	</style>
 
 	<!--****************-->
@@ -71,11 +97,9 @@
 	<!--****************-->
 	<!--   Buttons	-->
 	<!--****************-->
-	<style name="Material.Button" parent="Widget.AppCompat.Button">
-	</style>
+	<style name="Material.Button" parent="Widget.AppCompat.Button"/>
 
-	<style name="Material.Button.Borderless" parent="Widget.AppCompat.Button.Borderless">
-	</style>
+	<style name="Material.Button.Borderless" parent="Widget.AppCompat.Button.Borderless"/>
 
 	<style name="Material.Button.Borderless.Color">
 		<item name="android:textColor">@color/accent</item>
@@ -129,7 +153,7 @@
 	<!--****************-->
 	<!-- 	List Item 	-->
 	<!--****************-->
-	<style name="Material.ListItem"></style>
+	<style name="Material.ListItem"/>
 
 	<style name="Material.ListItem.Container">
 		<item name="android:paddingLeft">@dimen/list_item_padding</item>
@@ -137,44 +161,50 @@
 		<item name="android:orientation">horizontal</item>
 		<item name="android:layout_width">match_parent</item>
 		<item name="android:gravity">center_vertical</item>
+		<item name="android:layout_height">wrap_content</item>
 	</style>
 
 	<style name="Material.ListItem.Container.1">
-		<item name="android:layout_height">@dimen/list_item_height_one_line</item>
+		<item name="android:minHeight">@dimen/list_item_height_one_line</item>
 	</style>
 
 	<style name="Material.ListItem.Container.2">
-		<item name="android:layout_height">@dimen/list_item_height_two_lines</item>
+		<item name="android:minHeight">@dimen/list_item_height_two_lines</item>
 	</style>
 
 	<style name="Material.ListItem.Container.3">
-		<item name="android:layout_height">@dimen/list_item_height_three_lines</item>
+		<item name="android:minHeight">@dimen/list_item_height_three_lines</item>
 	</style>
 
 	<style name="Material.ListItem.Container.Avatar">
-		<item name="android:layout_height">@dimen/list_item_height_avatar</item>
+		<item name="android:minHeight">@dimen/list_item_height_avatar</item>
 	</style>
 
 	<style name="Material.ListItem.Container.1.Dense">
-		<item name="android:layout_height">@dimen/list_item_height_one_line_dense</item>
+		<item name="android:minHeight">@dimen/list_item_height_one_line_dense</item>
 	</style>
 
 	<style name="Material.ListItem.Container.2.Dense">
-		<item name="android:layout_height">@dimen/list_item_height_two_lines_dense</item>
+		<item name="android:minHeight">@dimen/list_item_height_two_lines_dense</item>
 	</style>
 
 	<style name="Material.ListItem.Container.3.Dense">
-		<item name="android:layout_height">@dimen/list_item_height_three_lines_dense</item>
+		<item name="android:minHeight">@dimen/list_item_height_three_lines_dense</item>
 	</style>
 
 	<style name="Material.ListItem.Container.Avatar.Dense">
-		<item name="android:layout_height">@dimen/list_item_height_avatar_dense</item>
+		<item name="android:minHeight">@dimen/list_item_height_avatar_dense</item>
 	</style>
 
 	<style name="Material.ListItem.Icon">
 		<item name="android:tint">@color/icon</item>
 		<item name="android:layout_width">wrap_content</item>
 		<item name="android:layout_height">wrap_content</item>
+	</style>
+
+	<style name="Material.ListItem.Icon.Right">
+		<item name="android:paddingEnd">@dimen/list_item_padding</item>
+		<item name="android:paddingStart">@dimen/list_item_padding</item>
 	</style>
 
 	<style name="Material.ListItem.Text">
@@ -188,9 +218,10 @@
 	<style name="Material.ListItem.Text.Single">
 		<item name="android:paddingLeft">@dimen/list_item_padding</item>
 		<item name="android:paddingStart" tools:targetApi="17">@dimen/list_item_padding</item>
+		<item name="android:paddingTop">@dimen/list_item_padding</item>
+		<item name="android:paddingBottom">@dimen/list_item_padding</item>
 		<item name="android:textSize">16sp</item>
 		<item name="android:gravity">center_vertical</item>
-		<item name="android:layout_height">@dimen/list_item_height_one_line</item>
 		<item name="android:textColor">@color/text_primary</item>
 		<item name="android:paddingRight">@dimen/list_item_padding</item>
 		<item name="android:paddingEnd" tools:targetApi="17">@dimen/list_item_padding</item>
@@ -259,6 +290,8 @@
 		<item name="android:orientation">vertical</item>
 		<item name="android:layout_width">0dp</item>
 		<item name="android:layout_weight">1</item>
+		<item name="android:paddingTop">@dimen/list_item_padding</item>
+		<item name="android:paddingBottom">@dimen/list_item_padding</item>
 		<item name="android:paddingRight">@dimen/list_item_padding</item>
 		<item name="android:paddingEnd" tools:targetApi="17">@dimen/list_item_padding</item>
 	</style>
@@ -313,6 +346,13 @@
 		<item name="android:background">?attr/selectableItemBackgroundBorderless</item>
 	</style>
 
+	<style name="Material.ListItem.Action.Left">
+		<item name="android:layout_marginLeft">-4dp</item>
+		<item name="android:layout_marginStart">-4dp</item>
+		<item name="android:layout_marginRight">4dp</item>
+		<item name="android:layout_marginEnd">4dp</item>
+	</style>
+
 	<style name="Material.ListItem.ActionContainer">
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:layout_width">wrap_content</item>
@@ -337,28 +377,31 @@
 	<style name="Material.Edit">
 		<item name="android:textColor">@color/text_primary</item>
 		<item name="android:textColorHint">@color/text_hint_disabled</item>
-		<item name="android:layout_marginLeft">@dimen/list_item_padding</item>
-		<item name="android:layout_marginStart" tools:targetApi="17">@dimen/list_item_padding</item>
-		<item name="android:layout_marginRight">@dimen/list_item_padding</item>
-		<item name="android:layout_marginEnd" tools:targetApi="17">@dimen/list_item_padding</item>
 		<item name="android:layout_width">match_parent</item>
 		<item name="android:layout_height">wrap_content</item>
 	</style>
 
 	<style name="Material.Edit.WithLabel">
-		<item name="android:layout_height">wrap_content</item>
 		<item name="android:paddingBottom">16dp</item>
 		<item name="android:paddingTop">8dp</item>
 	</style>
 
 	<style name="Material.Edit.WithLabel.Dense">
-		<item name="android:layout_height">wrap_content</item>
-		<item name="android:paddingBottom">12dp</item>
-		<item name="android:paddingTop">4dp</item>
+		<!--<item name="android:layout_height">wrap_content</item>-->
+		<item name="android:paddingBottom">16dp</item>
+		<item name="android:paddingTop">8dp</item>
+		<item name="android:layout_height">36dp</item>
 		<item name="android:textSize">13sp</item>
 	</style>
 
 	<style name="Material.Edit.Full">
+		<item name="android:layout_marginLeft">@dimen/edit_padding_left_right</item>
+		<item name="android:layout_marginStart" tools:targetApi="17">
+			@dimen/edit_padding_left_right
+		</item>
+		<item name="android:layout_marginRight">@dimen/edit_padding_left_right</item>
+		<item name="android:layout_marginEnd" tools:targetApi="17">@dimen/edit_padding_left_right
+		</item>
 		<item name="android:background">@null</item>
 		<item name="android:layout_height">@dimen/edit_height_full</item>
 	</style>
@@ -381,14 +424,20 @@
 	</style>
 
 	<style name="Material.EditContainer">
+		<item name="android:paddingLeft">@dimen/edit_padding_left_right</item>
+		<item name="android:paddingStart" tools:targetApi="17">@dimen/edit_padding_left_right</item>
+		<item name="android:paddingRight">@dimen/edit_padding_left_right</item>
+		<item name="android:paddingEnd" tools:targetApi="17">@dimen/edit_padding_left_right</item>
 		<item name="android:layout_width">match_parent</item>
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:paddingTop">16dp</item>
 	</style>
 
+	<style name="Material.EditContainer.AfterHeader">
+		<item name="android:paddingTop">0dp</item>
+	</style>
+
 	<style name="Material.EditContainer.Dense">
-		<item name="android:layout_width">match_parent</item>
-		<item name="android:layout_height">60dp</item>
 		<item name="android:paddingTop">12dp</item>
 	</style>
 

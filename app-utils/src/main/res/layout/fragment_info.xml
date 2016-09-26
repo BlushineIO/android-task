@@ -16,7 +16,7 @@
 			android:id="@+id/toolbar"
 			style="@style/Material.Toolbar"
 			android:layout_marginBottom="@dimen/list_margin_top_bottom"
-			app:navigationIcon="@drawable/arrow_back_24dp"/>
+			app:navigationIcon="@drawable/ic_arrow_back_24dp"/>
 
 		<ScrollView
 			android:layout_width="match_parent"
