@@ -18,6 +18,16 @@ static private AppActivity mActivity = null;
 private static boolean mFirstTime = true;
 
 /**
+ * Default constructor
+ */
+public AppActivity() {
+	// Set the activity first time it's created
+	if (mActivity == null) {
+		mActivity = this;
+	}
+}
+
+/**
  * Exit the application
  */
 public static void exit() {
