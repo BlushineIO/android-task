@@ -24,11 +24,8 @@
 
 			<TextView
 				android:id="@+id/info_text"
-				style="@style/Material.Edit"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
+				style="@style/Material.Text.Info"
 				android:autoLink="web|email"
-				android:textAppearance="?android:attr/textAppearanceSmall"
 				/>
 		</ScrollView>
 
