@@ -13,7 +13,7 @@ class ValidateRequiredText extends Validate<TextView> {
  * Uses the default setRequired message
  */
 ValidateRequiredText() {
-	this(AppActivity.getActivity().getResources().getString(R.string.validate_required));
+	this(AppActivity.getActivity().getResources().getString(R.string.validate_required_no_hint));
 }
 
 /**

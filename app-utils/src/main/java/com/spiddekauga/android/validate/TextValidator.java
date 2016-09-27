@@ -107,11 +107,41 @@ public static class Builder extends Validator.Builder<TextValidator, Builder> {
 	}
 
 	/**
-	 * Set the text field as setRequired
+	 * Set the text field as setRequired. If the text field has a hint, the error text will use
+	 * the hint text + " required" as an error message. If the text field doesn't have a hint
+	 * it will display a generic required message.
 	 */
 	public Builder setRequired() {
-		addValidation(new ValidateRequiredText());
+		String hint = getHint();
+		if (hint != null && hint.length() > 0) {
+			String errorMessage = hint + " " + AppActivity.getActivity().getResources().getString(R.string.validate_required_use_hint);
+			setRequired(errorMessage);
+		} else {
+			addValidation(new ValidateRequiredText());
+		}
 		return this;
+	}
+
+	/**
+	 * Get the hint message of the text field
+	 * @return hint message of the text field
+	 */
+	private String getHint() {
+		// TextInputLayout
+		if (mValidator.mTextInputLayout != null) {
+			CharSequence hint = mValidator.mTextInputLayout.getHint();
+			if (hint != null && hint.length() > 0) {
+				return hint.toString();
+			}
+		}
+
+		// TextField
+		CharSequence hint = mValidator.mField.getHint();
+		if (hint != null && hint.length() > 0) {
+			return hint.toString();
+		}
+
+		return null;
 	}
 
 	/**

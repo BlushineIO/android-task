@@ -233,7 +233,7 @@ private enum FeedbackTypes {
 
 private class RequiredWhenNotException extends Validate<TextView> {
 	private RequiredWhenNotException() {
-		super(AppActivity.getActivity().getResources().getString(R.string.validate_required));
+		super(AppActivity.getActivity().getResources().getString(R.string.validate_required_no_hint));
 	}
 
 	@Override

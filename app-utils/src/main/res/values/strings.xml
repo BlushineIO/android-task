@@ -24,7 +24,8 @@
 	<string name="exit">Exit</string>
 
 	<!-- Validate -->
-	<string name="validate_required">Field required</string>
+	<string name="validate_required_no_hint">Field required</string>
+	<string name="validate_required_use_hint">required</string>
 	<string name="validate_password_mismatch">Passwords don\'t match</string>
 	<string name="validate_checkbox_not_checked">Check off the box</string>
 	<string name="validate_checkbox_not_unchecked">Uncheck the box</string>

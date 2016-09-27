@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="item_removed">Borttagen</string>
-	<string name="validate_required">Fält obligatoriskt</string>
+	<string name="validate_required_no_hint">Fält obligatoriskt</string>
 	<string name="undo">Ångra</string>
 	<string name="cancel">Avbryt</string>
 	<string name="erase">Radera</string>
