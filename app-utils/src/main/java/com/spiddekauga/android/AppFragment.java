@@ -35,7 +35,8 @@ public void show() {
 }
 
 /**
- * Set the toolbar and statusbar colors. Only works before {@link #onResume()} is called.
+ * Set the toolbar and statusbar colors. Colors are applied in {@link #onViewCreated(View, Bundle)}
+ * so call this method before then.
  * @param toolbarColor color of the toolbar
  * @param statusbarColor color of the statusbar
  */
