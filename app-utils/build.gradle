@@ -4,12 +4,12 @@ group = 'com.spiddekauga.android'
 version = '0.1.0-SNAPSHOT'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
 
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        minSdkVersion 16
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
     }
@@ -65,7 +65,7 @@ dependencies {
     compile(project(path: ':cloudshine', configuration: 'android-endpoints')) {
         exclude(module: 'guava-jdk5')
     }
-    compile "com.android.support:appcompat-v7:$supportLibraryVersion"
-    compile "com.android.support:recyclerview-v7:$supportLibraryVersion"
-    compile "com.android.support:design:$supportLibraryVersion"
+    compile "com.android.support:appcompat-v7:25.1.0"
+    compile "com.android.support:recyclerview-v7:25.1.0"
+    compile "com.android.support:design:25.1.0"
 }

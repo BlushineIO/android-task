@@ -8,22 +8,22 @@ import com.spiddekauga.android.R;
 /**
  * Validate if the text view has at least N characters
  */
-public class ValidateMinLengthText extends Validate<TextView> {
+class ValidateMinLengthText extends Validate<TextView> {
 private static final String ERROR_MESSAGE_DEFAULT = AppActivity.getActivity().getResources().getString(R.string.validate_min_length);
-private int mMinLength;
+private final int mMinLength;
 
 /**
  * @param minLength minimum number of characters the text view should have
  * @param errorMessage print this message if the validation fails. If null default error message is
- * used
+ * used. If the character '#' is in the error message string this will be replace with minLength.
  */
-protected ValidateMinLengthText(int minLength, String errorMessage) {
+ValidateMinLengthText(int minLength, String errorMessage) {
 	super(getErrorMessage(minLength, errorMessage));
 	mMinLength = minLength;
 }
 
 private static String getErrorMessage(int minLength, String errorMessage) {
-	String messageToUse = null;
+	String messageToUse;
 	if (errorMessage != null) {
 		messageToUse = errorMessage;
 	} else {

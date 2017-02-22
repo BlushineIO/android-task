@@ -107,9 +107,9 @@ public static class Builder extends Validator.Builder<TextValidator, Builder> {
 	}
 
 	/**
-	 * Set the text field as setRequired. If the text field has a hint, the error text will use
-	 * the hint text + " required" as an error message. If the text field doesn't have a hint
-	 * it will display a generic required message.
+	 * Set the text field as setRequired. If the text field has a hint, the error text will use the
+	 * hint text + " required" as an error message. If the text field doesn't have a hint it will
+	 * display a generic required message.
 	 */
 	public Builder setRequired() {
 		String hint = getHint();
@@ -165,11 +165,20 @@ public static class Builder extends Validator.Builder<TextValidator, Builder> {
 	/**
 	 * Set the minimum length of the text.
 	 * @param minLength minimum length of the text.
-	 * @param errorMessage the error message to display. If the message has an '#' it will be
-	 * replaced with minLength.
+	 * @param errorMessage the error message to display. If the message has the character '#' it
+	 * will be replaced with minLength.
 	 */
 	public Builder setMinLength(int minLength, String errorMessage) {
 		addValidation(new ValidateMinLengthText(minLength, errorMessage));
+		return this;
+	}
+
+	/**
+	 * Set the maximum length of the text.
+	 * @param maxLength maximum length of the text.
+	 */
+	public Builder setMaxLength(int maxLength) {
+		addValidation(new ValidateMaxLengthText(maxLength));
 		return this;
 	}
 

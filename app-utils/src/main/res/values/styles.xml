@@ -79,7 +79,7 @@
 
 	<style name="Material.Text.Error">
 		<item name="android:textSize">12sp</item>
-		<item name="android:textColor">@color/default_error_color</item>
+		<item name="android:textColor">@color/text_error</item>
 		<item name="android:layout_width">wrap_content</item>
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:visibility">gone</item>
@@ -108,9 +108,9 @@
 	<!--****************-->
 	<!--   Buttons	-->
 	<!--****************-->
-	<style name="Material.Button" parent="Widget.AppCompat.Button"/>
+	<style name="Material.Button" parent="Widget.AppCompat.Button" />
 
-	<style name="Material.Button.Borderless" parent="Widget.AppCompat.Button.Borderless"/>
+	<style name="Material.Button.Borderless" parent="Widget.AppCompat.Button.Borderless" />
 
 	<style name="Material.Button.Borderless.Color">
 		<item name="android:textColor">@color/accent</item>
@@ -164,7 +164,7 @@
 	<!--****************-->
 	<!-- 	List Item 	-->
 	<!--****************-->
-	<style name="Material.ListItem"/>
+	<style name="Material.ListItem" />
 
 	<style name="Material.ListItem.Container">
 		<item name="android:paddingLeft">@dimen/list_item_padding</item>
@@ -442,6 +442,8 @@
 		<item name="android:layout_width">match_parent</item>
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:paddingTop">16dp</item>
+		<item name="counterOverflowTextAppearance">@style/Material.Text.Error</item>
+		<item name="errorTextAppearance">@style/Material.Text.Error</item>
 	</style>
 
 	<style name="Material.EditContainer.AfterHeader">

@@ -131,4 +131,10 @@ public void dismiss() {
 	mFragmentHelper.dismiss();
 }
 
+public class BackOnClickListener implements View.OnClickListener {
+	@Override
+	public void onClick(View v) {
+		back();
+	}
+}
 }
