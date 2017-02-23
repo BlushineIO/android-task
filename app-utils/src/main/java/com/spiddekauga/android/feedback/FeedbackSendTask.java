@@ -58,7 +58,7 @@ protected void doInBackground(FeedbackResponseEvent event, Feedback... feedbacks
 				break;
 			}
 		} catch (IOException e) {
-			Log.w(TAG, "doInBackground() - Couldn't send menu_feedback", e);
+			Log.w(TAG, "doInBackground() - Couldn't send feedback", e);
 			event.setStatus(ResponseEvent.ResponseStatuses.FAILED);
 			break;
 		}

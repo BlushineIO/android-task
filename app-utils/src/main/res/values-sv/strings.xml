@@ -40,4 +40,10 @@
 	<string name="validate_password_min_length">Använd # bokstäver eller mer för lösenord</string>
 	<string name="validate_checkbox_not_checked">Bocka av rutan</string>
 	<string name="validate_checkbox_not_unchecked">Bocka ur rutan</string>
+	<string name="feedback_email_hint">Din mail</string>
+	<string name="feedback_email_optional_hint">Din mail (frivilligt)</string>
+	<string name="feedback_name_hint">Förnamn</string>
+	<string name="feedback_name_optional_hint">Förnamn (frivilligt)</string>
+	<string name="feedback_title_optional_hint">Titel (frivilligt)</string>
+	<string name="validate_required_use_hint">obligatorisk</string>
 </resources>

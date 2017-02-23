@@ -40,7 +40,12 @@
 	<string name="bug_report_sent">Thank you for submitting a bug report!</string>
 	<string name="feedback_cancel">Discard feedback?</string>
 	<string name="bug_report_cancel">Discard bug report?</string>
+	<string name="feedback_name_hint">First name</string>
+	<string name="feedback_name_optional_hint">First name (optional)</string>
+	<string name="feedback_email_hint">Your email</string>
+	<string name="feedback_email_optional_hint">Your email (optional)</string>
 	<string name="feedback_title_hint">Title</string>
+	<string name="feedback_title_optional_hint">Title (optional)</string>
 	<string name="feedback_message_hint">Message</string>
 	<string name="bug_report_message_hint">What happened?\nYour actions before the bug?</string>
 	<string name="feedback_bug">Bug report</string>

@@ -30,18 +30,22 @@ import com.spiddekauga.utils.Strings;
  * Displays a dialog for sending menu_feedback to Spiddekauga's mail
  */
 public class FeedbackFragment extends AppFragment {
-private static final String TITLE_KEY = "title";
-private static final String MESSAGE_KEY = "message";
+private static final String NAME_EDIT_KEY = "name_edit";
+private static final String EMAIL_EDIT_KEY = "email_edit";
+private static final String TITLE_EDIT_KEY = "title_edit";
+private static final String MESSAGE_EDIT_KEY = "message_edit";
 private static final String EXCEPTION_KEY = "exception";
 private static final String NAME_KEY = "name";
 private static final String EMAIL_KEY = "email";
 private CheckBox mBugReport = null;
-private EditText mTitle = null;
-private EditText mMessage = null;
+private EditText mTitleEdit = null;
+private EditText mMessageEdit = null;
+private EditText mNameEdit = null;
+private EditText mEmailEdit = null;
 private Toolbar mToolbar = null;
 private String mException = null;
-private String mName = null;
-private String mEmail = null;
+private String mPresetName = null;
+private String mPresetEmail = null;
 @StringRes
 private int mSuccessText = -1;
 private ValidatorGroup mValidatorGroup = new ValidatorGroup();
@@ -68,8 +72,8 @@ public void setException(Throwable e) {
  * @param email email of the user
  */
 public void setUserInfo(String name, String email) {
-	mName = name;
-	mEmail = email;
+	mPresetName = name;
+	mPresetEmail = email;
 }
 
 @Nullable
@@ -85,19 +89,51 @@ public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
 		}
 	});
 
-	mTitle = (EditText) view.findViewById(R.id.title_edit);
-	TextValidator titleValidator = new TextValidator
-			.Builder(mTitle)
-			.addValidation(new RequiredWhenNotException())
-			.build();
-	mValidatorGroup.add(titleValidator);
+	// Name
+	mNameEdit = (EditText) view.findViewById(R.id.name_edit);
+	if (mPresetName == null) {
+		mValidatorGroup.add(new TextValidator.Builder(mNameEdit)
+				.addValidation(new RequiredWhenNotException())
+				.build()
+		);
+	}
+	// Hide name as this has already been set
+	else {
+		mNameEdit.setVisibility(View.GONE);
+		View nameDivider = view.findViewById(R.id.name_divider);
+		nameDivider.setVisibility(View.GONE);
+	}
 
-	mMessage = (EditText) view.findViewById(R.id.message_edit);
-	TextValidator messageValidator = new TextValidator
-			.Builder(mMessage)
+	// Email
+	mEmailEdit = (EditText) view.findViewById(R.id.email_edit);
+	if (mPresetEmail == null) {
+		mValidatorGroup.add(new TextValidator.Builder(mEmailEdit)
+				.addValidation(new RequiredWhenNotException())
+				.build()
+		);
+	}
+	// Hide email as this has already been set
+	else {
+		mEmailEdit.setVisibility(View.GONE);
+		View emailDivider = view.findViewById(R.id.email_divider);
+		emailDivider.setVisibility(View.GONE);
+	}
+
+	// Title
+	mTitleEdit = (EditText) view.findViewById(R.id.title_edit);
+	mValidatorGroup.add(new TextValidator
+			.Builder(mTitleEdit)
 			.addValidation(new RequiredWhenNotException())
-			.build();
-	mValidatorGroup.add(messageValidator);
+			.build()
+	);
+
+	// Message
+	mMessageEdit = (EditText) view.findViewById(R.id.message_edit);
+	mValidatorGroup.add(new TextValidator
+			.Builder(mMessageEdit)
+			.addValidation(new RequiredWhenNotException())
+			.build()
+	);
 
 	// Set dialog title
 	mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
@@ -121,21 +157,32 @@ public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
 
 	// Set previous values
 	if (savedInstanceState != null) {
-		String title = savedInstanceState.getString(TITLE_KEY);
-		if (title != null) {
-			mTitle.setText(title);
+		String name = savedInstanceState.getString(NAME_EDIT_KEY);
+		if (name != null) {
+			mNameEdit.setText(name);
 		}
 
-		String message = savedInstanceState.getString(MESSAGE_KEY);
+		String email = savedInstanceState.getString(EMAIL_EDIT_KEY);
+		if (email != null) {
+			mEmailEdit.setText(email);
+		}
+
+		String title = savedInstanceState.getString(TITLE_EDIT_KEY);
+		if (title != null) {
+			mTitleEdit.setText(title);
+		}
+
+		String message = savedInstanceState.getString(MESSAGE_EDIT_KEY);
 		if (message != null) {
-			mMessage.setText(message);
+			mMessageEdit.setText(message);
 		}
 
 		mException = savedInstanceState.getString(EXCEPTION_KEY);
-		mName = savedInstanceState.getString(NAME_KEY);
-		mEmail = savedInstanceState.getString(EMAIL_KEY);
+		mPresetName = savedInstanceState.getString(NAME_KEY);
+		mPresetEmail = savedInstanceState.getString(EMAIL_KEY);
 	}
 
+	// Set exception and force bug report
 	if (mException != null) {
 		mBugReport.setChecked(true);
 		mBugReport.setEnabled(false);
@@ -156,13 +203,19 @@ private void switchFeedbackType(FeedbackTypes feedbackType) {
 	switch (feedbackType) {
 	case FEEDBACK:
 		mToolbar.setTitle(resources.getString(R.string.feedback_header));
-		mMessage.setHint(resources.getString(R.string.feedback_message_hint));
+		mNameEdit.setHint(R.string.feedback_name_hint);
+		mEmailEdit.setHint(R.string.feedback_email_hint);
+		mTitleEdit.setHint(R.string.feedback_title_hint);
+		mMessageEdit.setHint(resources.getString(R.string.feedback_message_hint));
 		setBackMessage(R.string.feedback_cancel);
 		mSuccessText = R.string.feedback_sent;
 		break;
 	case BUG_REPORT:
 		mToolbar.setTitle(resources.getString(R.string.bug_report_header));
-		mMessage.setHint(resources.getString(R.string.bug_report_message_hint));
+		mNameEdit.setHint(R.string.feedback_name_optional_hint);
+		mEmailEdit.setHint(R.string.feedback_email_optional_hint);
+		mTitleEdit.setHint(R.string.feedback_title_optional_hint);
+		mMessageEdit.setHint(resources.getString(R.string.bug_report_message_hint));
 		setBackMessage(R.string.bug_report_cancel);
 		mSuccessText = R.string.bug_report_sent;
 		break;
@@ -181,12 +234,20 @@ private void sendFeedback() {
 private Feedback createFeedback() {
 	Feedback feedback = new Feedback();
 
-	feedback.setTitle(mTitle.getText().toString());
-	feedback.setMessage(mMessage.getText().toString());
+	feedback.setTitle(mTitleEdit.getText().toString());
+	feedback.setMessage(mMessageEdit.getText().toString());
 	feedback.setException(mException);
 	feedback.setBugReport(mBugReport.isChecked());
-	feedback.setName(mName);
-	feedback.setEmail(mEmail);
+	if (mPresetName != null) {
+		feedback.setName(mPresetName);
+	} else {
+		feedback.setName(mNameEdit.getText().toString());
+	}
+	if (mPresetEmail != null) {
+		feedback.setEmail(mPresetEmail);
+	} else {
+		feedback.setEmail(mEmailEdit.getText().toString());
+	}
 	feedback.setDeviceInfo(getDeviceInfo());
 	feedback.setAppVersion(BuildConfig.VERSION_NAME);
 
@@ -208,22 +269,24 @@ private String getDeviceInfo() {
 public void onSaveInstanceState(Bundle outState) {
 	super.onSaveInstanceState(outState);
 
-	outState.putString(TITLE_KEY, mTitle.getText().toString());
-	outState.putString(MESSAGE_KEY, mMessage.getText().toString());
+	outState.putString(NAME_EDIT_KEY, mNameEdit.getText().toString());
+	outState.putString(EMAIL_EDIT_KEY, mEmailEdit.getText().toString());
+	outState.putString(TITLE_EDIT_KEY, mTitleEdit.getText().toString());
+	outState.putString(MESSAGE_EDIT_KEY, mMessageEdit.getText().toString());
 
 	if (mException != null) {
 		outState.putString(EXCEPTION_KEY, mException);
 	}
-	if (mName != null) {
-		outState.putString(NAME_KEY, mName);
+	if (mPresetName != null) {
+		outState.putString(NAME_KEY, mPresetName);
 	}
-	if (mEmail != null) {
-		outState.putString(EMAIL_KEY, mEmail);
+	if (mPresetEmail != null) {
+		outState.putString(EMAIL_KEY, mPresetEmail);
 	}
 }
 
 protected boolean isChanged() {
-	return !mTitle.getText().toString().isEmpty() || !mMessage.getText().toString().isEmpty();
+	return !mTitleEdit.getText().toString().isEmpty() || !mMessageEdit.getText().toString().isEmpty();
 }
 
 private enum FeedbackTypes {
