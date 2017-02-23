@@ -3,7 +3,6 @@ package com.spiddekauga.android.ui;
 import android.support.annotation.StringRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -12,8 +11,6 @@ import com.spiddekauga.android.AppFragmentHelper;
 import com.spiddekauga.android.FragmentEvent;
 import com.spiddekauga.utils.EventBus;
 import com.squareup.otto.Subscribe;
-
-import java.util.Arrays;
 
 /**
  * Some helper methods for creating simple snackbars
@@ -135,9 +132,9 @@ private static class SnackbarMessage {
 	}
 
 	void show() {
-		String stackTrace = Arrays.toString(Thread.currentThread().getStackTrace());
-		stackTrace = stackTrace.replace(", ", "\n");
-		Log.d(TAG, "show() — Show snackbar: " + mMessage + "\n" + stackTrace); // Stacktrace
+//		String stackTrace = Arrays.toString(Thread.currentThread().getStackTrace());
+//		stackTrace = stackTrace.replace(", ", "\n");
+//		Log.d(TAG, "show() — Show snackbar: " + mMessage + "\n" + stackTrace); // Stacktrace
 
 		if (AppFragmentHelper.getHelper() != null) {
 			final View view = getView();
@@ -145,7 +142,7 @@ private static class SnackbarMessage {
 			if (mActionTitle != null && mAction != null) {
 				mSnackbar.setAction(mActionTitle, mAction);
 			}
-			mSnackbar.setCallback(new Snackbar.Callback() {
+			mSnackbar.addCallback(new Snackbar.Callback() {
 				@Override
 				public void onDismissed(Snackbar snackbar, int event) {
 					if (view instanceof FloatingActionButton) {
