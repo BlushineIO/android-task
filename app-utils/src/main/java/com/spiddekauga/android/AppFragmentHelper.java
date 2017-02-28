@@ -124,6 +124,16 @@ public static Fragment getFragment() {
 }
 
 /**
+ * Focus an edittext and show the keyboard
+ * @param editText the field to focus and show the keyboard for
+ */
+public static void focusEditText(EditText editText) {
+	editText.requestFocus();
+	InputMethodManager inputMethodManager = (InputMethodManager) AppActivity.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+	inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+}
+
+/**
  * Called when the fragment has resumed
  */
 void onResume() {
