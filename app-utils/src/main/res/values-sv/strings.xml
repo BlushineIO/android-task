@@ -46,4 +46,7 @@
 	<string name="feedback_name_optional_hint">Förnamn (frivilligt)</string>
 	<string name="feedback_title_optional_hint">Titel (frivilligt)</string>
 	<string name="validate_required_use_hint">obligatorisk</string>
+	<string name="legal_title">Villkor</string>
+	<string name="legal_privacy_policy_title">Integritetspolicy</string>
+	<string name="legal_open_source_title">Open source licenser</string>
 </resources>

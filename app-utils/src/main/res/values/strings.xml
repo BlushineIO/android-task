@@ -22,6 +22,16 @@
 	<string name="login">Login</string>
 	<string name="logout">Logout</string>
 	<string name="exit">Exit</string>
+	<string name="view_changes">View changes</string>
+
+	<!-- Legal Settings -->
+	<string name="legal_key">legal</string>
+	<string name="legal_title">Legal</string>
+	<string name="legal_privacy_policy_key" translatable="false">privacy_policy</string>
+	<string name="legal_privacy_policy_title">Privacy policy</string>
+	<string name="legal_privacy_policy_changed">Privacy policy has been updated. View changes?</string>
+	<string name="legal_open_source_key" translatable="false">open_source</string>
+	<string name="legal_open_source_title">Open source licences</string>
 
 	<!-- Validate -->
 	<string name="validate_required_no_hint">Field required</string>
