@@ -88,9 +88,18 @@ protected final Event doInBackground(Params... params) {
 			return event;
 		}
 		break;
+
+	case ONLY_RETRY:
+		// Does nothing
+		break;
 	}
 
-	doInBackground(event, params);
+	// Retry
+	int retriesLeft = RETRIES;
+	while (retriesLeft > 0 && !event.isSuccessful()) {
+		doInBackground(event, params);
+		retriesLeft -= 1;
+	}
 
 	return event;
 }
@@ -155,6 +164,10 @@ protected enum WaitTypes {
 	 * Wait we have an Internet connection before calling {@link #doInBackground(ResponseEvent,
 	 * Object[])}
 	 */
-	WAIT_CONNECTION
+	WAIT_CONNECTION,
+	/**
+	 * Don't check connection, just retry.
+	 */
+	ONLY_RETRY,
 }
 }
