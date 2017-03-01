@@ -32,8 +32,8 @@ public static FeedbackRepo getInstance() {
 }
 
 /**
- * Send a new menu_feedback. Will store the menu_feedback locally until it has been successfully sent
- * @param feedback the menu_feedback to send.
+ * Send a new feedback. Will store the menu_feedback locally until it has been successfully sent
+ * @param feedback the feedback to send.
  */
 void sendFeedback(Feedback feedback) {
 	feedback.setSyncing(true);
@@ -44,9 +44,10 @@ void sendFeedback(Feedback feedback) {
 
 /**
  * Called after sendFeedback server response
- * @param event the menu_feedback response event
+ * @param event the feedback response event
  */
 @Subscribe
+@SuppressWarnings("unused")
 public void onFeedbackResponse(FeedbackResponseEvent event) {
 	if (event.isSuccessful()) {
 		List<Feedback> syncedFeedbacks = event.getFeedbacks();
