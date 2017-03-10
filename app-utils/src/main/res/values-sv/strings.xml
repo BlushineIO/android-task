@@ -49,4 +49,6 @@
 	<string name="legal_title">Villkor</string>
 	<string name="legal_privacy_policy_title">Integritetspolicy</string>
 	<string name="legal_open_source_title">Open source licenser</string>
+	<string name="legal_privacy_policy_changed">Appens integritetspolicy har ändrats. Visa ändringar?</string>
+	<string name="view_changes">Visa ändringar</string>
 </resources>
