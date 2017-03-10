@@ -82,6 +82,7 @@ protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	mActivity = this;
 
+	// TODO Remember each inherit
 	if (mFirstTime) {
 		mFirstTime = false;
 		onFirstTime();
