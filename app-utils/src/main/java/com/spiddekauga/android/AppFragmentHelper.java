@@ -27,7 +27,6 @@ import com.spiddekauga.android.ui.Fonts;
 import com.spiddekauga.utils.EventBus;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * Various common helper methods for both {@link AppFragment} and {@link AppPreferenceFragment}.
@@ -79,7 +78,7 @@ public static void gotoFragment(Class<? extends AppFragment> fragmentClass) {
 			Constructor<? extends AppFragment> constructor = fragmentClass.getConstructor();
 			AppFragment appFragment = constructor.newInstance();
 			appFragment.show();
-		} catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+		} catch (Exception e) {
 			Log.e(TAG, "newFirstScreenInstance() - Failed to find Constructor", e);
 		}
 	}
@@ -130,7 +129,7 @@ public static Fragment getFragment() {
 public static void focusEditText(EditText editText) {
 	editText.requestFocus();
 	InputMethodManager inputMethodManager = (InputMethodManager) AppActivity.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-	inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+	inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
 }
 
 /**
