@@ -82,7 +82,6 @@ protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	mActivity = this;
 
-	// TODO Remember each inherit
 	if (mFirstTime) {
 		mFirstTime = false;
 		onFirstTime();
@@ -92,7 +91,7 @@ protected void onCreate(Bundle savedInstanceState) {
 /**
  * Called first time the application is started
  */
-protected void onFirstTime() {
+private void onFirstTime() {
 	FeedbackRepo feedbackRepo = FeedbackRepo.getInstance();
 	feedbackRepo.resetSyncingFeedbacks();
 	feedbackRepo.syncUnsyncedFeedbacks();
