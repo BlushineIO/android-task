@@ -30,8 +30,8 @@ import java.io.InputStream;
  * {@link #setArguments(int, String, int...)}.
  */
 public class InfoFragment extends AppFragment {
-static final String TITLE_KEY = "title";
-static final String TEXT_KEY = "text";
+private static final String TITLE_KEY = "title";
+private static final String TEXT_KEY = "text";
 private static final String TAG = InfoFragment.class.getSimpleName();
 private static final String DEFAULT_VALUE = "NOT SET";
 private String mTitle = DEFAULT_VALUE;
@@ -125,7 +125,7 @@ public void setArguments(String title, String text) {
 @Nullable
 @Override
 public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-	retreiveArguments();
+	readArguments();
 
 	View view = inflater.inflate(R.layout.fragment_info, container, false);
 
@@ -159,7 +159,7 @@ public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
 	return view;
 }
 
-private void retreiveArguments() {
+private void readArguments() {
 	Bundle arguments = getArguments();
 	mTitle = arguments.getString(TITLE_KEY, DEFAULT_VALUE);
 	mText = arguments.getString(TEXT_KEY, DEFAULT_VALUE);
