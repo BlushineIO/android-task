@@ -24,6 +24,7 @@
 	<color name="text_secondary_inverse">@color/text_white_secondary</color>
 	<color name="text_hint_disabled_inverse">@color/text_white_hint_disabled</color>
 	<color name="toolbar_title">@color/text_white_primary</color>
+	<color name="toolbar_text_secondary">@color/text_white_secondary</color>
 	<color name="text_error">@color/red_A700</color>
 
 	<!-- Icons -->

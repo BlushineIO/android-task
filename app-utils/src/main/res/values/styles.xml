@@ -34,13 +34,27 @@
 	<style name="Material.Toolbar">
 		<item name="android:layout_width">match_parent</item>
 		<item name="android:layout_height">?attr/actionBarSize</item>
-		<item name="android:background">@color/primary</item>
+		<item name="tabBackground">@color/primary</item>
 		<item name="android:elevation" tools:targetApi="21">4dp</item>
 		<item name="titleTextColor">@color/toolbar_title</item>
 	</style>
 
 	<style name="Material.MenuButtonOverflow" parent="Widget.AppCompat.ActionButton.Overflow">
 		<item name="android:tint">@color/icon_toolbar</item>
+	</style>
+
+	<!--****************-->
+	<!-- 	Tabs		-->
+	<!--****************-->
+	<style name="Material.TabLayout">
+		<item name="android:elevation" tools:targetApi="21">4dp</item>
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:background">@color/primary</item>
+		<item name="tabTextColor">@color/toolbar_text_secondary</item>
+		<item name="tabSelectedTextColor">@color/toolbar_title</item>
+		<item name="tabIndicatorColor">@color/toolbar_title</item>
+		<item name="tabGravity">fill</item>
 	</style>
 
 	<!--****************-->
