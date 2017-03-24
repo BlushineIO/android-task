@@ -173,6 +173,21 @@ void onStop() {
 }
 
 /**
+ * Called when the fragment view is destroyed
+ */
+void onDestroyView() {
+	Log.d(TAG, "onDestroyView() — " + mFragment.getClass().getSimpleName());
+}
+
+/**
+ * Called when the fragment is destroyed
+ */
+void onDestroy() {
+	Log.d(TAG, "onDestroy() — " + mFragment.getClass().getSimpleName());
+	mFragment = null;
+}
+
+/**
  * Updates the Toolbar and statusbar colors and fixes the Toolbar font
  * @param view the view that was created
  * @param savedInstanceState saved variables

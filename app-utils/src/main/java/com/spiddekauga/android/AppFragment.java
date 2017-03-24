@@ -124,6 +124,18 @@ public void onStop() {
 	mFragmentHelper.onStop();
 }
 
+@Override
+public void onDestroyView() {
+	super.onDestroyView();
+	mFragmentHelper.onDestroyView();
+}
+
+@Override
+public void onDestroy() {
+	super.onDestroy();
+	mFragmentHelper.onDestroy();
+}
+
 /**
  * Dismiss this window.
  */
