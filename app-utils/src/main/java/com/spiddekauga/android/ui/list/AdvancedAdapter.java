@@ -70,7 +70,8 @@ public void notifyItemChanged(T item) {
 
 /**
  * Get item position. Test against reference
- * @param item the item to get the position of. Has to be same reference, i.e tests with itemA == itemB.
+ * @param item the item to get the position of. Has to be same reference, i.e tests with itemA ==
+ * itemB.
  * @return position of the item, -1 if not found
  */
 public int getItemPosition(T item) {
@@ -189,7 +190,7 @@ public void setItems(List<T> items) {
  * Add item(s) to the end of the list
  * @param items the items to add
  */
-public void addItem(T... items) {
+public void add(T... items) {
 	int prevSize = mItems.size();
 	List<T> convertList = Arrays.asList(items);
 	mItems.addAll(convertList);
@@ -201,10 +202,9 @@ public void addItem(T... items) {
  * @param position the position to add the item
  * @param item the item to add at the specified position
  */
-public void addItem(int position, T item) {
+public void add(int position, T item) {
 	mItems.add(position, item);
 	notifyItemInserted(position);
-
 }
 
 /**
