@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.support.annotation.ColorInt;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,18 +34,18 @@ private Map<T, Runnable> mPendingRemoves = new HashMap<>();
 private Handler mHandler = new Handler();
 private boolean mRemoving = false;
 
-public SwipeRemoveFunctionality(AdvancedAdapter<T, ?> adapter, RemoveListener<T> listener) {
+SwipeRemoveFunctionality(AdvancedAdapter<T, ?> adapter, RemoveListener<T> listener) {
 	mAdapter = adapter;
 	mListener = listener;
 }
 
-public SwipeRemoveFunctionality(AdvancedAdapter<T, ?> adapter, RemoveListener<T> listener, boolean undoFunctionality) {
+SwipeRemoveFunctionality(AdvancedAdapter<T, ?> adapter, RemoveListener<T> listener, boolean undoFunctionality) {
 	mAdapter = adapter;
 	mListener = listener;
 	mUndoFunctionality = undoFunctionality;
 }
 
-public SwipeRemoveFunctionality(AdvancedAdapter<T, ?> adapter, RemoveListener<T> listener, boolean undoFunctionality, String removedMessage) {
+SwipeRemoveFunctionality(AdvancedAdapter<T, ?> adapter, RemoveListener<T> listener, boolean undoFunctionality, String removedMessage) {
 	mAdapter = adapter;
 	mListener = listener;
 	mUndoFunctionality = undoFunctionality;
@@ -71,9 +70,8 @@ public Class<UndoViewHolder> getViewHolderClass() {
 @Override
 public void onBindViewHolder(AdvancedAdapter<T, ?> adapter, RecyclerView.ViewHolder view, int position) {
 	UndoViewHolder undoView = (UndoViewHolder) view;
-//	undoView.itemView.setBackgroundColor(mColor);
 	undoView.mRemovedTextView.setText(mRemovedMessage);
-
+	
 	if (mUndoFunctionality) {
 		final T item = mAdapter.getItem(position);
 		undoView.mUndoButton.setVisibility(View.VISIBLE);
@@ -102,21 +100,21 @@ public void applyFunctionality(AdvancedAdapter<T, ?> adapter, RecyclerView recyc
 	// Item touch helper
 	ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new TransactionRemoveCallback());
 	itemTouchHelper.attachToRecyclerView(recyclerView);
-
+	
 	// Red background when erasing
 	BackgroundDecoration backgroundDecoration = new BackgroundDecoration();
 	recyclerView.addItemDecoration(backgroundDecoration);
-
+	
 }
 
 /**
  * Undo ViewHolder that views the undo functionality
  */
-static class UndoViewHolder extends RecyclerView.ViewHolder {
+private static class UndoViewHolder extends RecyclerView.ViewHolder {
 	private TextView mRemovedTextView;
 	private Button mUndoButton;
-
-	public UndoViewHolder(View itemView) {
+	
+	UndoViewHolder(View itemView) {
 		super(itemView);
 		mRemovedTextView = (TextView) itemView.findViewById(R.id.remove_message);
 		mUndoButton = (Button) itemView.findViewById(R.id.undo_button);
@@ -127,12 +125,12 @@ static class UndoViewHolder extends RecyclerView.ViewHolder {
  * Callback when a transaction has been swiped (and should be removed)
  * Draws the red background together with the trash can while the list item is being swiped
  */
-class TransactionRemoveCallback extends ItemTouchHelper.Callback {
+private class TransactionRemoveCallback extends ItemTouchHelper.Callback {
 	private static final int UNDO_DURATION = 3000; // 3sec
 	private final int mTrashMargin = (int) AppActivity.getActivity().getResources().getDimension(R.dimen.margin);
 	private Drawable mBackground = new ColorDrawable(mColor);
 	private Drawable mTrash = ContextCompat.getDrawable(AppActivity.getActivity(), R.drawable.ic_delete_24dp);
-
+	
 	@Override
 	public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
 		// Don't allow undo view holders to be swiped
@@ -143,22 +141,22 @@ class TransactionRemoveCallback extends ItemTouchHelper.Callback {
 			return makeMovementFlags(0, swipeFlags);
 		}
 	}
-
+	
 	@Override
 	public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
 		return false;
 	}
-
+	
 	@Override
 	public boolean isItemViewSwipeEnabled() {
 		return true;
 	}
-
+	
 	@Override
 	public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
 		int swipedPosition = viewHolder.getAdapterPosition();
 		final T item = mAdapter.getItem(swipedPosition);
-
+		
 		// Ability to undo
 		if (mUndoFunctionality) {
 			mAdapter.setItemViewHolder(item, SwipeRemoveFunctionality.this);
@@ -177,17 +175,17 @@ class TransactionRemoveCallback extends ItemTouchHelper.Callback {
 			onRemove(item);
 		}
 	}
-
+	
 	@Override
 	public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
 		View itemView = viewHolder.itemView;
-
+		
 		// not sure why, but this method get's called for viewholder that are already swiped away
 		if (viewHolder.getAdapterPosition() == -1) {
 			// not interested in those
 			return;
 		}
-
+		
 		// draw red background
 		// To the right
 		if (dX < 0) {
@@ -197,9 +195,9 @@ class TransactionRemoveCallback extends ItemTouchHelper.Callback {
 		else {
 			mBackground.setBounds(itemView.getLeft(), itemView.getTop(), itemView.getLeft() + (int) dX, itemView.getBottom());
 		}
-
+		
 		mBackground.draw(c);
-
+		
 		// draw trash mark
 		int itemHeight = itemView.getBottom() - itemView.getTop();
 		int intrinsicWidth = mTrash.getIntrinsicWidth();
@@ -208,7 +206,7 @@ class TransactionRemoveCallback extends ItemTouchHelper.Callback {
 		int trashBottom = trashTop + intrinsicHeight;
 		int trashLeft = Integer.MIN_VALUE;
 		int trashRight = Integer.MIN_VALUE;
-
+		
 		// Right
 		if (dX < 0) {
 			trashLeft = itemView.getRight() - mTrashMargin - intrinsicWidth;
@@ -221,10 +219,10 @@ class TransactionRemoveCallback extends ItemTouchHelper.Callback {
 		}
 		mTrash.setBounds(trashLeft, trashTop, trashRight, trashBottom);
 		mTrash.draw(c);
-
+		
 		super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
 	}
-
+	
 	private void onRemove(T item) {
 		mRemoving = true;
 		mAdapter.remove(item);
@@ -238,33 +236,33 @@ class TransactionRemoveCallback extends ItemTouchHelper.Callback {
 /**
  * Draws the red background during the remove animation. I.e. after the list item has been removed
  */
-class BackgroundDecoration extends RecyclerView.ItemDecoration {
+private class BackgroundDecoration extends RecyclerView.ItemDecoration {
 	private Drawable mBackground = new ColorDrawable(mColor);
-
+	
 	@Override
 	public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
 		// only if animation is in progress
 		if (mRemoving && parent.getItemAnimator().isRunning()) {
-
+			
 			// some items might be animating down and some items might be animating up to close the gap left by the removed item
 			// this is not exclusive, both movement can be happening at the same time
 			// to reproduce this leave just enough items so the first one and the last one would be just a little off screen
 			// then remove one from the middle
-
+			
 			// find first child with translationY > 0
 			// and last one with translationY < 0
 			// we're after a rect that is not covered in recycler-view views at this point in time
 			View lastViewComingDown = null;
 			View firstViewComingUp = null;
-
+			
 			// this is fixed
 			int left = 0;
 			int right = parent.getWidth();
-
+			
 			// this we need to find out
 			int top = 0;
 			int bottom = 0;
-
+			
 			// find relevant translating views
 			int childCount = parent.getLayoutManager().getChildCount();
 			for (int i = 0; i < childCount; i++) {
@@ -279,7 +277,7 @@ class BackgroundDecoration extends RecyclerView.ItemDecoration {
 					}
 				}
 			}
-
+			
 			if (lastViewComingDown != null && firstViewComingUp != null) {
 				// views are coming down AND going up to fill the void
 				top = lastViewComingDown.getBottom() + (int) lastViewComingDown.getTranslationY();
@@ -293,14 +291,14 @@ class BackgroundDecoration extends RecyclerView.ItemDecoration {
 				top = firstViewComingUp.getTop();
 				bottom = firstViewComingUp.getTop() + (int) firstViewComingUp.getTranslationY();
 			}
-
+			
 			mBackground.setBounds(left, top, right, bottom);
 			mBackground.draw(c);
 		} else {
 			mRemoving = false;
 		}
-
-
+		
+		
 		super.onDraw(c, parent, state);
 	}
 }
