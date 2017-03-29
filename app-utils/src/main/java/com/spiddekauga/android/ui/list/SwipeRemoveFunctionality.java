@@ -6,10 +6,12 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.annotation.ColorInt;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -98,13 +100,34 @@ public void onBindViewHolder(AdvancedAdapter<T, ?> adapter, RecyclerView.ViewHol
 @Override
 public void applyFunctionality(AdvancedAdapter<T, ?> adapter, RecyclerView recyclerView) {
 	// Item touch helper
-	ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new TransactionRemoveCallback());
+	// Use custom item touch helper so we can swipe between View Pages
+	android.support.v7.widget.helper.ItemTouchHelper itemTouchHelper;
+	if (canSwipeBetweenPages(recyclerView)) {
+		itemTouchHelper = new ItemTouchHelper(new TransactionRemoveCallback());
+	} else {
+		itemTouchHelper = new android.support.v7.widget.helper.ItemTouchHelper(new TransactionRemoveCallback());
+	}
 	itemTouchHelper.attachToRecyclerView(recyclerView);
 	
 	// Red background when erasing
 	BackgroundDecoration backgroundDecoration = new BackgroundDecoration();
 	recyclerView.addItemDecoration(backgroundDecoration);
 	
+}
+
+/**
+ * Check if we have multiple pages we can swipe between
+ * @param recyclerView used to check if this view is a child of ViewPages
+ * @return true if we have multiple pages and can swipe mode has been enabled
+ */
+private static boolean canSwipeBetweenPages(RecyclerView recyclerView) {
+	ViewParent viewParent = recyclerView.getParent();
+	while (viewParent != null) {
+		if (viewParent instanceof ViewPager) {
+			return true;
+		}
+	}
+	return false;
 }
 
 /**

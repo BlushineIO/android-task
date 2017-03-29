@@ -1,6 +1,10 @@
 package com.spiddekauga.android.ui.list;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
@@ -10,7 +14,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * An advanced adapter for a RecyclerView
+ * An advanced adapter for a RecyclerView.
+ * Note. Calling {@link RecyclerView#setAdapter(RecyclerView.Adapter)} should be called after
+ * {@link android.app.Fragment#onCreateView(LayoutInflater, ViewGroup, Bundle)}; for example, in
+ * {@link android.app.Fragment#onViewCreated(View, Bundle)}.
  * @param <T> what type of items to store inside the adapetr
  * @param <VH> ViewHolder type for T's items
  */
@@ -21,7 +28,7 @@ private List<RecyclerView> mRecyclerViews = new ArrayList<>();
 private Map<Class<?>, AdapterFunctionality<T>> mFunctionalities = new HashMap<>();
 private List<PostBindFunctionality<T>> mPostBindFunctionalities = new ArrayList<>();
 private Map<Class<?>, ViewHolderFunctionality<T>> mFunctionalityByViewHolder = new HashMap<>();
-private Map<Integer, ViewHolderFunctionality<T>> mFunctionalityByViewType = new HashMap<>();
+private SparseArray<ViewHolderFunctionality<T>> mFunctionalityByViewType = new SparseArray<>();
 private Map<T, ViewHolderFunctionality<T>> mItemViewHolder = new HashMap<>();
 
 /**
@@ -41,17 +48,17 @@ public void addFunctionality(AdapterFunctionality<T> functionality) {
 	// Not added before
 	if (!mFunctionalities.containsKey(functionality.getClass())) {
 		mFunctionalities.put(functionality.getClass(), functionality);
-
+		
 		if (functionality instanceof ViewHolderFunctionality) {
 			ViewHolderFunctionality viewHolderFunctionality = (ViewHolderFunctionality<T>) functionality;
 			mFunctionalityByViewType.put(viewHolderFunctionality.getViewType(), viewHolderFunctionality);
 			mFunctionalityByViewHolder.put(viewHolderFunctionality.getViewHolderClass(), viewHolderFunctionality);
 		}
-
+		
 		if (functionality instanceof PostBindFunctionality) {
 			mPostBindFunctionalities.add((PostBindFunctionality<T>) functionality);
 		}
-
+		
 		// Apply functionality to RecyclerViews
 		for (RecyclerView recyclerView : mRecyclerViews) {
 			functionality.applyFunctionality(this, recyclerView);
@@ -132,7 +139,7 @@ public void setItemViewHolder(T item, ViewHolderFunctionality viewHolderFunction
  */
 public void removeItemViewHolder(T item, ViewHolderFunctionality viewHolderFunctionality) {
 	ViewHolderFunctionality overridingViewHolder = mItemViewHolder.get(item);
-
+	
 	// Only remove if it's the same view holder
 	if (overridingViewHolder == viewHolderFunctionality) {
 		mItemViewHolder.remove(item);
@@ -225,7 +232,7 @@ public void remove(T item) {
 public void remove(int itemIndex) {
 	T item = mItems.remove(itemIndex);
 	notifyItemRemoved(itemIndex);
-
+	
 	if (item != null) {
 		mItemViewHolder.remove(item);
 	}
@@ -251,7 +258,7 @@ public final void onBindViewHolder(RecyclerView.ViewHolder view, final int posit
 		functionality.onBindViewHolder(this, view, position);
 	} else {
 		onBindView((VH) view, position);
-
+		
 		// Call post bind functionalities
 		for (PostBindFunctionality<T> postBindFunctionality : mPostBindFunctionalities) {
 			postBindFunctionality.onPostBind(this, view, position);
@@ -293,7 +300,7 @@ public int getItemCount() {
 @Override
 public void onAttachedToRecyclerView(RecyclerView recyclerView) {
 	mRecyclerViews.add(recyclerView);
-
+	
 	// Apply previously added functionalities
 	for (AdapterFunctionality<T> functionality : mFunctionalities.values()) {
 		functionality.applyFunctionality(this, recyclerView);

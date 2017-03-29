@@ -1,16 +1,19 @@
 package com.spiddekauga.android.ui.list;
 
 import android.content.res.Resources;
+import android.graphics.Point;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
 
+import com.spiddekauga.android.AppActivity;
 import com.spiddekauga.android.R;
 
 import java.lang.reflect.Field;
@@ -23,17 +26,19 @@ import java.util.List;
  */
 public class ItemTouchHelper extends android.support.v7.widget.helper.ItemTouchHelper {
 private static final String TAG = ItemTouchHelper.class.getSimpleName();
+private static final float CLOSE_TO_SCREEN_EDGE = 0.15f; // 15%
 private static final int ACTIVE_POINTER_ID_NONE = -1;
 private static final int DIRECTION_FLAG_COUNT = 8;
 private static final int ACTION_MODE_IDLE_MASK = (1 << DIRECTION_FLAG_COUNT) - 1;
 private static final int ACTION_MODE_SWIPE_MASK = ACTION_MODE_IDLE_MASK << DIRECTION_FLAG_COUNT;
-private static final int ACTION_MODE_DRAG_MASK = ACTION_MODE_SWIPE_MASK << DIRECTION_FLAG_COUNT;
 private static final boolean DEBUG = false;
 private RecyclerView mRecyclerView;
 private Callback mCallback;
 private OnItemTouchListener mOnItemTouchListener = new OnItemTouchListener();
 private float mInitialTouchX;
 private float mInitialTouchY;
+private float mInitialScreenTouchX;
+private float mInitialScreenTouchY;
 private Field mfActionState;
 private Field mfActivePointerId;
 private Field mfDx;
@@ -171,6 +176,9 @@ private boolean checkSelectForSwipe(int action, MotionEvent motionEvent, int poi
 	if (mRecyclerView.getScrollState() == RecyclerView.SCROLL_STATE_DRAGGING) {
 		return false;
 	}
+	if (isInitialTouchCloseToScreenEdge()) {
+		return false;
+	}
 	final RecyclerView.ViewHolder vh = callMethod(mmFindSwipedView, motionEvent);
 	if (vh == null) {
 		return false;
@@ -226,6 +234,40 @@ private boolean checkSelectForSwipe(int action, MotionEvent motionEvent, int poi
 @SuppressWarnings("unchecked")
 private <ObjectType> ObjectType getField(Field field) {
 	return getField(field, this);
+}
+
+/**
+ * Check if initial touch is too close to the screen edge. TODO never works close to any screen
+ * edge. Check for swipe direction of the item touch helper to check which screens to use.
+ * @return true if the initial touch is too close to the screen; meaning we shouldn't start a swipe.
+ * False if it isn't near the screen edge
+ */
+private boolean isInitialTouchCloseToScreenEdge() {
+	Display display = AppActivity.getActivity().getWindowManager().getDefaultDisplay();
+	Point displaySize = new Point();
+	display.getSize(displaySize);
+	
+	float closeToEdgeWidth = displaySize.x * CLOSE_TO_SCREEN_EDGE;
+	float closeToEdgeHeight = displaySize.y * CLOSE_TO_SCREEN_EDGE;
+	
+	// Left edge
+	if (mInitialScreenTouchX < closeToEdgeWidth) {
+		return true;
+	}
+	// Right edge
+	else if (displaySize.x - mInitialScreenTouchX < closeToEdgeWidth) {
+		return true;
+	}
+//	// Top edge
+//	else if (mInitialScreenTouchY < closeToEdgeHeight) {
+//		return true;
+//	}
+//	// Bottom edge
+//	else if (displaySize.y - mInitialScreenTouchY < closeToEdgeHeight) {
+//		return true;
+//	}
+	
+	return false;
 }
 
 @SuppressWarnings("unchecked")
@@ -339,6 +381,11 @@ private class OnItemTouchListener implements RecyclerView.OnItemTouchListener {
 			mInitialTouchY = event.getY();
 			setField(mfInitialTouchX, mInitialTouchX);
 			setField(mfInitialTouchY, mInitialTouchY);
+			
+			// Screen touch location
+			mInitialScreenTouchX = event.getRawX();
+			mInitialScreenTouchY = event.getRawY();
+			
 			callMethod(mmObtainVelocityTracker);
 			RecyclerView.ViewHolder selected = getField(mfSelected);
 			if (selected == null) {
