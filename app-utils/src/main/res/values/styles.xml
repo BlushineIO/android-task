@@ -24,7 +24,9 @@
 		<item name="dialogTheme">@style/Material.Dialog</item>
 		<item name="alertDialogTheme">@style/Material.Dialog.Alert</item>
 		<item name="android:preferenceScreenStyle">@style/Material.PreferenceScreen</item>
-		<item name="android:preferenceFragmentStyle">@style/Material.PreferenceScreen</item>
+		<item name="android:preferenceFragmentStyle" tools:targetApi="24">
+			@style/Material.PreferenceScreen
+		</item>
 		<item name="android:listViewStyle">@style/Material.List.General</item>
 	</style>
 
@@ -39,8 +41,28 @@
 		<item name="titleTextColor">@color/toolbar_title</item>
 	</style>
 
+	<style name="Material.Toolbar.Collapse">
+		<item name="layout_scrollFlags">scroll|enterAlways|snap</item>
+	</style>
+
 	<style name="Material.MenuButtonOverflow" parent="Widget.AppCompat.ActionButton.Overflow">
 		<item name="android:tint">@color/icon_toolbar</item>
+	</style>
+
+	<style name="Material.AppBarLayout">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:fitsSystemWindows">false</item>
+	</style>
+
+	<style name="Material.CollapsingToolbarLayout">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:fitsSystemWindows">false</item>
+		<item name="titleEnabled">false</item>
+		<item name="expandedTitleMarginEnd">?attr/actionBarSize</item>
+		<item name="expandedTitleMarginStart">0dp</item>
+		<item name="layout_scrollFlags">scroll|exitUntilCollapsed</item>
 	</style>
 
 	<!--****************-->
@@ -71,9 +93,9 @@
 		<item name="android:paddingTop">32dp</item>
 		<item name="android:paddingBottom">16dp</item>
 		<item name="android:paddingLeft">@dimen/list_item_padding</item>
-		<item name="android:paddingStart">@dimen/list_item_padding</item>
+		<item name="android:paddingStart" tools:targetApi="17">@dimen/list_item_padding</item>
 		<item name="android:paddingRight">@dimen/list_item_padding</item>
-		<item name="android:paddingEnd">@dimen/list_item_padding</item>
+		<item name="android:paddingEnd" tools:targetApi="17">@dimen/list_item_padding</item>
 	</style>
 
 	<style name="Material.Text.H2.First">
@@ -82,9 +104,9 @@
 
 	<style name="Material.Text.Category">
 		<item name="android:paddingLeft">@dimen/list_item_padding</item>
-		<item name="android:paddingStart">@dimen/list_item_padding</item>
+		<item name="android:paddingStart" tools:targetApi="17">@dimen/list_item_padding</item>
 		<item name="android:paddingRight">@dimen/list_item_padding</item>
-		<item name="android:paddingEnd">@dimen/list_item_padding</item>
+		<item name="android:paddingEnd" tools:targetApi="17">@dimen/list_item_padding</item>
 		<item name="android:layout_height">@dimen/list_item_height_one_line</item>
 		<item name="android:textSize">14sp</item>
 		<item name="android:textColor">@color/text_black_secondary</item>
@@ -103,9 +125,9 @@
 		<item name="android:layout_width">wrap_content</item>
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:paddingLeft">@dimen/margin</item>
-		<item name="android:paddingStart">@dimen/margin</item>
+		<item name="android:paddingStart" tools:targetApi="17">@dimen/margin</item>
 		<item name="android:paddingRight">@dimen/margin</item>
-		<item name="android:paddingEnd">@dimen/margin</item>
+		<item name="android:paddingEnd" tools:targetApi="17">@dimen/margin</item>
 		<item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
 		<item name="android:textColor">@color/text_secondary</item>
 	</style>
@@ -156,6 +178,12 @@
 	<!--****************-->
 	<!-- 	  List	 	-->
 	<!--****************-->
+	<style name="Material.ViewPager">
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_width">match_parent</item>
+		<item name="layout_behavior">@string/appbar_scrolling_view_behavior</item>
+	</style>
+
 	<style name="Material.List">
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:layout_width">match_parent</item>
@@ -228,8 +256,8 @@
 	</style>
 
 	<style name="Material.ListItem.Icon.Right">
-		<item name="android:paddingEnd">@dimen/list_item_padding</item>
-		<item name="android:paddingStart">@dimen/list_item_padding</item>
+		<item name="android:paddingEnd" tools:targetApi="17">@dimen/list_item_padding</item>
+		<item name="android:paddingStart" tools:targetApi="17">@dimen/list_item_padding</item>
 	</style>
 
 	<style name="Material.ListItem.Text">
@@ -373,9 +401,9 @@
 
 	<style name="Material.ListItem.Action.Left">
 		<item name="android:layout_marginLeft">-4dp</item>
-		<item name="android:layout_marginStart">-4dp</item>
+		<item name="android:layout_marginStart" tools:targetApi="17">-4dp</item>
 		<item name="android:layout_marginRight">4dp</item>
-		<item name="android:layout_marginEnd">4dp</item>
+		<item name="android:layout_marginEnd" tools:targetApi="17">4dp</item>
 	</style>
 
 	<style name="Material.ListItem.ActionContainer">
