@@ -23,6 +23,7 @@
 	<string name="logout">Logout</string>
 	<string name="exit">Exit</string>
 	<string name="view_changes">View changes</string>
+	<string name="edit_success">Changes saved</string>
 
 	<!-- Legal Settings -->
 	<string name="legal_key" translatable="false">legal</string>

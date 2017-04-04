@@ -42,6 +42,10 @@
 	<integer name="font_title_size">20</integer>
 	<integer name="font_button_size">14</integer>
 
+	<!-- Elevations -->
+	<dimen name="elevation_toolbar">4dp</dimen>
+	<dimen name="elevation_fab">8dp</dimen>
+	<dimen name="elevation_card">2dp</dimen>
 
 	<dimen name="item_touch_helper_swipe_escape_velocity" tools:override="true">120dp</dimen>
 	<dimen name="item_touch_helper_swipe_escape_max_velocity" tools:override="true">800dp</dimen>

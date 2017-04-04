@@ -51,4 +51,5 @@
 	<string name="legal_open_source_title">Open source licenser</string>
 	<string name="legal_privacy_policy_changed">Appens integritetspolicy har ändrats. Visa ändringar?</string>
 	<string name="view_changes">Visa ändringar</string>
+	<string name="edit_success">Ändringar sparade</string>
 </resources>
