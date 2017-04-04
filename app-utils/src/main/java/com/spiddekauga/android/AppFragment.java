@@ -10,6 +10,10 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.view.View;
+import android.widget.EditText;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import de.mrapp.android.dialog.MaterialDialog;
 
@@ -22,6 +26,47 @@ int mBackMessage;
 @StringRes
 int mBackPositiveActionText = R.string.discard;
 private AppFragmentHelper mFragmentHelper = new AppFragmentHelper(this);
+private Map<String, View> mSaveViews = new HashMap<>();
+private Map<String, Object> mArguments = new HashMap<>();
+private Map<String, ArgumentRequired> mArgumentRequired = new HashMap<>();
+
+public AppFragment() {
+	onDeclareArguments();
+}
+
+/**
+ * Called when argument should be declared
+ */
+protected void onDeclareArguments() {
+	// Does nothing
+}
+
+/**
+ * Declare arguments. If an argument is set as required and it's not available it will
+ * generate an error.
+ * @param argumentName name of the argument
+ * @param required true if required, false if optional.
+ */
+protected void declareArgument(String argumentName, ArgumentRequired required) {
+	mArgumentRequired.put(argumentName, required);
+}
+
+/**
+ * Save the state of this view when this view is destroyed and restore it when it's created.
+ * Also works for arguments. Be sure to call this method before {@link #onViewStateRestored(Bundle)}
+ * is called.
+ * @param view the view which state to save. Accepts: <ul> <li>{@link android.widget.EditText}</li>
+ * </ul>
+ * @param name name of the view to save it as
+ * @throws IllegalArgumentException if the view class hasn't been implemented yet
+ */
+protected void addSaveView(View view, String name) {
+	if (!(view instanceof EditText)) {
+		throw new IllegalArgumentException(view.getClass().getName() + " not implemented");
+	}
+	
+	mSaveViews.put(name, view);
+}
 
 /**
  * Show the current fragment
@@ -85,10 +130,28 @@ public void back() {
 }
 
 /**
- * Override this to check if values have been changed
+ * Automatically checks if any of the save views have been changed
  * @return true if values have been changed/edited
  */
 protected boolean isChanged() {
+	// Values
+	for (Map.Entry<String, View> entry : mSaveViews.entrySet()) {
+		String name = entry.getKey();
+		View view = entry.getValue();
+		Object originalValue = mArguments.get(name);
+		
+		if (view instanceof EditText) {
+			String compareValue = "";
+			if (originalValue != null) {
+				compareValue = (String) originalValue;
+			}
+			
+			if (!((EditText) view).getText().toString().equals(compareValue)) {
+				return true;
+			}
+		}
+	}
+	
 	return false;
 }
 
@@ -107,9 +170,91 @@ public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 }
 
 @Override
+public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+	super.onActivityCreated(savedInstanceState);
+	fetchArguments();
+}
+
+/**
+ * Fetch Arguments
+ */
+private void fetchArguments() {
+	Bundle arguments = getArguments();
+	
+	for (Map.Entry<String, ArgumentRequired> entry : mArgumentRequired.entrySet()) {
+		String name = entry.getKey();
+		ArgumentRequired required = entry.getValue();
+		Object value = arguments.get(name);
+		
+		if (value != null) {
+			mArguments.put(name, value);
+		} else if (required == ArgumentRequired.REQUIRED) {
+			throw new IllegalStateException("Required argument " + name + " not set!");
+		}
+	}
+}
+
+@Override
+public void onViewStateRestored(Bundle savedInstanceState) {
+	super.onViewStateRestored(savedInstanceState);
+	
+	for (Map.Entry<String, View> entry : mSaveViews.entrySet()) {
+		String name = entry.getKey();
+		View view = entry.getValue();
+		
+		if (view instanceof EditText) {
+			String value = null;
+			// Fetch value from saved instance
+			if (savedInstanceState != null) {
+				value = savedInstanceState.getString(name);
+			}
+			
+			// Try with argument
+			if (value == null) {
+				value = getArgument(name);
+			}
+			
+			if (value != null) {
+				((EditText) view).setText(value);
+			}
+		}
+	}
+}
+
+/**
+ * Get the argument value
+ * @param argumentName the name of the argument
+ * @return original field value as string, an empty string if no original value was found
+ */
+@SuppressWarnings("unchecked")
+protected <ReturnType> ReturnType getArgument(String argumentName) {
+	Object value = mArguments.get(argumentName);
+	if (value instanceof String) {
+		return (ReturnType) value;
+	}
+	
+	return null;
+}
+
+@Override
 public void onResume() {
 	super.onResume();
 	mFragmentHelper.onResume();
+}
+
+@Override
+public void onSaveInstanceState(Bundle outState) {
+	super.onSaveInstanceState(outState);
+	
+	// Values
+	for (Map.Entry<String, View> entry : mSaveViews.entrySet()) {
+		String name = entry.getKey();
+		View view = entry.getValue();
+		
+		if (view instanceof EditText) {
+			outState.putString(name, ((EditText) view).getText().toString());
+		}
+	}
 }
 
 @Override
@@ -141,6 +286,14 @@ public void onDestroy() {
  */
 public void dismiss() {
 	mFragmentHelper.dismiss();
+}
+
+/**
+ * If an argument is required or not
+ */
+protected enum ArgumentRequired {
+	REQUIRED,
+	OPTIONAL,
 }
 
 public class BackOnClickListener implements View.OnClickListener {
