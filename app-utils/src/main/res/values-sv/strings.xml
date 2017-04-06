@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="item_removed">Borttagen</string>
+	<string name="removed">Borttagen</string>
 	<string name="validate_required_no_hint">Fält obligatoriskt</string>
 	<string name="undo">Ångra</string>
 	<string name="cancel">Avbryt</string>
@@ -52,4 +52,5 @@
 	<string name="legal_privacy_policy_changed">Appens integritetspolicy har ändrats. Visa ändringar?</string>
 	<string name="view_changes">Visa ändringar</string>
 	<string name="edit_success">Ändringar sparade</string>
+	<string name="remove">Radera</string>
 </resources>
