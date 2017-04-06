@@ -24,7 +24,7 @@ private static BlockingQueue<SqlExecute> mExecuteLater = new ArrayBlockingQueue<
  */
 public static synchronized void setSqlite(SQLiteOpenHelper sqliteOpenHelper) {
 	mSqlite = sqliteOpenHelper;
-
+	
 	while (!mExecuteLater.isEmpty()) {
 		SqlExecute sqlExecute = mExecuteLater.remove();
 		sqlExecute.execute();
@@ -184,7 +184,7 @@ private static class SqlExecute extends SqliteGateway {
 	private String mSql = null;
 	private String mWhereClause = null;
 	private ExecuteTypes mExecuteType = null;
-
+	
 	SqlExecute(ExecuteTypes executeType, String table, ContentValues contentValues, String whereClause, String sql) {
 		mTable = table;
 		mContentValues = contentValues;
@@ -192,7 +192,7 @@ private static class SqlExecute extends SqliteGateway {
 		mWhereClause = whereClause;
 		mExecuteType = executeType;
 	}
-
+	
 	void execute() {
 		switch (mExecuteType) {
 		case REPLACE:

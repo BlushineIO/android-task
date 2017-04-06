@@ -27,7 +27,7 @@ import java.util.Map;
  */
 class SwipeRemoveFunctionality<T> implements ViewHolderFunctionality<T> {
 private boolean mUndoFunctionality = false;
-private String mRemovedMessage = AppActivity.getActivity().getResources().getString(R.string.item_removed);
+private String mRemovedMessage = AppActivity.getActivity().getResources().getString(R.string.removed);
 private RemoveListener<T> mListener;
 @ColorInt
 private int mColor = ColorHelper.getColor(AppActivity.getActivity().getResources(), R.color.remove, null);
