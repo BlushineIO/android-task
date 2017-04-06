@@ -37,6 +37,55 @@ private static final String DEFAULT_VALUE = "NOT SET";
 private String mTitle = DEFAULT_VALUE;
 private String mText = DEFAULT_VALUE;
 
+@Override
+protected void onDeclareArguments() {
+	super.onDeclareArguments();
+	declareArgument(TITLE_KEY, ArgumentRequired.REQUIRED);
+	declareArgument(TEXT_KEY, ArgumentRequired.REQUIRED);
+}
+
+@Nullable
+@Override
+public View onCreateViewImpl(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+	View view = inflater.inflate(R.layout.fragment_info, container, false);
+	
+	// Toolbar title
+	Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+	toolbar.setTitle(mTitle);
+	toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+		@Override
+		public void onClick(View view) {
+			back();
+		}
+	});
+	
+	// Text
+	TextView infoText = (TextView) view.findViewById(R.id.info_text);
+	// HTML
+	if (Strings.isHtml(mText)) {
+		Spanned htmlFormattedText;
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			htmlFormattedText = Html.fromHtml(mText, Html.FROM_HTML_MODE_LEGACY);
+		} else {
+			htmlFormattedText = Html.fromHtml(mText);
+		}
+		infoText.setText(htmlFormattedText);
+	}
+	// Plain Text
+	else {
+		infoText.setText(mText);
+	}
+	
+	return view;
+}
+
+@Override
+protected void onArgumentsSet() {
+	super.onArgumentsSet();
+	mTitle = getArgument(TITLE_KEY);
+	mText = getArgument(TEXT_KEY);
+}
+
 /**
  * Set the arguments for this fragment
  * @param titleId toolbar title id of this info fragment
@@ -65,7 +114,7 @@ static Bundle createArguments(@StringRes int titleId, String separator, @RawRes 
 	Resources resources = AppActivity.getActivity().getResources();
 	String title = resources.getString(titleId);
 	String text = "";
-
+	
 	try {
 		boolean firstTime = true;
 		for (int rawId : rawIds) {
@@ -75,7 +124,7 @@ static Bundle createArguments(@StringRes int titleId, String separator, @RawRes 
 			} else {
 				firstTime = false;
 			}
-
+			
 			// App header
 			InputStream inputStream = resources.openRawResource(rawId);
 			byte[] bytes = new byte[inputStream.available()];
@@ -87,7 +136,7 @@ static Bundle createArguments(@StringRes int titleId, String separator, @RawRes 
 	} catch (IOException e) {
 		Log.e(TAG, "show() — Couldn't parse raw text file", e);
 	}
-
+	
 	return createArguments(title, text);
 }
 
@@ -120,48 +169,5 @@ public void setArguments(@StringRes int titleId, String separator, @RawRes int..
  */
 public void setArguments(String title, String text) {
 	setArguments(createArguments(title, text));
-}
-
-@Nullable
-@Override
-public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-	readArguments();
-
-	View view = inflater.inflate(R.layout.fragment_info, container, false);
-
-	// Toolbar title
-	Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-	toolbar.setTitle(mTitle);
-	toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-		@Override
-		public void onClick(View view) {
-			back();
-		}
-	});
-
-	// Text
-	TextView infoText = (TextView) view.findViewById(R.id.info_text);
-	// HTML
-	if (Strings.isHtml(mText)) {
-		Spanned htmlFormattedText;
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-			htmlFormattedText = Html.fromHtml(mText, Html.FROM_HTML_MODE_LEGACY);
-		} else {
-			htmlFormattedText = Html.fromHtml(mText);
-		}
-		infoText.setText(htmlFormattedText);
-	}
-	// Plain Text
-	else {
-		infoText.setText(mText);
-	}
-
-	return view;
-}
-
-private void readArguments() {
-	Bundle arguments = getArguments();
-	mTitle = arguments.getString(TITLE_KEY, DEFAULT_VALUE);
-	mText = arguments.getString(TEXT_KEY, DEFAULT_VALUE);
 }
 }

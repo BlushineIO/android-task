@@ -55,7 +55,7 @@ AppFragmentHelper(Fragment fragment) {
 }
 
 /**
- * Set the toolbar and statusbar colors. Colors are applied in {@link #onViewCreated(View, Bundle)}
+ * Set the toolbar and statusbar colors. Colors are applied in {@link #onViewRestored(View, Bundle)}
  * so call this method before then.
  * @param toolbarColor color of the toolbar
  * @param statusbarColor color of the statusbar
@@ -192,16 +192,16 @@ void onDestroy() {
  * @param view the view that was created
  * @param savedInstanceState saved variables
  */
-void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+void onViewRestored(View view, @Nullable Bundle savedInstanceState) {
 	updateColorsFromResource();
-
+	
 	if (Build.VERSION.SDK_INT >= 21) {
 		AppActivity.getActivity().getWindow().setStatusBarColor(mStatusbarColor);
 	}
 	Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
 	if (toolbar != null) {
 		colorToolbar(toolbar);
-
+		
 		// Fix Fonts
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
 			fixToolbarFonts(toolbar);
@@ -224,22 +224,22 @@ private void updateColorsFromResource() {
  */
 private void colorToolbar(Toolbar toolbar) {
 	toolbar.setBackgroundColor(mToolbarColor);
-
+	
 	Resources resources = AppActivity.getActivity().getResources();
 	@ColorInt int iconColor = ColorHelper.getColor(resources, R.color.icon_toolbar, null);
-
+	
 	// Navigation icon
 	Drawable navIcon = toolbar.getNavigationIcon();
 	if (navIcon != null) {
 		navIcon.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
 	}
-
+	
 	// Menu items
 	Menu menu = toolbar.getMenu();
 	if (menu != null) {
 		for (int i = 0; i < menu.size(); i++) {
 			MenuItem menuItem = menu.getItem(i);
-
+			
 			// Icon
 			Drawable icon = menuItem.getIcon();
 			if (icon != null) {
@@ -256,7 +256,7 @@ private void colorToolbar(Toolbar toolbar) {
 private void fixToolbarFonts(Toolbar toolbar) {
 	for (int childIndex = 0; childIndex < toolbar.getChildCount(); childIndex++) {
 		View view = toolbar.getChildAt(childIndex);
-
+		
 		// Title
 		if (view instanceof TextView) {
 			TextView textView = (TextView) view;
@@ -294,7 +294,7 @@ public void back() {
 public void dismiss() {
 	FragmentManager fragmentManager = mFragment.getFragmentManager();
 	if (fragmentManager.getBackStackEntryCount() > 1) {
-		fragmentManager.popBackStackImmediate();
+		fragmentManager.popBackStack();
 	} else {
 		AppActivity.getActivity().supportFinishAfterTransition();
 	}

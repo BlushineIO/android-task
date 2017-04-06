@@ -1,6 +1,5 @@
 package com.spiddekauga.android;
 
-import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,29 +26,6 @@ int mBackMessage;
 int mBackPositiveActionText = R.string.discard;
 private AppFragmentHelper mFragmentHelper = new AppFragmentHelper(this);
 private Map<String, View> mSaveViews = new HashMap<>();
-private Map<String, Object> mArguments = new HashMap<>();
-private Map<String, ArgumentRequired> mArgumentRequired = new HashMap<>();
-
-public AppFragment() {
-	onDeclareArguments();
-}
-
-/**
- * Called when argument should be declared
- */
-protected void onDeclareArguments() {
-	// Does nothing
-}
-
-/**
- * Declare arguments. If an argument is set as required and it's not available it will
- * generate an error.
- * @param argumentName name of the argument
- * @param required true if required, false if optional.
- */
-protected void declareArgument(String argumentName, ArgumentRequired required) {
-	mArgumentRequired.put(argumentName, required);
-}
 
 /**
  * Save the state of this view when this view is destroyed and restore it when it's created.
@@ -138,7 +114,7 @@ protected boolean isChanged() {
 	for (Map.Entry<String, View> entry : mSaveViews.entrySet()) {
 		String name = entry.getKey();
 		View view = entry.getValue();
-		Object originalValue = mArguments.get(name);
+		Object originalValue = getArgument(name);
 		
 		if (view instanceof EditText) {
 			String compareValue = "";
@@ -164,39 +140,9 @@ public Context getContext() {
 }
 
 @Override
-public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-	super.onViewCreated(view, savedInstanceState);
-	mFragmentHelper.onViewCreated(view, savedInstanceState);
-}
-
-@Override
-public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-	super.onActivityCreated(savedInstanceState);
-	fetchArguments();
-}
-
-/**
- * Fetch Arguments
- */
-private void fetchArguments() {
-	Bundle arguments = getArguments();
-	
-	for (Map.Entry<String, ArgumentRequired> entry : mArgumentRequired.entrySet()) {
-		String name = entry.getKey();
-		ArgumentRequired required = entry.getValue();
-		Object value = arguments.get(name);
-		
-		if (value != null) {
-			mArguments.put(name, value);
-		} else if (required == ArgumentRequired.REQUIRED) {
-			throw new IllegalStateException("Required argument " + name + " not set!");
-		}
-	}
-}
-
-@Override
 public void onViewStateRestored(Bundle savedInstanceState) {
 	super.onViewStateRestored(savedInstanceState);
+	mFragmentHelper.onViewRestored(mView, savedInstanceState);
 	
 	for (Map.Entry<String, View> entry : mSaveViews.entrySet()) {
 		String name = entry.getKey();
@@ -219,21 +165,6 @@ public void onViewStateRestored(Bundle savedInstanceState) {
 			}
 		}
 	}
-}
-
-/**
- * Get the argument value
- * @param argumentName the name of the argument
- * @return original field value as string, an empty string if no original value was found
- */
-@SuppressWarnings("unchecked")
-protected <ReturnType> ReturnType getArgument(String argumentName) {
-	Object value = mArguments.get(argumentName);
-	if (value instanceof String) {
-		return (ReturnType) value;
-	}
-	
-	return null;
 }
 
 @Override
@@ -288,12 +219,9 @@ public void dismiss() {
 	mFragmentHelper.dismiss();
 }
 
-/**
- * If an argument is required or not
- */
-protected enum ArgumentRequired {
-	REQUIRED,
-	OPTIONAL,
+@Override
+public void onViewCreatedImpl(View view, @Nullable Bundle savedInstanceState) {
+	super.onViewCreatedImpl(view, savedInstanceState);
 }
 
 public class BackOnClickListener implements View.OnClickListener {

@@ -32,7 +32,7 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle sa
 @Override
 public void onViewCreated(View view, Bundle savedInstanceState) {
 	super.onViewCreated(view, savedInstanceState);
-	mFragmentHelper.onViewCreated(view.getRootView(), savedInstanceState);
+	mFragmentHelper.onViewRestored(view.getRootView(), savedInstanceState);
 }
 
 @Override

@@ -78,9 +78,9 @@ public void setUserInfo(String name, String email) {
 
 @Nullable
 @Override
-public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+public View onCreateViewImpl(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 	View view = inflater.inflate(R.layout.fragment_feedback, container, false);
-
+	
 	mBugReport = (CheckBox) view.findViewById(R.id.bug_checkbox);
 	mBugReport.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 		@Override
@@ -88,7 +88,7 @@ public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
 			switchFeedbackType(isChecked ? FeedbackTypes.BUG_REPORT : FeedbackTypes.FEEDBACK);
 		}
 	});
-
+	
 	// Name
 	mNameEdit = (EditText) view.findViewById(R.id.name_edit);
 	if (mPresetName == null) {
@@ -103,7 +103,7 @@ public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
 		View nameDivider = view.findViewById(R.id.name_divider);
 		nameDivider.setVisibility(View.GONE);
 	}
-
+	
 	// Email
 	mEmailEdit = (EditText) view.findViewById(R.id.email_edit);
 	if (mPresetEmail == null) {
@@ -118,7 +118,7 @@ public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
 		View emailDivider = view.findViewById(R.id.email_divider);
 		emailDivider.setVisibility(View.GONE);
 	}
-
+	
 	// Title
 	mTitleEdit = (EditText) view.findViewById(R.id.title_edit);
 	mValidatorGroup.add(new TextValidator
@@ -126,7 +126,7 @@ public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
 			.addValidation(new RequiredWhenNotException())
 			.build()
 	);
-
+	
 	// Message
 	mMessageEdit = (EditText) view.findViewById(R.id.message_edit);
 	mValidatorGroup.add(new TextValidator
@@ -134,7 +134,7 @@ public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
 			.addValidation(new RequiredWhenNotException())
 			.build()
 	);
-
+	
 	// Set dialog title
 	mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
 	mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -153,35 +153,35 @@ public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
 			return true;
 		}
 	});
-
-
+	
+	
 	// Set previous values
 	if (savedInstanceState != null) {
 		String name = savedInstanceState.getString(NAME_EDIT_KEY);
 		if (name != null) {
 			mNameEdit.setText(name);
 		}
-
+		
 		String email = savedInstanceState.getString(EMAIL_EDIT_KEY);
 		if (email != null) {
 			mEmailEdit.setText(email);
 		}
-
+		
 		String title = savedInstanceState.getString(TITLE_EDIT_KEY);
 		if (title != null) {
 			mTitleEdit.setText(title);
 		}
-
+		
 		String message = savedInstanceState.getString(MESSAGE_EDIT_KEY);
 		if (message != null) {
 			mMessageEdit.setText(message);
 		}
-
+		
 		mException = savedInstanceState.getString(EXCEPTION_KEY);
 		mPresetName = savedInstanceState.getString(NAME_KEY);
 		mPresetEmail = savedInstanceState.getString(EMAIL_KEY);
 	}
-
+	
 	// Set exception and force bug report
 	if (mException != null) {
 		mBugReport.setChecked(true);
@@ -190,7 +190,7 @@ public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
 	} else {
 		switchFeedbackType(FeedbackTypes.FEEDBACK);
 	}
-
+	
 	return view;
 }
 
@@ -233,7 +233,7 @@ private void sendFeedback() {
 
 private Feedback createFeedback() {
 	Feedback feedback = new Feedback();
-
+	
 	feedback.setTitle(mTitleEdit.getText().toString());
 	feedback.setMessage(mMessageEdit.getText().toString());
 	feedback.setException(mException);
@@ -250,10 +250,10 @@ private Feedback createFeedback() {
 	}
 	feedback.setDeviceInfo(getDeviceInfo());
 	feedback.setAppVersion(BuildConfig.VERSION_NAME);
-
+	
 	int appStringId = AppActivity.getActivity().getApplicationInfo().labelRes;
 	feedback.setAppName(AppActivity.getActivity().getResources().getString(appStringId));
-
+	
 	return feedback;
 }
 
@@ -265,15 +265,19 @@ private String getDeviceInfo() {
 			"Product: " + Build.PRODUCT;
 }
 
+protected boolean isChanged() {
+	return !mTitleEdit.getText().toString().isEmpty() || !mMessageEdit.getText().toString().isEmpty();
+}
+
 @Override
 public void onSaveInstanceState(Bundle outState) {
 	super.onSaveInstanceState(outState);
-
+	
 	outState.putString(NAME_EDIT_KEY, mNameEdit.getText().toString());
 	outState.putString(EMAIL_EDIT_KEY, mEmailEdit.getText().toString());
 	outState.putString(TITLE_EDIT_KEY, mTitleEdit.getText().toString());
 	outState.putString(MESSAGE_EDIT_KEY, mMessageEdit.getText().toString());
-
+	
 	if (mException != null) {
 		outState.putString(EXCEPTION_KEY, mException);
 	}
@@ -285,10 +289,6 @@ public void onSaveInstanceState(Bundle outState) {
 	}
 }
 
-protected boolean isChanged() {
-	return !mTitleEdit.getText().toString().isEmpty() || !mMessageEdit.getText().toString().isEmpty();
-}
-
 private enum FeedbackTypes {
 	FEEDBACK,
 	BUG_REPORT
@@ -298,7 +298,7 @@ private class RequiredWhenNotException extends Validate<TextView> {
 	private RequiredWhenNotException() {
 		super(AppActivity.getActivity().getResources().getString(R.string.validate_required_no_hint));
 	}
-
+	
 	@Override
 	public boolean validate(TextView field) {
 		return mException != null || !field.getText().toString().isEmpty();
