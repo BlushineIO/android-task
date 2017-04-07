@@ -171,8 +171,9 @@ public void addSwipeRemoveFunctionality(RemoveListener<T> listener, boolean undo
 /**
  * Clear all items
  */
-public void clearItems() {
+public void clear() {
 	mItems.clear();
+	notifyDataSetChanged();
 }
 
 /**
@@ -194,14 +195,25 @@ public void setItems(List<T> items) {
 }
 
 /**
- * Add item(s) to the end of the list
+ * Add item(s) to the end of the list. Calls {@link #add(List)}. If you want to change
+ * the functionality of adding items, override {@link #add(List)}.
  * @param items the items to add
  */
-public void add(T... items) {
-	int prevSize = mItems.size();
+@SafeVarargs
+public final void add(T... items) {
 	List<T> convertList = Arrays.asList(items);
-	mItems.addAll(convertList);
-	notifyItemRangeInserted(prevSize, items.length);
+	add(convertList);
+}
+
+/**
+ * Add item(s) to the end of the list. Override this method if you want to change the functionality
+ * of adding items, e.g., they shouldn't be added at the end of the list.
+ * @param items the items to add
+ */
+public void add(List<T> items) {
+	int prevSize = mItems.size();
+	mItems.addAll(items);
+	notifyItemRangeInserted(prevSize, items.size());
 }
 
 /**
@@ -215,15 +227,31 @@ public void add(int position, T item) {
 }
 
 /**
- * Remove the specified item from the list
- * @param item the item to remove
+ * Remove the specified items from the adapter. Calls {@link #remove(List)}. If you want to change
+ * the functionality of removing items, override {@link #remove(List)}. You might want to do this if
+ * you want to update other items in the list after all items have been removed.
+ * @param items the items to remove
  */
-public void remove(T item) {
-	int index = mItems.indexOf(item);
-	if (index >= 0) {
-		remove(index);
+@SafeVarargs
+public final void remove(T... items) {
+	List<T> convertList = Arrays.asList(items);
+	remove(convertList);
+}
+
+/**
+ * Remove items from the adapter. Override this method if you want to change the functionality of
+ * removing items. E.g. if you want to update other items in the list.
+ * @param items the items to remove
+ */
+public void remove(List<T> items) {
+	for (T item : items) {
+		int index = mItems.indexOf(item);
+		if (index >= 0) {
+			remove(index);
+		}
 	}
 }
+
 
 /**
  * Remove the item at the specified location from the list
