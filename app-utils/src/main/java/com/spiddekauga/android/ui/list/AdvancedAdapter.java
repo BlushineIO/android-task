@@ -67,11 +67,23 @@ public void addFunctionality(AdapterFunctionality<T> functionality) {
 }
 
 /**
+ * Notify multiple items changed
+ * @param items the items that has changed
+ */
+public void notifyItemsChanged(List<T> items) {
+	for (T item : items) {
+		notifyItemChanged(item);
+	}
+}
+
+/**
  * Notify item changed
  * @param item the item that was changed
  */
 public void notifyItemChanged(T item) {
 	int position = getItemPosition(item);
+	mItems.remove(position);
+	mItems.add(position, item);
 	notifyItemChanged(position);
 }
 
