@@ -17,6 +17,10 @@ public void onClick(View view) {
 }
 
 protected void showSnackbar(@StringRes int resId) {
+	SnackbarHelper.showSnackbar(resId);
+}
+
+protected void showSnackbarWithUndo(@StringRes int resId) {
 	SnackbarHelper.showSnackbar(resId, R.string.undo, this);
 }
 }
