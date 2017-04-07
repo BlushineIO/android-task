@@ -35,4 +35,11 @@ public FragmentType getItem(int position) {
  * @return new fragment instance for this position
  */
 protected abstract FragmentType instantiateItem(int position);
+
+@Override
+public void notifyDataSetChanged() {
+	mFragments.clear();
+	
+	super.notifyDataSetChanged();
+}
 }
