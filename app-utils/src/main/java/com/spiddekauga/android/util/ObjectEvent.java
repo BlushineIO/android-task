@@ -50,8 +50,11 @@ public Actions getAction() {
  * The different actions
  */
 public enum Actions {
+	/** Add one or several objects to DB */
 	ADD,
+	/** Edit one or several objects in DB */
 	EDIT,
+	/** Remove one or several objects to DB */
 	REMOVE,
 	/** Called after {@link #ADD}, i.e., after an object has been added to the DB */
 	ADDED,
