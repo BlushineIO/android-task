@@ -55,7 +55,7 @@ SwipeRemoveFunctionality(AdvancedAdapter<T, ?> adapter, RemoveListener<T> listen
 }
 
 public UndoViewHolder onCreateViewHolder(ViewGroup parent) {
-	View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.undo_list_item, parent, false);
+	View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_undo, parent, false);
 	return new UndoViewHolder(itemView);
 }
 
@@ -103,9 +103,9 @@ public void applyFunctionality(AdvancedAdapter<T, ?> adapter, RecyclerView recyc
 	// Use custom item touch helper so we can swipe between View Pages
 	android.support.v7.widget.helper.ItemTouchHelper itemTouchHelper;
 	if (canSwipeBetweenPages(recyclerView)) {
-		itemTouchHelper = new ItemTouchHelper(new TransactionRemoveCallback());
+		itemTouchHelper = new ItemTouchHelper(new ItemRemoveCallback());
 	} else {
-		itemTouchHelper = new android.support.v7.widget.helper.ItemTouchHelper(new TransactionRemoveCallback());
+		itemTouchHelper = new android.support.v7.widget.helper.ItemTouchHelper(new ItemRemoveCallback());
 	}
 	itemTouchHelper.attachToRecyclerView(recyclerView);
 	
@@ -145,10 +145,10 @@ private static class UndoViewHolder extends RecyclerView.ViewHolder {
 }
 
 /**
- * Callback when a transaction has been swiped (and should be removed)
+ * Callback when a list item has been swiped (and should be removed)
  * Draws the red background together with the trash can while the list item is being swiped
  */
-private class TransactionRemoveCallback extends ItemTouchHelper.Callback {
+private class ItemRemoveCallback extends ItemTouchHelper.Callback {
 	private static final int UNDO_DURATION = 3000; // 3sec
 	private final int mTrashMargin = (int) AppActivity.getActivity().getResources().getDimension(R.dimen.margin);
 	private Drawable mBackground = new ColorDrawable(mColor);

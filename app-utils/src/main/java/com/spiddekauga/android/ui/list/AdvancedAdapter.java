@@ -1,6 +1,7 @@
 package com.spiddekauga.android.ui.list;
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -181,6 +183,25 @@ public void addSwipeRemoveFunctionality(RemoveListener<T> listener, boolean undo
 }
 
 /**
+ * Add ability to drag and drop items in the adapter. Long press to start drag and drop.
+ * @param listener listens to when an item has been moved
+ */
+public void addDragDropMoveFunctionality(MoveListener<T> listener) {
+	addFunctionality(new MoveFunctionality<T>(listener));
+}
+
+/**
+ * Add ability to drag and drop items in the adapter. Start dragging by pressing the specified
+ * button
+ * @param listener listens to when an item has been moved
+ * @param moveButtonId resource id of the button
+ */
+public void addDragDropMoveFunctionality(MoveListener<T> listener, @IdRes int moveButtonId) {
+	addFunctionality(new MoveFunctionality<T>(listener, moveButtonId));
+}
+
+
+/**
  * Clear all items
  */
 public void clear() {
@@ -264,7 +285,6 @@ public void remove(List<T> items) {
 	}
 }
 
-
 /**
  * Remove the item at the specified location from the list
  * @param itemIndex index of the item to remove
@@ -276,6 +296,24 @@ public void remove(int itemIndex) {
 	if (item != null) {
 		mItemViewHolder.remove(item);
 	}
+}
+
+/**
+ * Move an item from one position to the other
+ * @param fromPosition move the item at this position
+ * @param toPosition move the item to this position
+ */
+public void move(int fromPosition, int toPosition) {
+	if (fromPosition < toPosition) {
+		for (int i = fromPosition; i < toPosition; i++) {
+			Collections.swap(mItems, i, i + 1);
+		}
+	} else {
+		for (int i = fromPosition; i > toPosition; i--) {
+			Collections.swap(mItems, i, i - 1);
+		}
+	}
+	notifyItemMoved(fromPosition, toPosition);
 }
 
 @Override
@@ -364,5 +402,6 @@ private <F extends AdapterFunctionality> F getFunctionality(Class<F> clazz) {
  */
 enum ViewTypes {
 	UNDO,
+	MOVE,
 }
 }
