@@ -1,7 +1,6 @@
 package com.spiddekauga.android;
 
 import android.support.annotation.MenuRes;
-import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -36,8 +35,7 @@ protected void initToolbar(View view) {
 /**
  * @return title of this dialog
  */
-@StringRes
-protected abstract int getTitle();
+protected abstract String getTitle();
 
 /**
  * @return menu to inflate the toolbar with
