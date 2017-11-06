@@ -5,10 +5,10 @@ version = '0.1.0-SNAPSHOT'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '25.0.2'
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -56,18 +56,21 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile project(':common-utils')
-    compile 'com.squareup.okhttp3:okhttp:3.2.0'
+    compile 'com.squareup.okhttp3:okhttp:3.7.0'
     compile "com.squareup.okhttp3:okhttp-urlconnection:3.2.0"
     compile 'com.github.franmontiel:PersistentCookieJar:v0.9.3'
-    compile 'com.google.code.gson:gson:2.7'
+    compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.github.michael-rapp:android-material-dialog:4.0.1'
     compile 'com.github.michael-rapp:android-material-preferences:3.0.1'
     compile 'com.wdullaer:materialdatetimepicker:3.2.2'
     compile(project(path: ':cloudshine', configuration: 'android-endpoints')) {
         exclude(module: 'guava-jdk5')
     }
-    compile "com.android.support:appcompat-v7:25.3.1"
-    compile "com.android.support:recyclerview-v7:25.3.1"
-    compile "com.android.support:design:25.3.1"
-    compile 'com.android.support:support-v13:25.3.1'
+    compile "com.android.support:appcompat-v7:25.4.0"
+    compile "com.android.support:recyclerview-v7:25.4.0"
+    compile "com.android.support:design:25.4.0"
+    compile 'com.android.support:support-v13:25.4.0'
+}
+repositories {
+    google()
 }
