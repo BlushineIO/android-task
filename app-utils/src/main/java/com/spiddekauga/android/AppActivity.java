@@ -81,7 +81,7 @@ public static View getRootView() {
 protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	mActivity = this;
-
+	
 	if (mFirstTime) {
 		mFirstTime = false;
 		onFirstTime();
@@ -91,7 +91,7 @@ protected void onCreate(Bundle savedInstanceState) {
 /**
  * Called first time the application is started
  */
-private void onFirstTime() {
+protected void onFirstTime() {
 	FeedbackRepo feedbackRepo = FeedbackRepo.getInstance();
 	feedbackRepo.resetSyncingFeedbacks();
 	feedbackRepo.syncUnsyncedFeedbacks();

@@ -15,6 +15,7 @@
 	<string name="feedback_title_hint">Titel</string>
 	<string name="feedback_menu">Skicka feedback</string>
 	<string name="send">Skicka</string>
+	<string name="select">Välj</string>
 	<string name="feedback_cancel">Radera feedback?</string>
 	<string name="discard">Kasta</string>
 	<string name="feedback_sent">Tack för din feedback!</string>

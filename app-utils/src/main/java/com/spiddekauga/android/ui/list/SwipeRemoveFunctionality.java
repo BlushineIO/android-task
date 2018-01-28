@@ -126,6 +126,7 @@ private static boolean canSwipeBetweenPages(RecyclerView recyclerView) {
 		if (viewParent instanceof ViewPager) {
 			return true;
 		}
+		viewParent = viewParent.getParent();
 	}
 	return false;
 }
