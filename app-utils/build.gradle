@@ -1,7 +1,18 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.google.cloud.tools.endpoints-framework-client'
 
-group = 'com.spiddekauga.android'
+group = 'io.blushine.android'
 version = '0.1.0-SNAPSHOT'
+
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:1.0.2'
+    }
+}
 
 android {
     compileSdkVersion 26
@@ -12,6 +23,7 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -52,24 +64,35 @@ configurations {
     provided
 }
 
+configurations.all {
+    resolutionStrategy {
+        force("com.google.guava:guava:23.3-jre")
+    }
+}
+
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    compile project(':common-utils')
-    compile 'com.squareup.okhttp3:okhttp:3.7.0'
-    compile "com.squareup.okhttp3:okhttp-urlconnection:3.2.0"
-    compile 'com.github.franmontiel:PersistentCookieJar:v0.9.3'
-    compile 'com.google.code.gson:gson:2.8.0'
-    compile 'com.github.michael-rapp:android-material-dialog:4.0.1'
-    compile 'com.github.michael-rapp:android-material-preferences:3.0.1'
-    compile 'com.wdullaer:materialdatetimepicker:3.2.2'
-    compile(project(path: ':cloudshine', configuration: 'android-endpoints')) {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+//    testImplementation 'junit:junit:4.12'
+    implementation project(':common-utils')
+    api 'com.squareup.okhttp3:okhttp:3.7.0'
+    api "com.squareup.okhttp3:okhttp-urlconnection:3.2.0"
+    implementation 'com.github.franmontiel:PersistentCookieJar:v0.9.3'
+    implementation 'com.google.code.gson:gson:2.8.0'
+    api 'com.github.michael-rapp:android-material-dialog:4.0.1'
+    api 'com.github.michael-rapp:android-material-preferences:3.0.1'
+    api 'com.wdullaer:materialdatetimepicker:3.2.2'
+    api "com.android.support:appcompat-v7:26.1.0"
+    api "com.android.support:recyclerview-v7:26.1.0"
+    api "com.android.support:design:26.1.0"
+    api 'com.android.support:support-v13:26.1.0'
+    api 'com.squareup:otto:1.3.8'
+
+    endpointsServer(project(path: ':cloudshine', configuration: 'endpoints'))
+    implementation('com.google.api-client:google-api-client:+')
+    {
         exclude(module: 'guava-jdk5')
     }
-    compile "com.android.support:appcompat-v7:26.1.0"
-    compile "com.android.support:recyclerview-v7:26.1.0"
-    compile "com.android.support:design:26.1.0"
-    compile 'com.android.support:support-v13:26.1.0'
+    implementation 'com.google.http-client:google-http-client-android:1.23.0'
 }
 repositories {
     google()

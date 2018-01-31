@@ -61,7 +61,7 @@ public void onFeedbackResponse(FeedbackResponseEvent event) {
  */
 public void syncUnsyncedFeedbacks() {
 	List<Feedback> feedbacks = mPrefsGateway.getUnsyncedFeedbacks();
-
+	
 	if (!feedbacks.isEmpty()) {
 		FeedbackSendTask feedbackSendTask = new FeedbackSendTask();
 		Feedback[] feedbackArray = new Feedback[feedbacks.size()];
