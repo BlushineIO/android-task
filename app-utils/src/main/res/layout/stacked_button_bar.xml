@@ -2,13 +2,13 @@
 
 <!-- Material Dialog Buttons -->
 <LinearLayout
-	android:id="@+id/button_bar"
 	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/button_bar"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:orientation="vertical">
 
-	<com.spiddekauga.android.ui.view.ButtonMaterial
+	<io.blushine.android.ui.view.ButtonMaterial
 		android:id="@android:id/button1"
 		style="@style/MaterialDialog.Button"
 		android:layout_width="match_parent"
@@ -18,7 +18,7 @@
 		android:paddingRight="@dimen/dialog_button_horizontal_padding"
 		android:visibility="gone"/>
 
-	<com.spiddekauga.android.ui.view.ButtonMaterial
+	<io.blushine.android.ui.view.ButtonMaterial
 		android:id="@android:id/button2"
 		style="@style/MaterialDialog.Button"
 		android:layout_width="match_parent"
@@ -28,7 +28,7 @@
 		android:paddingRight="@dimen/dialog_button_horizontal_padding"
 		android:visibility="gone"/>
 
-	<com.spiddekauga.android.ui.view.ButtonMaterial
+	<io.blushine.android.ui.view.ButtonMaterial
 		android:id="@android:id/button3"
 		style="@style/MaterialDialog.Button"
 		android:layout_width="match_parent"
