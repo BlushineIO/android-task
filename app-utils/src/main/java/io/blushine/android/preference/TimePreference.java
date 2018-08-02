@@ -21,7 +21,7 @@ import io.blushine.android.util.Time;
  */
 public class TimePreference extends Preference implements TimePickerDialog.OnTimeSetListener {
 private TimePickerDialog mTimePicker;
-private Time mTime;
+private Time mTime = new Time(0, 0, 0);
 
 public TimePreference(@NonNull Context context) {
 	super(context);
