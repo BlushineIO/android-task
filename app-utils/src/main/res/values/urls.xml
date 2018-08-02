@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-	<string name="cloudshine_root_url" translatable="false">https://cloudshine-spiddekauga.appspot.com/_ah/api/</string>
-	<string name="cloudshine_app_name" translatable="false">cloudshine-spiddekauga</string>
-</resources>

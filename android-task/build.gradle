@@ -1,0 +1,65 @@
+apply plugin: 'com.android.library'
+
+group = 'io.blushine.android.task'
+version = '0.1.0-SNAPSHOT'
+
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+}
+
+android {
+    compileSdkVersion targetSdkVersionVal
+    buildToolsVersion buildToolsVersionVal
+
+    defaultConfig {
+        minSdkVersion minSdkVersionVal
+        targetSdkVersion targetSdkVersionVal
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+task sourceJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    destinationDir = file("../javadoc/")
+    failOnError false
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourceJar
+    archives javadocJar
+}
+
+configurations {
+    deployerJars
+    provided
+}
+
+dependencies {
+	implementation project(':common-utils')
+}

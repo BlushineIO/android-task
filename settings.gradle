@@ -1,1 +1,4 @@
-include ':app-utils'
+include ':android-task', ':common-utils'
+
+// Custom git directories
+project(':common-utils').projectDir = new File('../../common-utils')
